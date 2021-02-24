@@ -16,6 +16,8 @@ import FeatureCollection from "react-cismap/FeatureCollection";
 import GenericInfoBoxFromFeature from "react-cismap/topicmaps/GenericInfoBoxFromFeature";
 import getGTMFeatureStyler from "react-cismap/topicmaps/generic/GTMStyler";
 
+import convertBPKlimaItemsToFeature from "./helper/itemConverter";
+import InfoPanel from "./SecondaryInfo";
 const host = "https://wupp-topicmaps-data.cismet.de";
 
 const getGazData = async (setGazData) => {
@@ -27,8 +29,10 @@ const getGazData = async (setGazData) => {
   sources.quartiere = await md5FetchText(prefix, host + "/data/quartiere.json");
   sources.pois = await md5FetchText(prefix, host + "/data/pois.json");
   sources.kitas = await md5FetchText(prefix, host + "/data/kitas.json");
+  sources.bpklimastandorte = await md5FetchText(prefix, host + "/data/bpklimastandorte.json");
 
   const gazData = getGazDataForTopicIds(sources, [
+    "bpklimastandorte",
     "pois",
     "kitas",
     "bezirke",
@@ -45,8 +49,39 @@ function App() {
     getGazData(setGazData);
   }, []);
   return (
-    <TopicMapContextProvider>
-      <TopicMapComponent gazData={gazData}></TopicMapComponent>
+    <TopicMapContextProvider
+      featureItemsURL={host + "/data/bpklima.data.json"}
+      getFeatureStyler={getGTMFeatureStyler}
+      convertItemToFeature={convertBPKlimaItemsToFeature}
+      clusteringOptions={{
+        iconCreateFunction: getClusterIconCreatorFunction(30, (props) => props.color),
+      }}
+      clusteringEnabled={true}
+    >
+      <TopicMapComponent
+        gazData={gazData}
+        gazetteerSearchPlaceholder='Stadtteil | Adresse | POI | Standorte'
+        infoBox={
+          <GenericInfoBoxFromFeature
+            pixelwidth={400}
+            config={{
+              displaySecondaryInfoAction: true,
+              city: "Wuppertal",
+              navigator: {
+                noun: {
+                  singular: "Standort",
+                  plural: "Standorte",
+                },
+              },
+              noCurrentFeatureTitle: "Keine Standorte gefunden",
+              noCurrentFeatureContent: "",
+            }}
+          />
+        }
+        secondaryInfo={<InfoPanel />}
+      >
+        <FeatureCollection />
+      </TopicMapComponent>
     </TopicMapContextProvider>
   );
 }
