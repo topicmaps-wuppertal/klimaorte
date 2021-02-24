@@ -2,9 +2,9 @@
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/topicmaps-wuppertal/bestpractices-klimaschutz)
 
-## Ein einfaches Beispiel für eine TopicMap
+## Screenshot
 
-<img width="1549" alt="Screenshot 2021-02-19 at 08 40 49" src="https://user-images.githubusercontent.com/837211/108474812-2b2a9480-7290-11eb-967a-b174a73e9707.png">
+<img width="1534" alt="Screenshot 2021-02-24 at 14 02 16" src="https://user-images.githubusercontent.com/837211/109004349-f744da00-76a8-11eb-88cf-dc78339cebe2.png">
 
 ## Datengrundlage
 
