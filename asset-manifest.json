@@ -1,29 +1,29 @@
 {
   "files": {
     "main.css": "./static/css/main.8c8b27cf.chunk.css",
-    "main.js": "./static/js/main.f819bb59.chunk.js",
-    "main.js.map": "./static/js/main.f819bb59.chunk.js.map",
-    "runtime-main.js": "./static/js/runtime-main.03eb0010.js",
-    "runtime-main.js.map": "./static/js/runtime-main.03eb0010.js.map",
+    "main.js": "./static/js/main.eeb2e484.chunk.js",
+    "main.js.map": "./static/js/main.eeb2e484.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.4441b293.js",
+    "runtime-main.js.map": "./static/js/runtime-main.4441b293.js.map",
     "static/css/2.1a59bb52.chunk.css": "./static/css/2.1a59bb52.chunk.css",
-    "static/js/2.dba55e14.chunk.js": "./static/js/2.dba55e14.chunk.js",
-    "static/js/2.dba55e14.chunk.js.map": "./static/js/2.dba55e14.chunk.js.map",
-    "static/js/3.602c2dec.chunk.js": "./static/js/3.602c2dec.chunk.js",
-    "static/js/3.602c2dec.chunk.js.map": "./static/js/3.602c2dec.chunk.js.map",
+    "static/js/2.054b9cf2.chunk.js": "./static/js/2.054b9cf2.chunk.js",
+    "static/js/2.054b9cf2.chunk.js.map": "./static/js/2.054b9cf2.chunk.js.map",
+    "static/js/3.fe651866.chunk.js": "./static/js/3.fe651866.chunk.js",
+    "static/js/3.fe651866.chunk.js.map": "./static/js/3.fe651866.chunk.js.map",
     "index.html": "./index.html",
     "static/css/2.1a59bb52.chunk.css.map": "./static/css/2.1a59bb52.chunk.css.map",
     "static/css/main.8c8b27cf.chunk.css.map": "./static/css/main.8c8b27cf.chunk.css.map",
-    "static/js/2.dba55e14.chunk.js.LICENSE.txt": "./static/js/2.dba55e14.chunk.js.LICENSE.txt",
+    "static/js/2.054b9cf2.chunk.js.LICENSE.txt": "./static/js/2.054b9cf2.chunk.js.LICENSE.txt",
     "static/media/MeinStandpunktMarker.aec65d22.jpg": "./static/media/MeinStandpunktMarker.aec65d22.jpg",
     "static/media/MeinStandpunktMarkerDoppel.e4a85271.jpg": "./static/media/MeinStandpunktMarkerDoppel.e4a85271.jpg",
     "static/media/font-awesome.css": "./static/media/fontawesome-webfont.f691f37e.woff",
     "static/media/leaflet.extra-markers.min.css": "./static/media/markers_default@2x.9593b3c7.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.03eb0010.js",
+    "static/js/runtime-main.4441b293.js",
     "static/css/2.1a59bb52.chunk.css",
-    "static/js/2.dba55e14.chunk.js",
+    "static/js/2.054b9cf2.chunk.js",
     "static/css/main.8c8b27cf.chunk.css",
-    "static/js/main.f819bb59.chunk.js"
+    "static/js/main.eeb2e484.chunk.js"
   ]
 }
