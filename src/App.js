@@ -20,6 +20,10 @@ import convertBPKlimaItemsToFeature from "./helper/itemConverter";
 import InfoPanel from "./SecondaryInfo";
 import MyMenu from "./Menu";
 import itemFilterFunction from "./helper/filter";
+
+import Icon from "react-cismap/commons/Icon";
+import StyledWMSTileLayer from "react-cismap/StyledWMSTileLayer";
+
 const host = "https://wupp-topicmaps-data.cismet.de";
 
 const getGazData = async (setGazData) => {
@@ -60,8 +64,39 @@ function App() {
       }}
       clusteringEnabled={true}
       itemFilterFunction={itemFilterFunction}
+      additionalLayerConfiguration={{
+        fernwaerme: {
+          title: (
+            <span>
+              Fernwärme{" "}
+              <Icon
+                style={{
+                  color: "#EEB48C",
+                  width: "30px",
+                  textAlign: "center",
+                }}
+                name={"circle"}
+              />
+            </span>
+          ),
+          initialActive: true,
+          layer: (
+            <StyledWMSTileLayer
+              key={"fernwaermewsw"}
+              url='https://maps.wuppertal.de/deegree/wms'
+              layers='fernwaermewsw '
+              format='image/png'
+              tiled='true'
+              transparent='true'
+              maxZoom={19}
+              opacity={0.7}
+            />
+          ),
+        },
+      }}
     >
       <TopicMapComponent
+        applicationMenuTooltipString='Filtern | Einstellungen | Kompaktanleitung'
         modalMenu={<MyMenu />}
         gazData={gazData}
         gazetteerSearchPlaceholder='Stadtteil | Adresse | POI | Standorte'

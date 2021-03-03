@@ -91,7 +91,7 @@ const MyMenu = () => {
       term = "Standorte";
     }
 
-    return `Meine Klimastandorte (${count} ${term} gefunden, davon ${
+    return `Meine Klimaschutzstandorte (${count} ${term} gefunden, davon ${
       shownFeatures?.length || "0"
     } in der Karte)`;
   };
@@ -99,7 +99,7 @@ const MyMenu = () => {
   return (
     <ModalApplicationMenu
       menuIcon={"bars"}
-      menuTitle={"Filter, Einstellungen und Kompaktanleitung"}
+      menuTitle={"Meine Klimaschutzstandorte, Einstellungen und Kompaktanleitung"}
       menuIntroduction={
         <span>
           Benutzen Sie die Auswahlmöglichkeiten unter{" "}
@@ -111,10 +111,10 @@ const MyMenu = () => {
             delay={100}
             onClick={() => setAppMenuActiveMenuSection("filter")}
           >
-            Filter
+            Meine Klimaschutzstandorte
           </Link>
-          , um die in der Karte angezeigten vorbildlichen Klimastandorte auf die für Sie relevanten
-          Themen zu beschränken. Über Einstellungen{" "}
+          , um die in der Karte angezeigten vorbildlichen Klimaschutzstandorte auf die für Sie
+          relevanten Themen zu beschränken. Über{" "}
           <Link
             className='useAClassNameToRenderProperLink'
             to='settings'
@@ -126,7 +126,7 @@ const MyMenu = () => {
             Einstellungen
           </Link>{" "}
           können Sie die Darstellung der Hintergrundkarte und der klimarelevanten Themen an Ihre
-          Interesse anpassen. Wählen Sie die Kompaktanleitung{" "}
+          Interesse anpassen. Wählen Sie die{" "}
           <Link
             className='useAClassNameToRenderProperLink'
             to='help'
