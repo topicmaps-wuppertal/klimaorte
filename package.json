@@ -9,7 +9,7 @@
     "bootstrap": "^4.6.0",
     "react": "^16.11",
     "react-bootstrap": "^1.5.0",
-    "react-cismap": "^0.9.0-experimental-11",
+    "react-cismap": "^0.9.0-experimental-13",
     "react-dom": "^16.11",
     "react-scripts": "4.0.2",
     "web-vitals": "^1.0.1"
