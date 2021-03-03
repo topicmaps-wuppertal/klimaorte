@@ -18,6 +18,8 @@ import getGTMFeatureStyler from "react-cismap/topicmaps/generic/GTMStyler";
 
 import convertBPKlimaItemsToFeature from "./helper/itemConverter";
 import InfoPanel from "./SecondaryInfo";
+import MyMenu from "./Menu";
+import itemFilterFunction from "./helper/filter";
 const host = "https://wupp-topicmaps-data.cismet.de";
 
 const getGazData = async (setGazData) => {
@@ -57,8 +59,10 @@ function App() {
         iconCreateFunction: getClusterIconCreatorFunction(30, (props) => props.color),
       }}
       clusteringEnabled={true}
+      itemFilterFunction={itemFilterFunction}
     >
       <TopicMapComponent
+        modalMenu={<MyMenu />}
         gazData={gazData}
         gazetteerSearchPlaceholder='Stadtteil | Adresse | POI | Standorte'
         infoBox={

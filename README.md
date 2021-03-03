@@ -8,4 +8,4 @@
 
 ## Datengrundlage
 
-Hier stehen kurze Infos zur Datengrundlage
+Hier stehen Infos zur Datengrundlage
