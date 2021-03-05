@@ -100,7 +100,7 @@ function App() {
         applicationMenuTooltipString='Filtern | Einstellungen | Kompaktanleitung'
         modalMenu={<MyMenu />}
         gazData={gazData}
-        gazetteerSearchPlaceholder='Stadtteil | Adresse | POI | Standorte'
+        gazetteerSearchPlaceholder='Standort | Stadtteil | Adresse | POI'
         infoBox={
           <GenericInfoBoxFromFeature
             pixelwidth={400}
