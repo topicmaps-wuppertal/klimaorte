@@ -23,7 +23,7 @@ import itemFilterFunction from "./helper/filter";
 
 import Icon from "react-cismap/commons/Icon";
 import StyledWMSTileLayer from "react-cismap/StyledWMSTileLayer";
-
+import titleFactory from "./helper/titleFactory";
 const host = "https://wupp-topicmaps-data.cismet.de";
 
 const getGazData = async (setGazData) => {
@@ -65,6 +65,7 @@ function App() {
       }}
       clusteringEnabled={true}
       itemFilterFunction={itemFilterFunction}
+      titleFactory={titleFactory}
       additionalLayerConfiguration={{
         fernwaerme: {
           title: (
