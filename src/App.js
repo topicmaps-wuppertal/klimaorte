@@ -56,6 +56,7 @@ function App() {
   }, []);
   return (
     <TopicMapContextProvider
+      appKey='BestPracticeKlimaschutzWuppertal.TopicMap'
       featureItemsURL={host + "/data/bpklima.data.json"}
       getFeatureStyler={getGTMFeatureStyler}
       convertItemToFeature={convertBPKlimaItemsToFeature}
