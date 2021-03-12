@@ -33,14 +33,12 @@ const getGazData = async (setGazData) => {
   sources.adressen = await md5FetchText(prefix, host + "/data/adressen.json");
   sources.bezirke = await md5FetchText(prefix, host + "/data/bezirke.json");
   sources.quartiere = await md5FetchText(prefix, host + "/data/quartiere.json");
-  sources.pois = await md5FetchText(prefix, host + "/data/pois.json");
-  sources.kitas = await md5FetchText(prefix, host + "/data/kitas.json");
+  // sources.pois = await md5FetchText(prefix, host + "/data/pois.json");
+  // sources.kitas = await md5FetchText(prefix, host + "/data/kitas.json");
   sources.bpklimastandorte = await md5FetchText(prefix, host + "/data/bpklimastandorte.json");
 
   const gazData = getGazDataForTopicIds(sources, [
     "bpklimastandorte",
-    "pois",
-    "kitas",
     "bezirke",
     "quartiere",
     "adressen",
@@ -57,6 +55,7 @@ function App() {
   return (
     <TopicMapContextProvider
       appKey='BestPracticeKlimaschutzWuppertal.TopicMap'
+      featureTooltipFunction={(feature) => feature?.text}
       featureItemsURL={host + "/data/bpklima.data.json"}
       getFeatureStyler={getGTMFeatureStyler}
       convertItemToFeature={convertBPKlimaItemsToFeature}
@@ -101,7 +100,7 @@ function App() {
         applicationMenuTooltipString='Filtern | Einstellungen | Kompaktanleitung'
         modalMenu={<MyMenu />}
         gazData={gazData}
-        gazetteerSearchPlaceholder='Standort | Stadtteil | Adresse | POI'
+        gazetteerSearchPlaceholder='Klimastandort | Stadtteil | Adresse'
         infoBox={
           <GenericInfoBoxFromFeature
             pixelwidth={400}
