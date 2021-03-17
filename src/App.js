@@ -65,6 +65,8 @@ function App() {
       clusteringEnabled={true}
       itemFilterFunction={itemFilterFunction}
       titleFactory={titleFactory}
+      classKeyFunction={(item) => item.thema?.name}
+      getColorFromProperties={(item) => item?.thema?.farbe}
       additionalLayerConfiguration={{
         fernwaerme: {
           title: (
