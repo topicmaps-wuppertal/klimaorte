@@ -33,8 +33,6 @@ const getGazData = async (setGazData) => {
   sources.adressen = await md5FetchText(prefix, host + "/data/adressen.json");
   sources.bezirke = await md5FetchText(prefix, host + "/data/bezirke.json");
   sources.quartiere = await md5FetchText(prefix, host + "/data/quartiere.json");
-  // sources.pois = await md5FetchText(prefix, host + "/data/pois.json");
-  // sources.kitas = await md5FetchText(prefix, host + "/data/kitas.json");
   sources.bpklimastandorte = await md5FetchText(prefix, host + "/data/bpklimastandorte.json");
 
   const gazData = getGazDataForTopicIds(sources, [
@@ -100,6 +98,7 @@ function App() {
     >
       <TopicMapComponent
         applicationMenuTooltipString='Filtern | Einstellungen | Kompaktanleitung'
+        locatorControl={true}
         modalMenu={<MyMenu />}
         gazData={gazData}
         gazetteerSearchPlaceholder='Klimastandort | Stadtteil | Adresse'
