@@ -12,6 +12,10 @@ import FilterPanel from "react-cismap/topicmaps/menu/FilterPanel";
 import DefaultSettingsPanel from "react-cismap/topicmaps/menu/DefaultSettingsPanel";
 import ConfigurableDocBlocks from "react-cismap/topicmaps/ConfigurableDocBlocks";
 import MenuFooter from "./MenuFooter";
+import CustomizationContextProvider from "react-cismap/contexts/CustomizationContextProvider";
+
+import Icon from "react-cismap/commons/Icon";
+import { addSVGToProps } from "react-cismap/tools/svgHelper";
 
 const MyMenu = () => {
   const { setAppMenuActiveMenuSection } = useContext(UIDispatchContext);
@@ -78,7 +82,7 @@ const MyMenu = () => {
   if ((filterMode === undefined) & (items !== undefined)) {
     setFilterMode("themen");
   }
-  const topicMapTitle = "Klimaortkarte Klimaschutz";
+  const topicMapTitle = "Klimaortkarte Wuppertal";
   const simpleHelp = undefined;
 
   const getFilterHeader = () => {
@@ -97,70 +101,141 @@ const MyMenu = () => {
   };
 
   return (
-    <ModalApplicationMenu
-      menuIcon={"bars"}
-      menuTitle={"Meine Klimaorte, Einstellungen und Kompaktanleitung"}
-      menuFooter={<MenuFooter />}
-      menuIntroduction={
-        <span>
-          Benutzen Sie die Auswahlmöglichkeiten unter{" "}
-          <Link
-            className='useAClassNameToRenderProperLink'
-            to='filter'
-            containerId='myMenu'
-            smooth={true}
-            delay={100}
-            onClick={() => setAppMenuActiveMenuSection("filter")}
-          >
-            Meine Klimaorte
-          </Link>
-          , um die in der Karte angezeigten vorbildlichen Klimaorte auf die für Sie relevanten
-          Themen zu beschränken. Über{" "}
-          <Link
-            className='useAClassNameToRenderProperLink'
-            to='settings'
-            containerId='myMenu'
-            smooth={true}
-            delay={100}
-            onClick={() => setAppMenuActiveMenuSection("settings")}
-          >
-            Einstellungen
-          </Link>{" "}
-          können Sie die Darstellung der Hintergrundkarte und der klimarelevanten Themen an Ihre
-          Interesse anpassen. Wählen Sie die{" "}
-          <Link
-            className='useAClassNameToRenderProperLink'
-            to='help'
-            containerId='myMenu'
-            smooth={true}
-            delay={100}
-            onClick={() => setAppMenuActiveMenuSection("help")}
-          >
-            Kompaktanleitung
-          </Link>{" "}
-          für detailliertere Bedienungsinformationen.
-        </span>
-      }
-      menuSections={[
-        <Section
-          key='filter'
-          sectionKey='filter'
-          sectionTitle={getFilterHeader()}
-          sectionBsStyle='primary'
-          sectionContent={<FilterPanel filterConfiguration={filterConfiguration} />}
-        />,
-        <DefaultSettingsPanel key='settings' />,
-        <Section
-          key='help'
-          sectionKey='help'
-          sectionTitle='Kompaktanleitung'
-          sectionBsStyle='default'
-          sectionContent={
-            <ConfigurableDocBlocks configs={getSimpleHelpForTM(topicMapTitle, simpleHelp)} />
-          }
-        />,
-      ]}
-    />
+    <CustomizationContextProvider
+      customizations={{
+        inKartePositionieren: {
+          listWithSymbols: (
+            <p>
+              Durch das in der Auswahlliste vorangestellte Symbol erkennen Sie, ob es sich bei einem
+              Treffer um einen{" "}
+              <NW>
+                <Icon name='circle' /> Stadtbezirk
+              </NW>
+              , ein{" "}
+              <NW>
+                <Icon name='pie-chart' /> Quartier
+              </NW>
+              , eine{" "}
+              <NW>
+                <Icon name='home' /> Adresse
+              </NW>
+              , eine{" "}
+              <NW>
+                <Icon name='road' /> Straße ohne Hausnummern
+              </NW>
+              , eine{" "}
+              <NW>
+                <Icon name='child' /> Kindertageseinrichtung
+              </NW>
+              , eine{" "}
+              <NW>
+                <Icon name='graduation-cap' /> Schule
+              </NW>{" "}
+              oder Einstellungen{" "}
+              <NW>
+                <Icon name='sun' /> Klimaort
+              </NW>{" "}
+              handelt.
+            </p>
+          ),
+        },
+        fachobjekteAuswaehlen: {
+          furtherExplanationOfClickableContent: " (Signaturen oder dunkelblaue Fahrradtrassen)",
+        },
+        hintergrund: {
+          additionalDatasources: (
+            <p>
+              <ul>
+                <li>
+                  <strong>Fernwärme</strong>: Kartendienst (WMS) der Stadt Wuppertal in
+                  Zusammenarbeit mit der{" "}
+                  <a
+                    target='_wsw'
+                    href='https://www.wsw-online.de/wsw-energie-wasser/privatkunden/produkte/fernwaerme/talwaerme-wuppertal/'
+                  >
+                    WSW GmbH
+                  </a>
+                  . Datengrundlage: Fernwärmeleitungen der Wuppertaler Stadtwerke GmbH (Stand
+                  02.2021) mit einer Puffergröße von 10 m. ©{" "}
+                  <a target='_wsw' href='https://www.wsw-online.de/impressum/'>
+                    Wuppertaler Stadtwerke GmbH
+                  </a>
+                  .
+                </li>
+              </ul>
+            </p>
+          ),
+        },
+      }}
+    >
+      <ModalApplicationMenu
+        menuIcon={"bars"}
+        menuTitle={"Meine Klimaorte, Einstellungen und Kompaktanleitung"}
+        menuFooter={<MenuFooter />}
+        menuIntroduction={
+          <span>
+            Benutzen Sie die Auswahlmöglichkeiten unter{" "}
+            <Link
+              className='useAClassNameToRenderProperLink'
+              to='filter'
+              containerId='myMenu'
+              smooth={true}
+              delay={100}
+              onClick={() => setAppMenuActiveMenuSection("filter")}
+            >
+              Meine Klimaorte
+            </Link>
+            , um die in der Karte angezeigten vorbildlichen Klimaorte auf die für Sie relevanten
+            Themen zu beschränken. Über{" "}
+            <Link
+              className='useAClassNameToRenderProperLink'
+              to='settings'
+              containerId='myMenu'
+              smooth={true}
+              delay={100}
+              onClick={() => setAppMenuActiveMenuSection("settings")}
+            >
+              Einstellungen
+            </Link>{" "}
+            können Sie die Darstellung der Hintergrundkarte und der klimarelevanten Themen an Ihre
+            Interesse anpassen. Wählen Sie die{" "}
+            <Link
+              className='useAClassNameToRenderProperLink'
+              to='help'
+              containerId='myMenu'
+              smooth={true}
+              delay={100}
+              onClick={() => setAppMenuActiveMenuSection("help")}
+            >
+              Kompaktanleitung
+            </Link>{" "}
+            für detailliertere Bedienungsinformationen.
+          </span>
+        }
+        menuSections={[
+          <Section
+            key='filter'
+            sectionKey='filter'
+            sectionTitle={getFilterHeader()}
+            sectionBsStyle='primary'
+            sectionContent={<FilterPanel filterConfiguration={filterConfiguration} />}
+          />,
+          <DefaultSettingsPanel key='settings' />,
+          <Section
+            key='help'
+            sectionKey='help'
+            sectionTitle='Kompaktanleitung'
+            sectionBsStyle='default'
+            sectionContent={
+              <ConfigurableDocBlocks configs={getSimpleHelpForTM(topicMapTitle, simpleHelp)} />
+            }
+          />,
+        ]}
+      />
+    </CustomizationContextProvider>
   );
 };
 export default MyMenu;
+const NW = (props) => {
+  return <span style={{ whiteSpace: "nowrap" }}>{props.children}</span>;
+};
