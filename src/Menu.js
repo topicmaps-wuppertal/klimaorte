@@ -78,7 +78,7 @@ const MyMenu = () => {
   if ((filterMode === undefined) & (items !== undefined)) {
     setFilterMode("themen");
   }
-  const topicMapTitle = "Klimaorte Klimaschutz";
+  const topicMapTitle = "Klimaortkarte Klimaschutz";
   const simpleHelp = undefined;
 
   const getFilterHeader = () => {
