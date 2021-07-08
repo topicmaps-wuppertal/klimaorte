@@ -11,12 +11,12 @@ import Section from "react-cismap/topicmaps/menu/Section";
 import FilterPanel from "react-cismap/topicmaps/menu/FilterPanel";
 import DefaultSettingsPanel from "react-cismap/topicmaps/menu/DefaultSettingsPanel";
 import ConfigurableDocBlocks from "react-cismap/topicmaps/ConfigurableDocBlocks";
+import MenuFooter from "./MenuFooter";
 
 const MyMenu = () => {
   const { setAppMenuActiveMenuSection } = useContext(UIDispatchContext);
-  const { filterState, filterMode, filteredItems, shownFeatures } = useContext(
-    FeatureCollectionContext
-  );
+  const { filterState, filterMode, filteredItems, shownFeatures } =
+    useContext(FeatureCollectionContext);
   const { setFilterState, setFilterMode } = useContext(FeatureCollectionDispatchContext);
 
   const { items } = useContext(FeatureCollectionContext);
@@ -78,7 +78,7 @@ const MyMenu = () => {
   if ((filterMode === undefined) & (items !== undefined)) {
     setFilterMode("themen");
   }
-  const topicMapTitle = "Best Practice Klimaschutz";
+  const topicMapTitle = "Klimaorte Klimaschutz";
   const simpleHelp = undefined;
 
   const getFilterHeader = () => {
@@ -100,6 +100,7 @@ const MyMenu = () => {
     <ModalApplicationMenu
       menuIcon={"bars"}
       menuTitle={"Meine Klimaschutzstandorte, Einstellungen und Kompaktanleitung"}
+      menuFooter={<MenuFooter />}
       menuIntroduction={
         <span>
           Benutzen Sie die Auswahlmöglichkeiten unter{" "}
