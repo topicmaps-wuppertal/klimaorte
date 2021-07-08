@@ -97,7 +97,7 @@ function App() {
       }}
     >
       <TopicMapComponent
-        applicationMenuTooltipString='Filtern | Einstellungen | Kompaktanleitung'
+        applicationMenuTooltipString='Filter | Einstellungen | Anleitung'
         locatorControl={true}
         modalMenu={<MyMenu />}
         gazData={gazData}
