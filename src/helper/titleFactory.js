@@ -39,7 +39,7 @@ const factory = ({ featureCollectionContext }) => {
   if (featureCollectionContext?.filteredItems?.length === 0) {
     return (
       <div>
-        <b>Keine Klimastandorte gefunden!</b> Bitte überprüfen Sie Ihre Filtereinstellungen.
+        <b>Keine Klimaorte gefunden!</b> Bitte überprüfen Sie Ihre Filtereinstellungen.
       </div>
     );
   }
@@ -47,7 +47,7 @@ const factory = ({ featureCollectionContext }) => {
   if (themenstadtplanDesc) {
     return (
       <div>
-        <b>Meine Klimastandorte:</b> {themenstadtplanDesc}
+        <b>Meine Klimaorte:</b> {themenstadtplanDesc}
       </div>
     );
   } else {

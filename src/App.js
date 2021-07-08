@@ -101,7 +101,7 @@ function App() {
         locatorControl={true}
         modalMenu={<MyMenu />}
         gazData={gazData}
-        gazetteerSearchPlaceholder='Klimastandort | Stadtteil | Adresse'
+        gazetteerSearchPlaceholder='Klimaort | Stadtteil | Adresse'
         infoBox={
           <GenericInfoBoxFromFeature
             pixelwidth={400}
@@ -110,11 +110,11 @@ function App() {
               city: "Wuppertal",
               navigator: {
                 noun: {
-                  singular: "Standort",
-                  plural: "Standorte",
+                  singular: "Klimaort",
+                  plural: "Klimaorte",
                 },
               },
-              noCurrentFeatureTitle: "Keine Standorte gefunden",
+              noCurrentFeatureTitle: "Keine Klimaorte gefunden",
               noCurrentFeatureContent: "",
             }}
           />

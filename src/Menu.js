@@ -91,7 +91,7 @@ const MyMenu = () => {
       term = "Standorte";
     }
 
-    return `Meine Klimaschutzstandorte (${count} ${term} gefunden, davon ${
+    return `Meine Klimaorte (${count} ${term} gefunden, davon ${
       shownFeatures?.length || "0"
     } in der Karte)`;
   };
@@ -99,7 +99,7 @@ const MyMenu = () => {
   return (
     <ModalApplicationMenu
       menuIcon={"bars"}
-      menuTitle={"Meine Klimaschutzstandorte, Einstellungen und Kompaktanleitung"}
+      menuTitle={"Meine Klimaorte, Einstellungen und Kompaktanleitung"}
       menuFooter={<MenuFooter />}
       menuIntroduction={
         <span>
@@ -112,10 +112,10 @@ const MyMenu = () => {
             delay={100}
             onClick={() => setAppMenuActiveMenuSection("filter")}
           >
-            Meine Klimaschutzstandorte
+            Meine Klimaorte
           </Link>
-          , um die in der Karte angezeigten vorbildlichen Klimaschutzstandorte auf die für Sie
-          relevanten Themen zu beschränken. Über{" "}
+          , um die in der Karte angezeigten vorbildlichen Klimaorte auf die für Sie relevanten
+          Themen zu beschränken. Über{" "}
           <Link
             className='useAClassNameToRenderProperLink'
             to='settings'
