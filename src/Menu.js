@@ -131,7 +131,7 @@ const MyMenu = () => {
               <NW>
                 <Icon name='graduation-cap' /> Schule
               </NW>{" "}
-              oder Einstellungen{" "}
+              oder einen{" "}
               <NW>
                 <Icon name='sun' /> Klimaort
               </NW>{" "}
