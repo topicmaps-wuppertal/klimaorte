@@ -51,7 +51,7 @@ function KlimaorteMap() {
   useEffect(() => {
     getGazData(setGazData);
   }, []);
-  console.log("selectedFeature", selectedFeature);
+  //   console.log("selectedFeature", selectedFeature);
 
   return (
     <TopicMapComponent
