@@ -25,9 +25,9 @@ const MyMenu = () => {
 
   const { items } = useContext(FeatureCollectionContext);
 
-  const kategorien = [];
+  let kategorien = [];
   const katValues = [];
-  const themen = [];
+  let themen = [];
   const themenValues = [];
 
   for (const item of items || []) {
@@ -41,6 +41,20 @@ const MyMenu = () => {
       themen.push(item.thema.id);
       themenValues.push({ key: item.thema.id, title: item.thema.name, color: item.thema.farbe });
     }
+  }
+
+  themenValues.sort((a, b) => a.title.localeCompare(b.title));
+  katValues.sort((a, b) => a.key.localeCompare(b.key));
+
+  themen = [];
+
+  for (const t of themenValues) {
+    themen.push(t.key);
+  }
+  kategorien = [];
+
+  for (const k of katValues) {
+    kategorien.push(k.key);
   }
 
   const filterConfiguration = {
