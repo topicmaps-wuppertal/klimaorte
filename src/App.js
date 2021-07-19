@@ -1,60 +1,26 @@
-import { useEffect } from "react";
-
-import "./App.css";
-import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "leaflet/dist/leaflet.css";
 import "react-bootstrap-typeahead/css/Typeahead.css";
-import "react-cismap/topicMaps.css";
-import { md5FetchText, fetchJSON } from "react-cismap/tools/fetching";
-import { getGazDataForTopicIds } from "react-cismap/tools/gazetteerHelper";
-
-import TopicMapContextProvider from "react-cismap/contexts/TopicMapContextProvider";
-import { getClusterIconCreatorFunction } from "react-cismap/tools/uiHelper";
-import TopicMapComponent from "react-cismap/topicmaps/TopicMapComponent";
-import FeatureCollection from "react-cismap/FeatureCollection";
-import GenericInfoBoxFromFeature from "react-cismap/topicmaps/GenericInfoBoxFromFeature";
-import getGTMFeatureStyler from "react-cismap/topicmaps/generic/GTMStyler";
-
-import convertBPKlimaItemsToFeature from "./helper/itemConverter";
-import InfoPanel from "./SecondaryInfo";
-import MyMenu from "./Menu";
-import itemFilterFunction from "./helper/filter";
-
 import Icon from "react-cismap/commons/Icon";
+import TopicMapContextProvider from "react-cismap/contexts/TopicMapContextProvider";
 import StyledWMSTileLayer from "react-cismap/StyledWMSTileLayer";
+import { getClusterIconCreatorFunction } from "react-cismap/tools/uiHelper";
+import "react-cismap/topicMaps.css";
+import getGTMFeatureStyler from "react-cismap/topicmaps/generic/GTMStyler";
+import "./App.css";
+import itemFilterFunction from "./helper/filter";
+import convertBPKlimaItemsToFeature from "./helper/itemConverter";
 import titleFactory from "./helper/titleFactory";
-const host = "https://wupp-topicmaps-data.cismet.de";
+import KlimaorteMap from "./KlimaorteMap";
 
-const getGazData = async (setGazData) => {
-  const prefix = "GazDataForStories";
-  const sources = {};
-
-  sources.adressen = await md5FetchText(prefix, host + "/data/adressen.json");
-  sources.bezirke = await md5FetchText(prefix, host + "/data/bezirke.json");
-  sources.quartiere = await md5FetchText(prefix, host + "/data/quartiere.json");
-  sources.bpklimastandorte = await md5FetchText(prefix, host + "/data/bpklimastandorte.json");
-
-  const gazData = getGazDataForTopicIds(sources, [
-    "bpklimastandorte",
-    "bezirke",
-    "quartiere",
-    "adressen",
-  ]);
-
-  setGazData(gazData);
-};
+export const dataHost = "https://wupp-topicmaps-data.cismet.de";
 
 function App() {
-  const [gazData, setGazData] = useState([]);
-  useEffect(() => {
-    getGazData(setGazData);
-  }, []);
   return (
     <TopicMapContextProvider
       appKey='BestPracticeKlimaschutzWuppertal.TopicMap'
       featureTooltipFunction={(feature) => feature?.text}
-      featureItemsURL={host + "/data/bpklima.data.json"}
+      featureItemsURL={dataHost + "/data/bpklima.data.json"}
       getFeatureStyler={getGTMFeatureStyler}
       convertItemToFeature={convertBPKlimaItemsToFeature}
       clusteringOptions={{
@@ -96,33 +62,7 @@ function App() {
         },
       }}
     >
-      <TopicMapComponent
-        applicationMenuTooltipString='Filter | Einstellungen | Anleitung'
-        locatorControl={true}
-        modalMenu={<MyMenu />}
-        gazData={gazData}
-        gazetteerSearchPlaceholder='Klimaort | Stadtteil | Adresse'
-        infoBox={
-          <GenericInfoBoxFromFeature
-            pixelwidth={400}
-            config={{
-              displaySecondaryInfoAction: true,
-              city: "Wuppertal",
-              navigator: {
-                noun: {
-                  singular: "Klimaort",
-                  plural: "Klimaorte",
-                },
-              },
-              noCurrentFeatureTitle: "Keine Klimaorte gefunden",
-              noCurrentFeatureContent: "",
-            }}
-          />
-        }
-        secondaryInfo={<InfoPanel />}
-      >
-        <FeatureCollection />
-      </TopicMapComponent>
+      <KlimaorteMap />
     </TopicMapContextProvider>
   );
 }
