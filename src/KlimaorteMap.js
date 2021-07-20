@@ -44,7 +44,7 @@ function KlimaorteMap() {
   const { setSelectedFeatureByPredicate, setFilterState } = useContext(
     FeatureCollectionDispatchContext
   );
-  const { selectedFeature } = useContext(FeatureCollectionContext);
+  const { selectedFeature, items } = useContext(FeatureCollectionContext);
   const { zoomToFeature } = useContext(TopicMapDispatchContext);
 
   const [gazData, setGazData] = useState([]);
@@ -52,6 +52,19 @@ function KlimaorteMap() {
     getGazData(setGazData);
   }, []);
   //   console.log("selectedFeature", selectedFeature);
+
+  let weitereAngebote;
+  const angebot = selectedFeature?.properties;
+  let moreDataAvailable = false;
+  if (angebot) {
+    weitereAngebote = items.filter(
+      (testItem) => testItem?.standort.id === angebot.standort.id && testItem.id !== angebot.id
+    );
+    moreDataAvailable =
+      weitereAngebote.length > 0 ||
+      selectedFeature?.properties?.bemerkung !== undefined ||
+      selectedFeature?.properties?.kommentar !== undefined;
+  }
 
   return (
     <TopicMapComponent
@@ -64,7 +77,7 @@ function KlimaorteMap() {
         <GenericInfoBoxFromFeature
           pixelwidth={400}
           config={{
-            displaySecondaryInfoAction: true,
+            displaySecondaryInfoAction: moreDataAvailable,
             city: "Wuppertal",
             navigator: {
               noun: {
