@@ -70,6 +70,7 @@ function KlimaorteMap() {
       modalMenu={<MyMenu />}
       gazData={gazData}
       gazetteerSearchPlaceholder='Klimaort | Stadtteil | Adresse'
+      homeZoom={9}
       infoBox={
         <GenericInfoBoxFromFeature
           pixelwidth={400}
