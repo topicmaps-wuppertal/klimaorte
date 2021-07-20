@@ -22,13 +22,10 @@ const getGazData = async (setGazData) => {
   const prefix = "GazDataForStories";
   const sources = {};
 
-  sources.adressen = await md5FetchText(prefix, dataHost + "/data/3857/adressen.json");
-  sources.bezirke = await md5FetchText(prefix, dataHost + "/data/3857/bezirke.json");
-  sources.quartiere = await md5FetchText(prefix, dataHost + "/data/3857/quartiere.json");
-  sources.bpklimastandorte = await md5FetchText(
-    prefix,
-    dataHost + "/data/3857/bpklimastandorte.json"
-  );
+  sources.adressen = await md5FetchText(prefix, dataHost + "/data/adressen.json");
+  sources.bezirke = await md5FetchText(prefix, dataHost + "/data/bezirke.json");
+  sources.quartiere = await md5FetchText(prefix, dataHost + "/data/quartiere.json");
+  sources.bpklimastandorte = await md5FetchText(prefix, dataHost + "/data/bpklimastandorte.json");
 
   const gazData = getGazDataForTopicIds(sources, [
     "bpklimastandorte",

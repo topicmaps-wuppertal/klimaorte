@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "leaflet/dist/leaflet.css";
 import "react-bootstrap-typeahead/css/Typeahead.css";
+import { MappingConstants } from "react-cismap";
 import Icon from "react-cismap/commons/Icon";
 import TopicMapContextProvider from "react-cismap/contexts/TopicMapContextProvider";
 import StyledWMSTileLayer from "react-cismap/StyledWMSTileLayer";
@@ -21,6 +22,9 @@ function App() {
       appKey='BestPracticeKlimaschutzWuppertal.TopicMap'
       featureTooltipFunction={(feature) => feature?.text}
       featureItemsURL={dataHost + "/data/bpklima.data.json"}
+      referenceSystemDefinition={MappingConstants.proj4crs25832def}
+      mapEPSGCode='25832'
+      referenceSystem={MappingConstants.crs25832}
       getFeatureStyler={getGTMFeatureStyler}
       convertItemToFeature={convertBPKlimaItemsToFeature}
       clusteringOptions={{
