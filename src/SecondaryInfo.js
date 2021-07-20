@@ -58,6 +58,8 @@ const InfoPanel = () => {
       addOffers[ang.thema.name].push(ang.kategorien);
     }
 
+    console.log("angebot", angebot);
+
     const subSections = [
       <SecondaryInfoPanelSection
         key='standort'
@@ -85,15 +87,16 @@ const InfoPanel = () => {
               {angebot?.standort?.bemerkung} <br />
             </div>
           )}
+
           {angebot?.standort?.kommentar && (
             <div>
-              {angebot?.standort?.kommentar} <br />
+              <br></br> <i>{angebot?.standort?.kommentar} </i>
             </div>
           )}
         </div>
       </SecondaryInfoPanelSection>,
     ];
-
+    let first = true;
     if (weitereAngebote.length > 0) {
       subSections.push(
         <SecondaryInfoPanelSection
@@ -105,17 +108,43 @@ const InfoPanel = () => {
             <table border={0} style={{ xwidth: "100%" }}>
               <tbody>
                 {Object.keys(addOffers).map((key, index) => {
+                  let separator = null;
+                  if (first !== true) {
+                    separator = (
+                      <tr colspan={2}>
+                        <td
+                          style={{
+                            paddingLeft: 5,
+                            paddingright: 5,
+                            borderBottom: "1px solid #dddddd",
+                          }}
+                        ></td>
+                        <td
+                          style={{
+                            paddingLeft: 5,
+                            paddingright: 5,
+                            borderBottom: "1px solid #dddddd",
+                          }}
+                        ></td>
+                      </tr>
+                    );
+                  }
+
+                  first = false;
                   return (
-                    <tr style={{ paddingBottom: 10 }} key={"addAng" + index}>
-                      <td style={{ verticalAlign: "top", padding: 5 }} key={"addAng.L." + index}>
-                        {key}:
-                      </td>
-                      <td style={{ verticalAlign: "top", padding: 5 }} key={"addAng.R." + index}>
-                        {addOffers[key].map((val, index) => {
-                          return <div key={"kategorien." + index}>{val.join(", ")}</div>;
-                        })}
-                      </td>
-                    </tr>
+                    <>
+                      {separator}
+                      <tr style={{ paddingBottom: 10 }} key={"addAng" + index}>
+                        <td style={{ verticalAlign: "top", padding: 5 }} key={"addAng.L." + index}>
+                          {key}:
+                        </td>
+                        <td style={{ verticalAlign: "top", padding: 5 }} key={"addAng.R." + index}>
+                          {addOffers[key].map((val, index) => {
+                            return <div key={"kategorien." + index}>{val.join(", ")}</div>;
+                          })}
+                        </td>
+                      </tr>
+                    </>
                   );
                 })}
               </tbody>
@@ -163,7 +192,8 @@ const InfoPanel = () => {
               )}
               {angebot.kommentar && (
                 <div>
-                  {angebot.kommentar} <br />
+                  <br></br>
+                  <i>{angebot.kommentar} </i>
                 </div>
               )}
             </div>
