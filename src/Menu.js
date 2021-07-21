@@ -134,7 +134,7 @@ const MyMenu = () => {
             Innerhalb dieser Kriterien können sie in einer alphabetisch sortieren Menge an
             Schlagworten (Tags) bestimmte Begriffe per Mausklick selektieren bzw. deselektieren; die
             Auswahl aller bzw. keines der Schlagworte erfolgt über die Schaltfläche{" "}
-            <a class='renderAsLink'>alle</a> bzw. <a class='renderAsLink'>keine</a>.
+            <a className='renderAsLink'>alle</a> bzw. <a className='renderAsLink'>keine</a>.
           </p>
           <p>
             Ihre Einstellungen werden direkt in der blauen Titelzeile des Bereichs "
@@ -195,7 +195,7 @@ const MyMenu = () => {
         },
         hintergrund: {
           additionalDatasources: (
-            <p>
+            <div>
               <ul>
                 <li>
                   <strong>Fernwärme</strong>: Kartendienst (WMS) der Stadt Wuppertal in
@@ -214,7 +214,7 @@ const MyMenu = () => {
                   .
                 </li>
               </ul>
-            </p>
+            </div>
           ),
         },
       }}
