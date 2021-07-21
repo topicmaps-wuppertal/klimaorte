@@ -122,7 +122,7 @@ const MyMenu = () => {
       content: (
         <div>
           <p>
-            Im Bereich &quot;<strong>Filter</strong>&quot; können Sie im Anwendungsmenü{" "}
+            Im Bereich &quot;<strong>Meine Klimaorte</strong>&quot; können Sie im Anwendungsmenü{" "}
             <Icon name='bars' /> die in der Karte angezeigten Klimaorte so ausdünnen, dass nur die
             für Sie interessanten Orte übrig bleiben. Dabei umfasst die Filterung die Angebote an
             den Klimastandorten, wobei sich ein Angebot aus einem Thema und einer Kategorie ergibt.
@@ -138,11 +138,11 @@ const MyMenu = () => {
           </p>
           <p>
             Ihre Einstellungen werden direkt in der blauen Titelzeile des Bereichs "
-            <strong>Filter</strong>" und in dem Donut-Diagramm, das Sie rechts neben oder unter den
-            Filteroptionen finden, ausgewertet. Die Titelzeile zeigt die Gesamtanzahl der Klimaorte,
-            die den von Ihnen gesetzten Filterbedingungen entsprechen. Das Donut-Diagramm zeigt
-            zusätzlich die Verteilung der Klimaorte entsprechend der Filterkriterien "Themen" oder
-            "Kategorien". Bewegen Sie dazu den Mauszeiger auf eines der farbigen Segmente des
+            <strong>Meine Klimaorte</strong>" und in dem Donut-Diagramm, das Sie rechts neben oder
+            unter den Filteroptionen finden, ausgewertet. Die Titelzeile zeigt die Gesamtanzahl der
+            Klimaorte, die den von Ihnen gesetzten Filterbedingungen entsprechen. Das Donut-Diagramm
+            zeigt zusätzlich die Verteilung der Klimaorte entsprechend der Filterkriterien "Themen"
+            oder "Kategorien". Bewegen Sie dazu den Mauszeiger auf eines der farbigen Segmente des
             Diagramms. Die Farben des Donut-Diagramms entsprechen den farbigen Hintergründen der
             Schlagworte aus dem Filterkriterium "Themen".
           </p>
@@ -214,6 +214,12 @@ const MyMenu = () => {
                   .
                 </li>
               </ul>
+              <div>
+                Zusätzlich stellt die Klimaortkarte Wuppertal die Daten der Klimaorte dar. Die
+                Aufbereitung dieses Datensatzes für das Open-Data-Portal befindet sich aktuell in
+                der Umsetzung. Nach der öffentlichen Bereitstellung wird die Quelle an dieser
+                Position aufgeführt.
+              </div>
             </div>
           ),
         },
