@@ -91,6 +91,12 @@ const InfoPanel = () => {
               <br></br> <i>{angebot?.standort?.kommentar} </i>
             </div>
           )}
+
+          {angebot?.standort?.erreichbarkeit && (
+            <div>
+              <br></br> Erreichbarkeit über {angebot?.standort?.erreichbarkeit}
+            </div>
+          )}
         </div>
       </SecondaryInfoPanelSection>,
     ];
