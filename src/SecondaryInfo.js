@@ -58,8 +58,6 @@ const InfoPanel = () => {
       addOffers[ang.thema.name].push(ang.kategorien);
     }
 
-    console.log("angebot", angebot);
-
     const subSections = [
       <SecondaryInfoPanelSection
         key='standort'
