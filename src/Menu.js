@@ -101,9 +101,9 @@ const MyMenu = () => {
     content: `Die Möglichkeiten zum Klima- und Umweltschutz werden aktuell global diskutiert, wobei bereits 
               auf kommunaler Ebene viele Akteure und Einrichtungen an deren Umsetzung beteiligt sind. 
               An diesen "Klimaorten" wird das Thema Klimaschutz praktiziert und vermittelt; hier wird der 
-              Klimaschutz für die Bürger\*innen erlebbar. Viele dieser Klimaorte sind im Rahmen von innovativen 
+              Klimaschutz für die Bürger\\*innen erlebbar. Viele dieser Klimaorte sind im Rahmen von innovativen 
               Projekten durch den Wissenstransfer und das Engagement von Unternehmen, Vereinen, Verbänden sowie 
-              Quartiersbewohner\*innen entstanden, die sich aktiv für Lösungen zum Klima- und Umweltschutz in ihrem 
+              Quartiersbewohner\\*innen entstanden, die sich aktiv für Lösungen zum Klima- und Umweltschutz in ihrem 
               Quartier und für die Stadt Wuppertal einsetzen. Zu den zielführenden Projekten gehören z.B. Wuppertals 
               Klimasiedlungen, Anlagen zur effizienten und/oder regenerativen Energieerzeugung, Projekte der Verkehrswende 
               sowie der Klima- und Umweltbildung, an denen zahlreiche Akteure mitwirken und mitgestalten.`,
