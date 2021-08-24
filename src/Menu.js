@@ -214,11 +214,23 @@ const MyMenu = () => {
                   .
                 </li>
               </ul>
+
               <div>
-                Zusätzlich stellt die Klimaortkarte Wuppertal die Daten der Klimaorte dar. Die
-                Aufbereitung dieses Datensatzes für das Open-Data-Portal befindet sich aktuell in
-                der Umsetzung. Nach der öffentlichen Bereitstellung wird die Quelle an dieser
-                Position aufgeführt.
+                Zusätzlich stellt die Klimaortkarte Wuppertal die Daten der{" "}
+                <a
+                  target='_opendata'
+                  href='https://offenedaten-wuppertal.de/dataset/klimaorte-wuppertal'
+                >
+                  Klimaorte
+                </a>{" "}
+                und eine Auswahl der{" "}
+                <a
+                  target='_opendata'
+                  href='https://offenedaten-wuppertal.de/dataset/radrouten-wuppertal'
+                >
+                  Radrouten
+                </a>{" "}
+                (mit 1,5 Meter Puffer) aus dem Open-Data-Angebot der Stadt Wuppertal dar.
               </div>
             </div>
           ),
