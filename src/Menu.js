@@ -214,7 +214,6 @@ const MyMenu = () => {
                   .
                 </li>
               </ul>
-
               <div>
                 Zusätzlich stellt die Klimaortkarte Wuppertal die Daten der{" "}
                 <a
