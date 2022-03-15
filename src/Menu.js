@@ -17,14 +17,7 @@ import CustomizationContextProvider from "react-cismap/contexts/CustomizationCon
 import Icon from "react-cismap/commons/Icon";
 import { addSVGToProps } from "react-cismap/tools/svgHelper";
 
-const MyMenu = () => {
-  const { setAppMenuActiveMenuSection } = useContext(UIDispatchContext);
-  const { filterState, filterMode, filteredItems, shownFeatures } =
-    useContext(FeatureCollectionContext);
-  const { setFilterState, setFilterMode } = useContext(FeatureCollectionDispatchContext);
-
-  const { items } = useContext(FeatureCollectionContext);
-
+export const getFilterInfo = (items) => {
   let kategorien = [];
   const katValues = [];
   let themen = [];
@@ -56,6 +49,18 @@ const MyMenu = () => {
   for (const k of katValues) {
     kategorien.push(k.key);
   }
+  return { kategorien, katValues, themen, themenValues };
+};
+
+const MyMenu = () => {
+  const { setAppMenuActiveMenuSection } = useContext(UIDispatchContext);
+  const { filterState, filterMode, filteredItems, shownFeatures } =
+    useContext(FeatureCollectionContext);
+  const { setFilterState, setFilterMode } = useContext(FeatureCollectionDispatchContext);
+
+  const { items } = useContext(FeatureCollectionContext);
+
+  const { kategorien, katValues, themen, themenValues } = getFilterInfo(items);
 
   const filterConfiguration = {
     mode: "tabs", // list or tabs
@@ -107,7 +112,7 @@ const MyMenu = () => {
               Quartier und für die Stadt Wuppertal einsetzen. Zu den zielführenden Projekten gehören z.B. Wuppertals 
               Klimasiedlungen, Anlagen zur effizienten und/oder regenerativen Energieerzeugung, Projekte der Verkehrswende 
               sowie der Klima- und Umweltbildung, an denen zahlreiche Akteure mitwirken und mitgestalten.`,
-};
+  };
 
   const getFilterHeader = () => {
     const count = filteredItems?.length || 0;
