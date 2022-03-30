@@ -30,7 +30,7 @@
     "updateAlpha__": "ssh -t docker@$npm_package_config_alphaHost \"cd $npm_package_config_alphaFolder ; docker-compose pull && docker-compose down && docker-compose up -d\"",
     "restartAlpha": "ssh -t docker@$npm_package_config_alphaHost \"cd $npm_package_config_alphaFolder ; docker-compose down && docker-compose up -d\"",
     "pushBuildToAlpha": "ssh -t docker@$npm_package_config_alphaHost \"cd $npm_package_config_alphaFolder ; rm -rf docs/* \" &&  scp -r build/ docker@$npm_package_config_alphaHost:$npm_package_config_alphaFolder/docs/ ",
-    "publishAlpha": "yarn run postversion && yarn run build && yarn run pushBuildToAlpha && ",
+    "publishAlpha": "yarn run postversion && yarn run build && yarn run pushBuildToAlpha && yarn run restartAlpha",
     "postversion": "echo Postversionhook && rm .version && rm .githash && sed '/^.*\"version\":.*$/d' package.json > .package.json.without.version && echo $npm_package_version && echo $npm_package_version > .version && git rev-parse HEAD > .githash",
     "postbuild": "ls -d build > /dev/null && git rev-parse --short HEAD && echo $npm_package_version && git rev-parse --short HEAD > build/githash && echo $npm_package_version > build/version",
     "build:docker": "VERSION=`echo $npm_package_version| sed 's/\\.[0-9]*-SNAPSHOT.*$/-SNAPSHOT/'`; docker build --progress=auto -t cismet/$npm_package_name -t cismet/$npm_package_name:$VERSION .",
