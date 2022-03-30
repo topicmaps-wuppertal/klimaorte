@@ -8,12 +8,12 @@ import { getGazDataForTopicIds } from "react-cismap/tools/gazetteerHelper";
 import "react-cismap/topicMaps.css";
 import GenericInfoBoxFromFeature from "react-cismap/topicmaps/GenericInfoBoxFromFeature";
 import InfoBoxFotoPreview from "react-cismap/topicmaps/InfoBoxFotoPreview";
+import ModeSwitcher from "./ModeSwitcher";
 
 import TopicMapComponent from "react-cismap/topicmaps/TopicMapComponent";
 import "./App.css";
 import MyMenu, { getFilterInfo } from "./Menu";
 import InfoPanel from "./SecondaryInfo";
-
 import { dataHost } from "./App";
 import {
   FeatureCollectionContext,
@@ -25,6 +25,7 @@ import {
 } from "react-cismap/contexts/TopicMapContextProvider";
 import { removeQueryPart } from "react-cismap/tools/routingHelper";
 import { LightBoxDispatchContext } from "react-cismap/contexts/LightBoxContextProvider";
+import { getMode, getModeUrl } from "./helper/modeParser";
 const getGazData = async (setGazData) => {
   const prefix = "GazDataForStories";
   const sources = {};
@@ -44,16 +45,21 @@ const getGazData = async (setGazData) => {
   setGazData(gazData);
 };
 
-function KlimaorteMap() {
-  const { setSelectedFeatureByPredicate, setFilterState } = useContext(
+function KlimaorteMap({ mode, setModeState }) {
+  const { setSelectedFeatureByPredicate, setFilterState, setFilterMode } = useContext(
     FeatureCollectionDispatchContext
   );
   const lightBoxDispatchContext = useContext(LightBoxDispatchContext);
-  const { selectedFeature, items, shownFeatures, filterState } =
+  const { selectedFeature, items, shownFeatures, filterState, filterMode } =
     useContext(FeatureCollectionContext);
-  const { zoomToFeature } = useContext(TopicMapDispatchContext);
-  const { history } = useContext(TopicMapContext);
+  const { zoomToFeature, setAppMode } = useContext(TopicMapDispatchContext);
+  const { history, appMode } = useContext(TopicMapContext);
 
+  useEffect(() => {
+    if (appMode === undefined) {
+      setAppMode(getMode());
+    }
+  }, [appMode]);
   const [gazData, setGazData] = useState([]);
   useEffect(() => {
     getGazData(setGazData);
@@ -113,7 +119,10 @@ function KlimaorteMap() {
   let moreDataAvailable = false;
   if (angebot) {
     weitereAngebote = items.filter(
-      (testItem) => testItem?.standort.id === angebot.standort.id && testItem.id !== angebot.id
+      (testItem) =>
+        testItem.typ === "ort" &&
+        testItem?.standort.id === angebot?.standort?.id &&
+        testItem.id !== angebot.id
     );
     moreDataAvailable =
       weitereAngebote.length > 0 ||
@@ -142,51 +151,64 @@ function KlimaorteMap() {
       </a>
     );
   }
+  console.log("appMOde", appMode);
 
   return (
-    <TopicMapComponent
-      applicationMenuTooltipString='Filter | Einstellungen | Anleitung'
-      locatorControl={true}
-      modalMenu={<MyMenu />}
-      gazData={gazData}
-      gazetteerSearchPlaceholder='Klimaort | Stadtteil | Adresse'
-      infoBox={
-        <GenericInfoBoxFromFeature
-          pixelwidth={400}
-          config={{
-            displaySecondaryInfoAction: moreDataAvailable,
-            city: "Wuppertal",
-            navigator: {
-              noun: {
-                singular: "Klimaort",
-                plural: "Klimaorte",
+    <div>
+      <ModeSwitcher
+        mode={mode}
+        setMode={(mode) => {
+          window.location.href = getModeUrl(mode);
+          setModeState(mode);
+          console.log("will call setAppMode", mode);
+
+          setAppMode(mode);
+        }}
+      />
+      <TopicMapComponent
+        applicationMenuTooltipString='Filter | Einstellungen | Anleitung'
+        locatorControl={true}
+        modalMenu={<MyMenu mode={mode} />}
+        gazData={gazData}
+        gazetteerSearchPlaceholder='Klimaort | Stadtteil | Adresse'
+        infoBox={
+          <GenericInfoBoxFromFeature
+            pixelwidth={400}
+            config={{
+              displaySecondaryInfoAction: moreDataAvailable,
+              city: "Wuppertal",
+              navigator: {
+                noun: {
+                  singular: "Klimaort",
+                  plural: "Klimaorte",
+                },
               },
-            },
-            noCurrentFeatureTitle: "Keine Klimaorte gefunden",
-            noCurrentFeatureContent: "",
-          }}
-          secondaryInfoBoxElements={secondaryInfoBoxElements}
-        />
-      }
-      secondaryInfo={<InfoPanel />}
-      gazetteerHitTrigger={(hits) => {
-        if (Array.isArray(hits) && hits[0]?.more?.id) {
-          setSelectedFeatureByPredicate((feature) => {
-            try {
-              const check = parseInt(feature.properties.standort.id) === hits[0].more.id;
-              if (check === true) {
-                zoomToFeature(feature);
-              }
-              return check;
-            } catch (e) {
-              return false;
-            }
-          });
+              noCurrentFeatureTitle: "Keine Klimaorte gefunden",
+              noCurrentFeatureContent: "",
+            }}
+            secondaryInfoBoxElements={secondaryInfoBoxElements}
+          />
         }
-      }}
-    >
-      <FeatureCollection />
-    </TopicMapComponent>
+        secondaryInfo={<InfoPanel />}
+        gazetteerHitTrigger={(hits) => {
+          if (Array.isArray(hits) && hits[0]?.more?.id) {
+            setSelectedFeatureByPredicate((feature) => {
+              try {
+                const check = parseInt(feature.properties.standort.id) === hits[0].more.id;
+                if (check === true) {
+                  zoomToFeature(feature);
+                }
+                return check;
+              } catch (e) {
+                return false;
+              }
+            });
+          }
+        }}
+      >
+        <FeatureCollection key={"featureCollection" + appMode} />
+      </TopicMapComponent>
+    </div>
   );
 }
 

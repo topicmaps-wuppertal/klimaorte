@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "leaflet/dist/leaflet.css";
+import { useState } from "react";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import { MappingConstants } from "react-cismap";
 import Icon from "react-cismap/commons/Icon";
@@ -11,28 +12,38 @@ import getGTMFeatureStyler from "react-cismap/topicmaps/generic/GTMStyler";
 import "./App.css";
 import itemFilterFunction from "./helper/filter";
 import convertBPKlimaItemsToFeature from "./helper/itemConverter";
+import { getMode, getModeUrl } from "./helper/modeParser";
 import titleFactory from "./helper/titleFactory";
 import KlimaorteMap from "./KlimaorteMap";
+import createItemsDictionary from "./helper/createItemsDictionary";
+import getKlimaOrtkarteStyler from "./helper/styler";
 
 export const dataHost = "https://wupp-topicmaps-data.cismet.de";
 
+const appKey = "Klimaortkarte.TopicMap";
+
 function App() {
+  const mode = getMode();
+  console.log("mode", mode);
+  const [modeState, setModeState] = useState(mode);
   return (
     <TopicMapContextProvider
-      appKey='BestPracticeKlimaschutzWuppertal.TopicMap'
+      appKey={appKey}
       featureTooltipFunction={(feature) => feature?.text}
-      featureItemsURL={dataHost + "/data/bpklima.data.json"}
+      featureItemsURL={dataHost + "/data/klimaortkarte.data.json"}
+      featureItemsURL__={"/data/klimaortkarte.data.json"}
+      createFeatureItemsDictionary={createItemsDictionary}
       referenceSystemDefinition={MappingConstants.proj4crs25832def}
       mapEPSGCode='25832'
       referenceSystem={MappingConstants.crs25832}
-      getFeatureStyler={getGTMFeatureStyler}
+      getFeatureStyler={getKlimaOrtkarteStyler}
+      getFeatureStyler__={getGTMFeatureStyler}
       convertItemToFeature={convertBPKlimaItemsToFeature}
       clusteringOptions={{
         iconCreateFunction: getClusterIconCreatorFunction(30, (props) => props.color),
       }}
       clusteringEnabled={true}
       itemFilterFunction={itemFilterFunction}
-      titleFactory={titleFactory}
       classKeyFunction={(item) => item.thema?.name}
       getColorFromProperties={(item) => item?.thema?.farbe}
       additionalLayerConfiguration={{
@@ -66,7 +77,7 @@ function App() {
         },
       }}
     >
-      <KlimaorteMap />
+      <KlimaorteMap mode={modeState} setModeState={setModeState} />
     </TopicMapContextProvider>
   );
 }

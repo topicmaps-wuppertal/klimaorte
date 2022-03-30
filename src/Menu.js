@@ -24,15 +24,17 @@ export const getFilterInfo = (items) => {
   const themenValues = [];
 
   for (const item of items || []) {
-    for (const kat of item.kategorien) {
-      if (!kategorien.includes(kat)) {
-        katValues.push({ key: kat });
-        kategorien.push(kat);
+    if (item.typ === "ort") {
+      for (const kat of item.kategorien) {
+        if (!kategorien.includes(kat)) {
+          katValues.push({ key: kat });
+          kategorien.push(kat);
+        }
       }
-    }
-    if (!themen.includes(item.thema.id)) {
-      themen.push(item.thema.id);
-      themenValues.push({ key: item.thema.id, title: item.thema.name, color: item.thema.farbe });
+      if (!themen.includes(item.thema.id)) {
+        themen.push(item.thema.id);
+        themenValues.push({ key: item.thema.id, title: item.thema.name, color: item.thema.farbe });
+      }
     }
   }
 
@@ -303,7 +305,7 @@ const MyMenu = () => {
             sectionBsStyle='primary'
             sectionContent={<FilterPanel filterConfiguration={filterConfiguration} />}
           />,
-          <DefaultSettingsPanel key='settings' />,
+          <DefaultSettingsPanel skipFilterTitleSettings={true} key='settings' />,
           <Section
             key='help'
             sectionKey='help'

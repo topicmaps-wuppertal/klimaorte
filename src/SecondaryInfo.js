@@ -8,7 +8,7 @@ import { version as reactCismapVersion } from "react-cismap/meta";
 const InfoPanel = () => {
   const { selectedFeature, items } = useContext(FeatureCollectionContext);
 
-  const angebot = selectedFeature?.properties;
+  const item = selectedFeature?.properties;
   const footer = (
     <div style={{ fontSize: "11px" }}>
       <div>
@@ -38,14 +38,18 @@ const InfoPanel = () => {
       </div>
     </div>
   );
-  if (angebot !== undefined) {
+
+  if (item?.typ === "ort") {
     let foto;
-    if (angebot.bild !== undefined) {
-      foto = "https://www.wuppertal.de/geoportal/standort_klima/fotos/" + angebot.bild;
+    if (item.bild !== undefined) {
+      foto = "https://www.wuppertal.de/geoportal/standort_klima/fotos/" + item.bild;
     }
 
     const weitereAngebote = items.filter(
-      (testItem) => testItem?.standort.id === angebot.standort.id && testItem.id !== angebot.id
+      (testItem) =>
+        testItem.typ === "ort" &&
+        testItem?.standort.id === item.standort?.id &&
+        testItem.id !== item.id
     );
     //data structure for "weitere Angebote"
     // gruppenwechsel for thema
@@ -62,39 +66,39 @@ const InfoPanel = () => {
       <SecondaryInfoPanelSection
         key='standort'
         bsStyle='info'
-        header={"Standort: " + angebot?.standort?.name}
+        header={"Standort: " + item?.standort?.name}
       >
         <div style={{ fontSize: "115%", padding: "10px", paddingTop: "0px" }}>
-          {angebot?.standort && (
+          {item?.standort && (
             <b>
-              {angebot?.standort?.strasse} {angebot?.standort?.hausnummer}
+              {item?.standort?.strasse} {item?.standort?.hausnummer}
               <br />
-              {angebot?.standort?.plz} {angebot?.standort?.stadt}
+              {item?.standort?.plz} {item?.standort?.stadt}
               <br />
             </b>
           )}
 
-          {angebot?.standort?.beschreibung && (
+          {item?.standort?.beschreibung && (
             <div>
-              {angebot?.standort?.beschreibung}
+              {item?.standort?.beschreibung}
               <br />
             </div>
           )}
-          {angebot?.standort?.bemerkung && (
+          {item?.standort?.bemerkung && (
             <div>
-              {angebot?.standort?.bemerkung} <br />
+              {item?.standort?.bemerkung} <br />
             </div>
           )}
 
-          {angebot?.standort?.kommentar && (
+          {item?.standort?.kommentar && (
             <div>
-              <br></br> <i>{angebot?.standort?.kommentar} </i>
+              <br></br> <i>{item?.standort?.kommentar} </i>
             </div>
           )}
 
-          {angebot?.standort?.erreichbarkeit && (
+          {item?.standort?.erreichbarkeit && (
             <div>
-              <br></br> Erreichbarkeit über {angebot?.standort?.erreichbarkeit}
+              <br></br> Erreichbarkeit über {item?.standort?.erreichbarkeit}
             </div>
           )}
         </div>
@@ -166,7 +170,7 @@ const InfoPanel = () => {
     return (
       <SecondaryInfo
         titleIconName='info-circle'
-        title={"Datenblatt: " + angebot.kategorien.join(", ")}
+        title={"Datenblatt: " + item.kategorien.join(", ")}
         mainSection={
           <div style={{ width: "100%", minHeight: minHeight4MainSextion }}>
             {foto !== undefined && (
@@ -183,21 +187,21 @@ const InfoPanel = () => {
               />
             )}
             <div style={{ fontSize: "115%", padding: "10px", paddingTop: "0px" }}>
-              {angebot.beschreibung && (
+              {item.beschreibung && (
                 <b>
-                  {angebot.beschreibung}
+                  {item.beschreibung}
                   <br />
                 </b>
               )}
-              {angebot.bemerkung && (
+              {item.bemerkung && (
                 <div>
-                  {angebot.bemerkung} <br />
+                  {item.bemerkung} <br />
                 </div>
               )}
-              {angebot.kommentar && (
+              {item.kommentar && (
                 <div>
                   <br></br>
-                  <i>{angebot.kommentar} </i>
+                  <i>{item.kommentar} </i>
                 </div>
               )}
             </div>
