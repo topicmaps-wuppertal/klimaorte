@@ -59,7 +59,7 @@ function KlimaorteMap({ mode, setModeState }) {
     if (appMode === undefined) {
       setAppMode(getMode());
     }
-  }, [appMode]);
+  }, [appMode, setAppMode]);
   const [gazData, setGazData] = useState([]);
   useEffect(() => {
     getGazData(setGazData);
