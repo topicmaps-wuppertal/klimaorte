@@ -16,7 +16,9 @@ WORKDIR /app
 # Install dependencies
 COPY yarn.lock ./
 COPY .package.json.without.version ./package.json
-
+#COPY .npmrc ./
+RUN yarn install
+RUN yarn cache clean
 COPY . .
 RUN VERSION=`cat .version`; sed -i "s/%APPLICATION_VERSION%/$VERSION/" src/version.js
 RUN HASH=`cat .githash`; sed -i "s/%APPLICATION_HASH%/$HASH/" src/version.js
