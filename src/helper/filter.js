@@ -18,32 +18,28 @@ const itemFilterFunction = ({ filterState, filterMode, appMode, itemsDictionary 
     }
   };
 
-  if (filterMode) {
-    if (appMode === appModes.ORTE) {
-      return (item) => {
-        if (item.typ === "ort") {
-          return ortFilter(item);
+  if (appMode === appModes.ROUTEN) {
+    return (item) => {
+      if (item.typ === "route") {
+        return true;
+      } else {
+        if (item.standort.geojson.type === "Point") {
+          return ortFilter(item) && itemsDictionary.orteInRouten.includes(item.standort.id);
         } else {
-          //Routen werden rausgefiltert
+          //Orte die keine Punkte sind werden rausgefiltert
           return false;
         }
-      };
-    } else {
-      return (item) => {
-        if (item.typ === "route") {
-          return true;
-        } else {
-          if (item.standort.geojson.type === "Point") {
-            return ortFilter(item) && itemsDictionary.orteInRouten.includes(item.standort.id);
-          } else {
-            //Orte die keine Punkte sind werden rausgefiltert
-            return false;
-          }
-        }
-      };
-    }
+      }
+    };
   } else {
-    return () => true;
+    return (item) => {
+      if (item.typ === "ort") {
+        return ortFilter(item);
+      } else {
+        //Routen werden rausgefiltert
+        return false;
+      }
+    };
   }
 };
 export default itemFilterFunction;
