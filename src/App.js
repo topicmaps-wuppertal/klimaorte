@@ -23,9 +23,6 @@ export const dataHost = "https://wupp-topicmaps-data.cismet.de";
 const appKey = "Klimaortkarte.TopicMap";
 
 function App() {
-  const mode = getMode();
-  console.log("mode", mode);
-  const [modeState, setModeState] = useState(mode);
   return (
     <TopicMapContextProvider
       appKey={appKey}
@@ -77,7 +74,7 @@ function App() {
         },
       }}
     >
-      <KlimaorteMap mode={modeState} setModeState={setModeState} />
+      <KlimaorteMap />
     </TopicMapContextProvider>
   );
 }
