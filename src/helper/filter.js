@@ -1,8 +1,6 @@
 import { appModes } from "./modeParser";
 
 const itemFilterFunction = ({ filterState, filterMode, appMode, itemsDictionary }) => {
-  console.log("itemsDictionary", itemsDictionary);
-
   const ortFilter = (item) => {
     if (filterMode === "themen") {
       return filterState?.themen?.includes(item?.thema?.id);
