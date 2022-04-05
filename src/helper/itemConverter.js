@@ -93,7 +93,7 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
     if (item.routenpunkte) {
       for (const rp of item.routenpunkte) {
         if (rp.typ === "aussichtspunkt") {
-          const rpWithIcon = clone(rp);
+          const rpWithIcon = await addSVGToProps(itemIn, (i) => "Icon_Aussichtsturm_farbig.svg");
 
           const aussichtspunkt = {
             text: rp.name,
