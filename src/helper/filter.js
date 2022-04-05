@@ -22,7 +22,7 @@ const itemFilterFunction = ({ filterState, filterMode, appMode, itemsDictionary 
         return true;
       } else {
         if (item.standort.geojson.type === "Point") {
-          return ortFilter(item) && itemsDictionary.orteInRouten.includes(item.standort.id);
+          return ortFilter(item) && itemsDictionary.standorteInRouten.includes(item.standort.id);
         } else {
           //Orte die keine Punkte sind werden rausgefiltert
           return false;
