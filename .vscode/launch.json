@@ -10,6 +10,13 @@
       "name": "Utopiastadt",
       "url": "http://localhost:3000/#/?lat=51.26672160389642&lng=7.1450668573379525&zoom=18",
       "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Klimaroute Süd",
+      "url": "http://localhost:3000/#/orte?lat=51.24354210343733&lng=7.1504125965156575&zoom=10",
+      "webRoot": "${workspaceFolder}"
     }
   ]
 }
