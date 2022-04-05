@@ -3,7 +3,6 @@ const createItemsDictionary = (items) => {
 
   for (const item of items) {
     if (item.typ === "route") {
-      console.log("yyy route", item);
       //orte in routen
       for (const ort of item.routenpunkte) {
         if (ort.typ === "klimaort") {
@@ -14,7 +13,6 @@ const createItemsDictionary = (items) => {
           }
         }
       }
-      console.log("yyy orteInRouten", orteInRouten);
     }
   }
 
