@@ -45,12 +45,12 @@ const getGazData = async (setGazData) => {
   setGazData(gazData);
 };
 
-function KlimaorteMap({ mode, setModeState }) {
+function KlimaorteMap() {
   const { setSelectedFeatureByPredicate, setFilterState, setFilterMode } = useContext(
     FeatureCollectionDispatchContext
   );
   const lightBoxDispatchContext = useContext(LightBoxDispatchContext);
-  const { selectedFeature, items, shownFeatures, filterState, filterMode } =
+  const { selectedFeature, items, shownFeatures, filterState, filterMode, filteredItems } =
     useContext(FeatureCollectionContext);
   const { zoomToFeature, setAppMode } = useContext(TopicMapDispatchContext);
   const { history, appMode } = useContext(TopicMapContext);
@@ -151,24 +151,22 @@ function KlimaorteMap({ mode, setModeState }) {
       </a>
     );
   }
-  console.log("appMOde", appMode);
+  // console.log("appMOde", appMode);
 
   return (
     <div>
       <ModeSwitcher
-        mode={mode}
+        mode={appMode}
         setMode={(mode) => {
           window.location.href = getModeUrl(mode);
-          setModeState(mode);
-          console.log("will call setAppMode", mode);
-
+          // setModeState(mode);
           setAppMode(mode);
         }}
       />
       <TopicMapComponent
         applicationMenuTooltipString='Filter | Einstellungen | Anleitung'
         locatorControl={true}
-        modalMenu={<MyMenu mode={mode} />}
+        modalMenu={<MyMenu mode={appMode} />}
         gazData={gazData}
         gazetteerSearchPlaceholder='Klimaort | Stadtteil | Adresse'
         infoBox={
