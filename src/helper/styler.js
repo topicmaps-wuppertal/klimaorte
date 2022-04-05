@@ -4,20 +4,19 @@ import Color from "color";
 
 const selectionColor = new Color("#2664D8");
 const getKlimaOrtkarteStyler = (svgSize = 24, colorizer = (props) => props.color, appMode) => {
-  console.log("tttt appMode", appMode);
+  // console.log("tttt appMode", appMode);
 
   //   return gtmStyler(svgSize, colorizer);
 
   const styler = (feature) => {
     // console.log("in styler: feature, appMode", feature, appMode);
-
     if (appMode === undefined || feature === undefined) {
       console.log("returned style empty");
       return {};
     }
     if (appMode === appModes.ORTE) {
       const style = gtmStyler(svgSize, colorizer, appMode)(feature);
-      console.log("returned style 0", style);
+      // console.log("returned style 0", style);
 
       return style;
     } else {
@@ -45,7 +44,7 @@ const getKlimaOrtkarteStyler = (svgSize = 24, colorizer = (props) => props.color
 
             weight: 3,
           };
-          console.log("returned style 1", style);
+          // console.log("returned style 1", style);
 
           return style;
         } else {
@@ -76,15 +75,15 @@ const getKlimaOrtkarteStyler = (svgSize = 24, colorizer = (props) => props.color
           } else if (feature.properties.typ === "ort") {
             style = gtmStyler(svgSize, colorizer, appMode)(feature);
           } else {
-            console.log("what else ", feature);
+            // console.log("what else ", feature);
           }
-          console.log("returned style 2", style);
+          // console.log("returned style 2", style);
 
           return style;
         }
       } else {
         const style = gtmStyler(svgSize, colorizer, appMode)(feature);
-        console.log("returned style 3", style);
+        // console.log("returned style 3", style);
         return style;
       }
     }
