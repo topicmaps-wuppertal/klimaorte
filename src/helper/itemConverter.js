@@ -1,11 +1,5 @@
 import { addSVGToProps, DEFAULT_SVG } from "react-cismap/tools/svgHelper";
 
-const clone = (y) => {
-  const item = JSON.parse(JSON.stringify(y)); //await addSVGToProps(itemIn, (i) => "Icon_Aussichtsturm_farbig.svg");
-  item.svgBadge = DEFAULT_SVG.code;
-  item.svgBadgeDimension = DEFAULT_SVG.dimension;
-  return item;
-};
 const convertBPKlimaItemsToFeature = async (itemIn) => {
   if (itemIn.typ === "ort") {
     let item = await addSVGToProps(itemIn, (i) => i.thema.icon);
@@ -52,8 +46,7 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
   } else {
     console.log("itemIn Route", itemIn);
 
-    let item = await addSVGToProps(itemIn, (i) => "Icon_Aussichtsturm_farbig.svg");
-
+    let item = await addSVGToProps(itemIn, (i) => i.icon);
     const info = {
       header: "Klimaroute",
       title: item?.name,
@@ -93,8 +86,7 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
     if (item.routenpunkte) {
       for (const rp of item.routenpunkte) {
         if (rp.typ === "aussichtspunkt") {
-          const rpWithIcon = await addSVGToProps(itemIn, (i) => "Icon_Aussichtsturm_farbig.svg");
-
+          const rpWithIcon = await addSVGToProps(rp, (i) => "Icon_Aussichtsturm_farbig.svg");
           const aussichtspunkt = {
             text: rp.name,
             type: "Feature",
