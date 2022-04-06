@@ -41,6 +41,7 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
         },
       },
       properties: item,
+      featuretype: "ort",
     };
     return f;
   } else {
@@ -80,6 +81,7 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
         },
       },
       properties: item,
+      featuretype: "route",
     };
     result.push(route);
     //check if route contains aussichtspunkte
@@ -88,6 +90,8 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
         if (rp.typ === "aussichtspunkt") {
           const rpWithIcon = await addSVGToProps(rp, (i) => "Icon_Aussichtsturm_farbig.svg");
           const aussichtspunkt = {
+            featuretype: "aussichtspunkt",
+
             text: rp.name,
             type: "Feature",
             selected: false,
@@ -119,8 +123,11 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
           };
           result.push(aussichtspunkt);
           const aussichtsview = {
+            featuretype: "view",
+
             text: rp.name + " (Blickfeld)",
             type: "Feature",
+
             selected: false,
             preventSelection: true,
             geometry: rp.viewgeom,
