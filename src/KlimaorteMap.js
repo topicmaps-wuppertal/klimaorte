@@ -26,6 +26,8 @@ import {
 import { removeQueryPart } from "react-cismap/tools/routingHelper";
 import { LightBoxDispatchContext } from "react-cismap/contexts/LightBoxContextProvider";
 import { getMode, getModeUrl } from "./helper/modeParser";
+
+import InfoBox from "./InfoBox";
 const getGazData = async (setGazData) => {
   const prefix = "GazDataForStories";
   const sources = {};
@@ -170,21 +172,11 @@ function KlimaorteMap() {
         gazData={gazData}
         gazetteerSearchPlaceholder='Klimaort | Stadtteil | Adresse'
         infoBox={
-          <GenericInfoBoxFromFeature
+          <InfoBox
+            appMode={appMode}
             pixelwidth={400}
-            config={{
-              displaySecondaryInfoAction: moreDataAvailable,
-              city: "Wuppertal",
-              navigator: {
-                noun: {
-                  singular: "Klimaort",
-                  plural: "Klimaorte",
-                },
-              },
-              noCurrentFeatureTitle: "Keine Klimaorte gefunden",
-              noCurrentFeatureContent: "",
-            }}
             secondaryInfoBoxElements={secondaryInfoBoxElements}
+            moreDataAvailable={moreDataAvailable}
           />
         }
         secondaryInfo={<InfoPanel />}
