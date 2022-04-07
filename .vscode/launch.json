@@ -17,6 +17,13 @@
       "name": "Klimaroute Süd",
       "url": "http://localhost:3000/#/orte?lat=51.24354210343733&lng=7.1504125965156575&zoom=10",
       "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Uni mit 2 Klimarouten",
+      "url": "http://localhost:3000/#/routen?lat=51.239175055311755&lng=7.161890298164278&zoom=14",
+      "webRoot": "${workspaceFolder}"
     }
   ]
 }
