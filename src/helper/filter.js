@@ -21,12 +21,13 @@ const itemFilterFunction = ({ filterState, filterMode, appMode, itemsDictionary 
       if (item.typ === "route") {
         return true;
       } else {
-        if (item.standort.geojson.type === "Point") {
-          return ortFilter(item) && itemsDictionary.allStandorteInRouten.includes(item.standort.id);
-        } else {
-          //Orte die keine Punkte sind werden rausgefiltert
-          return false;
-        }
+        return ortFilter(item) && itemsDictionary.allStandorteInRouten.includes(item.standort.id);
+        // if (item.standort.geojson.type === "Point") {
+        //   return ortFilter(item) && itemsDictionary.allStandorteInRouten.includes(item.standort.id);
+        // } else {
+        //   //Orte die keine Punkte sind werden rausgefiltert
+        //   return false;
+        // }
       }
     };
   } else {

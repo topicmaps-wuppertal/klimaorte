@@ -1457,9 +1457,9 @@
     regenerator-runtime "^0.13.4"
 
 "@babel/runtime@^7.0.0", "@babel/runtime@^7.7.6":
-  version "7.17.8"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.17.8.tgz#3e56e4aff81befa55ac3ac6a0967349fd1c5bca2"
-  integrity sha512-dQpEpK0O9o6lj6oPu0gRDbbnk+4LeHlNcBpspf6Olzt3GIX4P1lWF1gS+pHLDFlaJvbR6q7jCfQ08zA4QJBnmA==
+  version "7.17.9"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.17.9.tgz#d19fbf802d01a8cb6cf053a64e472d42c434ba72"
+  integrity sha512-lSiBBvodq29uShpWGNbgFdKYNiFDo5/HIYsaCEY9ff4sb10x9jizo2+pRrSyF4jKZCXqgzuqBOQKbUm90gQwJg==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -5772,9 +5772,9 @@ domelementtype@^2.0.1:
   integrity sha512-LsTgx/L5VpD+Q8lmsXSHW2WpA+eBlZ9HPf3erD1IoPF00/3JKHZ3BknUVA2QGDNu69ZNmyFmCWBSO45XjYKC5w==
 
 domelementtype@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-2.2.0.tgz#9a0b6c2782ed6a1c7323d42267183df9bd8b1d57"
-  integrity sha512-DtBMo82pv1dFtUmHyr48beiuq792Sxohr+8Hm9zoxklYPfa6n0Z3Byjj2IV7bmr2IyqClnqEQhfgHJJ5QF0R5A==
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-2.3.0.tgz#5c45e8e869952626331d7aab326d01daf65d589d"
+  integrity sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==
 
 domexception@^2.0.1:
   version "2.0.1"
@@ -6809,13 +6809,13 @@ flat-cache@^3.0.4:
     rimraf "^3.0.2"
 
 flatbush@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/flatbush/-/flatbush-3.3.0.tgz#b68c9149107ae86d2bce6373491f404ba4f4534e"
-  integrity sha512-F3EzQvKpdmXUbFwWxLKBpytOFEGYQMCTBLuqZ4GEajFOEAvnOIBiyxW3OFSZXIOtpCS8teN6bFEpNZtnVXuDQA==
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/flatbush/-/flatbush-3.3.1.tgz#2ba10dfe4069ef142b8692a0c19982cf0ebabce0"
+  integrity sha512-oKuPbtT+DS2CxH+9Vhbsq8HifmSCuOw+3Cy5zt/vCIrZl5KyengoTHDBLmtpZoBhcwa7/biNjgL1DwdLMJYm1A==
   dependencies:
-    flatqueue "^1.2.0"
+    flatqueue "^1.2.1"
 
-flatqueue@^1.2.0:
+flatqueue@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/flatqueue/-/flatqueue-1.2.1.tgz#82f501758fc5925742fbeb478637230456157ef2"
   integrity sha512-X86TpWS1rGuY7m382HuA9vngLeDuWA9lJvhEG+GfgKMV5onSvx5a71cl7GMbXzhWtlN9dGfqOBrpfqeOtUfGYQ==
@@ -7237,9 +7237,9 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6
   integrity sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==
 
 graceful-fs@^4.1.4:
-  version "4.2.9"
-  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
-  integrity sha512-NtNxqUcXgpW2iMrfqSfR73Glt39K+BLwWsPs94yR63v45T0Wbej7eRmL5cWfwEgqXnmjQp3zaJTshdRW/qC2ZQ==
+  version "4.2.10"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
+  integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
 
 grid-index@^1.1.0:
   version "1.1.0"
@@ -7507,9 +7507,9 @@ html-minifier-terser@^5.0.1:
     terser "^4.6.3"
 
 html-react-parser@^1.2.4:
-  version "1.4.9"
-  resolved "https://registry.yarnpkg.com/html-react-parser/-/html-react-parser-1.4.9.tgz#fd0416728a5819292f5f718a76daa2659c46891f"
-  integrity sha512-V45RVd7GEGtk5bmL9iBV/AkaTE6jj9uhvUrJ/cWlq06DrcMzvz2kqMeZfWEV2pIWkRDzLAqrotCfmFSvdTjpHA==
+  version "1.4.10"
+  resolved "https://registry.yarnpkg.com/html-react-parser/-/html-react-parser-1.4.10.tgz#36862197876ccb9a32736f462555ba561350b715"
+  integrity sha512-GiG7mEwI0enY7hz0F0Zx1B4D0MCQWx2xH0KdVNV9fjqOXwwnPYM79meJ2dsIJf9QR4qQTTPEdSq7wlJfq/i6Tw==
   dependencies:
     domhandler "4.3.1"
     html-dom-parser "1.1.1"
@@ -9062,9 +9062,9 @@ leaflet-fullscreen-custom-container-fork@^1.0.7:
   integrity sha512-pTYxQ+NLD/lD36Uhei48ED6ypj52JiHCik6lvBDLrwNnSNEs3R4M29byhXEEZ6KizBIdphcQuga7up9iEQx4qg==
 
 leaflet-geometryutil@*:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/leaflet-geometryutil/-/leaflet-geometryutil-0.10.0.tgz#0693d64517ac96f0e101d4a3e6e0377fc71316d1"
-  integrity sha512-4OGu2OnpHLx+7QpOY6NatrAiSWWrP/Z3HOM9ZsmQ0JWIzAytFS6SLUnKHVjwpgRzPUpV/6w0b4Fh24pVIgqFHw==
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/leaflet-geometryutil/-/leaflet-geometryutil-0.10.1.tgz#d9e7f662991dac71d234faf2db9c7641abf57523"
+  integrity sha512-xfyBxv0Ls2H45V4nrzn5ASi/qw0VXgEVAkbXZqQE2Qhs52fMqmWyl7egA5ht2xbyPHqjTN9ssr9lXrmXWE91yw==
   dependencies:
     leaflet "^1.6.0"
 
@@ -9713,9 +9713,9 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
 moment@^2.10.2:
-  version "2.29.1"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
-  integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
+  version "2.29.2"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.2.tgz#00910c60b20843bcba52d37d58c628b47b1f20e4"
+  integrity sha512-UgzG4rvxYpN15jgCmVJwac49h9ly9NurikMWGPdVxm8GZD6XjkKPxDTjQQ43gtGgnV3X0cAyWDdP2Wexoquifg==
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -13440,9 +13440,9 @@ stylehacks@^4.0.0:
     postcss-selector-parser "^3.0.0"
 
 supercluster@^7.1.0:
-  version "7.1.4"
-  resolved "https://registry.yarnpkg.com/supercluster/-/supercluster-7.1.4.tgz#6762aabfd985d3390b49f13b815567d5116a828a"
-  integrity sha512-GhKkRM1jMR6WUwGPw05fs66pOFWhf59lXq+Q3J3SxPvhNcmgOtLRV6aVQPMRsmXdpaeFJGivt+t7QXUPL3ff4g==
+  version "7.1.5"
+  resolved "https://registry.yarnpkg.com/supercluster/-/supercluster-7.1.5.tgz#65a6ce4a037a972767740614c19051b64b8be5a3"
+  integrity sha512-EulshI3pGUM66o6ZdH3ReiFcvHpM3vAigyK+vcxdjpJyEbIIrtbmBdY23mGgnI24uXiGFvrGq9Gkum/8U7vJWg==
   dependencies:
     kdbush "^3.0.0"
 

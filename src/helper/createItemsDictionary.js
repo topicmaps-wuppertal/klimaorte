@@ -29,12 +29,21 @@ const createItemsDictionary = (items) => {
           const currentStandortInCache = standorteInRouten[item.id];
 
           if (currentStandortInCache) {
-            currentStandortInCache.push(ort.id);
+            currentStandortInCache.push({ typ: "standort", id: ort.id });
           } else {
-            standorteInRouten[item.id] = [ort.id];
+            standorteInRouten[item.id] = [{ typ: "standort", id: ort.id }];
           }
         } else if (ort.typ === "aussichtspunkt") {
           additionalSelectableItemsCount++;
+
+          const currentStandortInCache = standorteInRouten[item.id];
+
+          if (currentStandortInCache) {
+            currentStandortInCache.push({ typ: "aussichtspunkt", id: ort.id });
+          } else {
+            standorteInRouten[item.id] = [{ typ: "aussichtspunkt", id: ort.id }];
+          }
+
           //add routen subobject to aussichtspunkt
           if (ort.routen) {
             if (ort.routen.filter((r) => r.id === item.id).length === -1) {
@@ -47,9 +56,9 @@ const createItemsDictionary = (items) => {
             allStandorteInRouten.push(aussichtspunktort.id);
             const currentStandortInCache = standorteInRouten[item.id];
             if (currentStandortInCache) {
-              currentStandortInCache.push(aussichtspunktort.id);
+              currentStandortInCache.push({ typ: "standort", id: aussichtspunktort.id });
             } else {
-              standorteInRouten[item.id] = [aussichtspunktort.id];
+              standorteInRouten[item.id] = [{ typ: "standort", id: aussichtspunktort.id }];
             }
           }
         }
@@ -65,19 +74,33 @@ const createItemsDictionary = (items) => {
     }
   }
   //add routen subobject to angebote
+
   for (const route of Object.values(routen)) {
-    for (const standortId of standorteInRouten[route.id]) {
-      for (const angebotId of angeboteInStandorte[standortId]) {
-        const angebot = angebote[angebotId];
-        if (angebot.id === 70) {
-          console.log("stop angebot", angebot);
-        }
-        if (angebot.routen) {
-          if (angebot.routen.filter((r) => r.id === route.id).length === 0) {
-            angebot.routen.push({ id: route.id, typ: "route", name: route.name });
+    for (const standortInRoute of standorteInRouten[route.id]) {
+      if (standortInRoute.typ === "standort") {
+        const standortId = standortInRoute.id;
+        for (const angebotId of angeboteInStandorte[standortId]) {
+          const angebot = angebote[angebotId];
+          if (angebot.routen) {
+            if (angebot.routen.filter((r) => r.id === route.id).length === 0) {
+              angebot.routen.push({ id: route.id, typ: "route", name: route.name });
+            }
+          } else {
+            angebot.routen = [{ id: route.id, typ: "route", name: route.name }];
           }
-        } else {
-          angebot.routen = [{ id: route.id, typ: "route", name: route.name }];
+        }
+      }
+    }
+  }
+
+  //add angebote to angeboteInRouten
+  for (const routenId of Object.keys(routen)) {
+    angeboteInRouten[routenId] = [];
+    for (const standortInRoute of standorteInRouten[routenId]) {
+      if (standortInRoute.typ === "standort") {
+        const standortId = standortInRoute.id;
+        for (const angebotId of angeboteInStandorte[standortId]) {
+          angeboteInRouten[routenId].push(angebotId);
         }
       }
     }
@@ -88,10 +111,12 @@ const createItemsDictionary = (items) => {
     allStandorteInRouten,
     standorteInRouten,
     angeboteInStandorte,
+    angeboteInRouten,
     angebote,
     routen,
     additionalSelectableItemsCount,
   };
+  console.log("yyy dictionary", dict);
 
   return dict;
 };

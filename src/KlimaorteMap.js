@@ -25,7 +25,7 @@ import {
 } from "react-cismap/contexts/TopicMapContextProvider";
 import { removeQueryPart } from "react-cismap/tools/routingHelper";
 import { LightBoxDispatchContext } from "react-cismap/contexts/LightBoxContextProvider";
-import { getMode, getModeUrl } from "./helper/modeParser";
+import { appModes, getMode, getModeUrl } from "./helper/modeParser";
 import { getClusterIconCreatorFunction } from "react-cismap/tools/uiHelper";
 import { getColorConsideringSeondarySelection } from "./helper/styler";
 import InfoBox from "./InfoBox";
@@ -163,6 +163,16 @@ function KlimaorteMap() {
   }
   // console.log("appMOde", appMode);
 
+  let iconCreateFunction;
+
+  if (appMode === appModes.ORTE) {
+    iconCreateFunction = getClusterIconCreatorFunction(30, (props) => props.color);
+  } else {
+    iconCreateFunction = getClusterIconCreatorFunction(30, (props) => {
+      return getColorConsideringSeondarySelection(props, secondarySelection);
+    });
+  }
+
   return (
     <div>
       <ModeSwitcher
@@ -181,10 +191,13 @@ function KlimaorteMap() {
         gazetteerSearchPlaceholder='Klimaort | Stadtteil | Adresse'
         infoBox={
           <InfoBox
+            key={JSON.stringify(selectedFeature)}
             appMode={appMode}
             pixelwidth={400}
             secondaryInfoBoxElements={secondaryInfoBoxElements}
             moreDataAvailable={moreDataAvailable}
+            selectedFeature={selectedFeature}
+            secondarySelection={secondarySelection}
           />
         }
         secondaryInfo={<InfoPanel />}
@@ -207,9 +220,7 @@ function KlimaorteMap() {
         <FeatureCollection
           key={"featureCollection" + appMode}
           clusteringOptions={{
-            iconCreateFunction: getClusterIconCreatorFunction(30, (props) => {
-              return getColorConsideringSeondarySelection(props, secondarySelection);
-            }),
+            iconCreateFunction,
           }}
         />
       </TopicMapComponent>

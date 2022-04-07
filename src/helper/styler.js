@@ -103,19 +103,14 @@ export const getColorConsideringSeondarySelection = (props, secondarySelection) 
     }
   } else if (props.typ === "ort") {
     color = new Color(props.color);
-    console.log("props.routen", props.routen);
-    console.log(
-      "props.routen.filter",
-      props.routen.filter((r) => r.id === secondarySelection.id)
-    );
-    if (props.routen.filter((r) => r.id === secondarySelection.id).length === 0) {
+
+    if (props.routen && props.routen.filter((r) => r.id === secondarySelection?.id).length === 0) {
       color = color.grayscale();
     }
   } else if (props.typ === "aussichtspunkt") {
-    console.log("xxx props", props);
     //aussichtspunkt
     color = new Color("#655756");
-    if (props.routen.filter((r) => r.id === secondarySelection.id).length === 0) {
+    if (props.routen && props.routen.filter((r) => r.id === secondarySelection?.id).length === 0) {
       color = color.grayscale();
     }
   } else if (props.typ === "blickfeld") {
