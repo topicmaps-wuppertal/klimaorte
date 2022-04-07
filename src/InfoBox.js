@@ -24,9 +24,9 @@ const InfoBox = (props) => {
           <div
             key={"overlapping." + route.name}
             style={{
-              width: 380,
+              width: 390,
               paddingBottom: 3,
-              paddingLeft: counter * 5,
+              paddingLeft: (selectedFeature.properties.routen.length - counter) * 10,
 
               cursor: "pointer", //is a hand
             }}
