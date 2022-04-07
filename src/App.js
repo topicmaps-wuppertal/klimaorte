@@ -17,7 +17,7 @@ import titleFactory from "./helper/titleFactory";
 import KlimaorteMap from "./KlimaorteMap";
 import createItemsDictionary from "./helper/createItemsDictionary";
 import getKlimaOrtkarteStyler from "./helper/styler";
-
+import deriveSecondarySelection from "./helper/deriveSecondarySelection";
 export const dataHost = "https://wupp-topicmaps-data.cismet.de";
 
 const appKey = "Klimaortkarte.TopicMap";
@@ -30,15 +30,13 @@ function App() {
       featureItemsURL={dataHost + "/data/klimaortkarte.data.json"}
       featureItemsURL__={"/data/klimaortkarte.data.json"}
       createFeatureItemsDictionary={createItemsDictionary}
+      deriveSecondarySelection={deriveSecondarySelection}
       referenceSystemDefinition={MappingConstants.proj4crs25832def}
       mapEPSGCode='25832'
       referenceSystem={MappingConstants.crs25832}
       getFeatureStyler={getKlimaOrtkarteStyler}
       getFeatureStyler__={getGTMFeatureStyler}
       convertItemToFeature={convertBPKlimaItemsToFeature}
-      clusteringOptions={{
-        iconCreateFunction: getClusterIconCreatorFunction(30, (props) => props.color),
-      }}
       clusteringEnabled={true}
       itemFilterFunction={itemFilterFunction}
       classKeyFunction={(item) => item.thema?.name}

@@ -6,23 +6,28 @@ const createItemsDictionary = (items) => {
   const routen = {};
   const angebote = {};
 
-  console.log("xxx createItemsDictionary");
-
   //combined run
   // save all standortids in angeboteInStandorte
   // save all ort.id's that are in routen
 
   let additionalSelectableItemsCount = 0;
+  console.log(
+    "xx items ",
+    items.filter((item) => item.typ === "route")
+  );
 
   for (const item of items) {
     if (item.typ === "route") {
       //
       routen[item.id] = item;
       //orte in routen
+      console.log("xx route", item.id);
+
       for (const ort of item.routenpunkte) {
         if (ort.typ === "klimaort") {
           allStandorteInRouten.push(ort.id);
           const currentStandortInCache = standorteInRouten[item.id];
+
           if (currentStandortInCache) {
             currentStandortInCache.push(ort.id);
           } else {
@@ -30,8 +35,14 @@ const createItemsDictionary = (items) => {
           }
         } else if (ort.typ === "aussichtspunkt") {
           additionalSelectableItemsCount++;
-
-          ort.routen = [{ id: item.id, typ: "route", name: item.name }]; // achtung hier noch array möglichkeit vorsehen
+          //add routen subobject to aussichtspunkt
+          if (ort.routen) {
+            if (ort.routen.filter((r) => r.id === item.id).length === -1) {
+              ort.routen.push({ id: item.id, typ: "route", name: item.name });
+            }
+          } else {
+            ort.routen = [{ id: item.id, typ: "route", name: item.name }];
+          }
           for (const aussichtspunktort of ort.klimaorte) {
             allStandorteInRouten.push(aussichtspunktort.id);
             const currentStandortInCache = standorteInRouten[item.id];
@@ -53,11 +64,21 @@ const createItemsDictionary = (items) => {
       }
     }
   }
-
+  //add routen subobject to angebote
   for (const route of Object.values(routen)) {
     for (const standortId of standorteInRouten[route.id]) {
       for (const angebotId of angeboteInStandorte[standortId]) {
-        angebote[angebotId].routen = [{ id: route.id, typ: "route", name: route.name }]; // achtung hier noch array möglichkeit vorsehen
+        const angebot = angebote[angebotId];
+        if (angebot.id === 70) {
+          console.log("stop angebot", angebot);
+        }
+        if (angebot.routen) {
+          if (angebot.routen.filter((r) => r.id === route.id).length === 0) {
+            angebot.routen.push({ id: route.id, typ: "route", name: route.name });
+          }
+        } else {
+          angebot.routen = [{ id: route.id, typ: "route", name: route.name }];
+        }
       }
     }
   }
@@ -71,7 +92,6 @@ const createItemsDictionary = (items) => {
     routen,
     additionalSelectableItemsCount,
   };
-  console.log("xxx dictionary", dict);
 
   return dict;
 };

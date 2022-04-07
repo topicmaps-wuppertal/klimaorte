@@ -26,7 +26,8 @@ import {
 import { removeQueryPart } from "react-cismap/tools/routingHelper";
 import { LightBoxDispatchContext } from "react-cismap/contexts/LightBoxContextProvider";
 import { getMode, getModeUrl } from "./helper/modeParser";
-
+import { getClusterIconCreatorFunction } from "react-cismap/tools/uiHelper";
+import { getColorConsideringSeondarySelection } from "./helper/styler";
 import InfoBox from "./InfoBox";
 const getGazData = async (setGazData) => {
   const prefix = "GazDataForStories";
@@ -52,8 +53,15 @@ function KlimaorteMap() {
     FeatureCollectionDispatchContext
   );
   const lightBoxDispatchContext = useContext(LightBoxDispatchContext);
-  const { selectedFeature, items, shownFeatures, filterState, filterMode, filteredItems } =
-    useContext(FeatureCollectionContext);
+  const {
+    selectedFeature,
+    items,
+    shownFeatures,
+    filterState,
+    filterMode,
+    filteredItems,
+    secondarySelection,
+  } = useContext(FeatureCollectionContext);
   const { zoomToFeature, setAppMode } = useContext(TopicMapDispatchContext);
   const { history, appMode } = useContext(TopicMapContext);
 
@@ -196,7 +204,14 @@ function KlimaorteMap() {
           }
         }}
       >
-        <FeatureCollection key={"featureCollection" + appMode} />
+        <FeatureCollection
+          key={"featureCollection" + appMode}
+          clusteringOptions={{
+            iconCreateFunction: getClusterIconCreatorFunction(30, (props) => {
+              return getColorConsideringSeondarySelection(props, secondarySelection);
+            }),
+          }}
+        />
       </TopicMapComponent>
     </div>
   );

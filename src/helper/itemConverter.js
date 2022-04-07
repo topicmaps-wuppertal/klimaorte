@@ -137,7 +137,7 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
                 name: "urn:ogc:def:crs:EPSG::25832",
               },
             },
-            properties: rpWithIcon, //{ ...rpWithIcon, typ: "blickfeld" },
+            properties: { ...rpWithIcon, typ: "blickfeld" },
           };
           result.push(aussichtsview);
         }
