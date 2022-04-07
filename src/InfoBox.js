@@ -111,7 +111,7 @@ const InfoBox = (props) => {
         noCurrentFeatureContent: "",
 
         getTotalNumberOfItems: (items) => {
-          if (secondarySelection) {
+          if (secondarySelection?.id) {
             return (
               itemsDictionary.angeboteInRouten[secondarySelection.id].length +
               itemsDictionary.standorteInRouten[secondarySelection.id].filter(
@@ -124,7 +124,7 @@ const InfoBox = (props) => {
         },
 
         getNumberOfShownFeatures: (featureCollection) => {
-          if (featureCollection) {
+          if (featureCollection && secondarySelection?.id) {
             const featuresThatCount = featureCollection.filter(
               (feature) =>
                 feature.preventSelection !== true &&
