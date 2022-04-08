@@ -9,7 +9,9 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
     const geometry = item?.standort?.geojson;
     // item.svg=DEFAULT_SVG.code;
     item.color = item?.thema.farbe;
-
+    item.styleinfo = {};
+    item.styleinfo.weight = 2;
+    item.styleinfo.darkenFactor = 0.01;
     const info = {
       header: item.thema.name,
       title: text,

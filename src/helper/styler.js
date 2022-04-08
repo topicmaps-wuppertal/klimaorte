@@ -18,12 +18,19 @@ const getKlimaOrtkarteStyler = (
     }
     if (appMode === appModes.ORTE) {
       const style = gtmStyler(svgSize, colorizer, appMode)(feature);
-      // console.log("returned style 0", style);
+      style.color = new Color(colorizer(feature.properties));
+      console.log("color", style.color);
 
+      style.fillColor = style.color.lighten(0.5);
+      // console.log("returned style 0", style);
       returningStyle = style;
     } else {
       //in ROUTEN Mode
-      let color = getColorConsideringSeondarySelection(feature.properties, secondarySelection);
+      let color = getColorConsideringSeondarySelection(
+        feature.properties,
+        secondarySelection,
+        feature.geometry
+      );
       let radius = svgSize / 2; //needed for the Tooltip Positioning
 
       if (feature.geometry.type !== "Point") {
@@ -44,19 +51,15 @@ const getKlimaOrtkarteStyler = (
         } else {
           let style;
           if (feature.properties.typ === "route") {
-            // color = new Color("#92BE4D");
             style = {
               radius,
               fillColor: color,
-              color: color.darken(0.5),
+              color: color.darken(0.2),
               opacity: 1,
               fillOpacity: 0.8,
-
-              weight: 1,
+              weight: 3,
             };
           } else if (feature.properties.typ === "blickfeld") {
-            // color = new Color("#00000040");
-
             style = {
               radius,
               fillColor: color,
@@ -67,7 +70,12 @@ const getKlimaOrtkarteStyler = (
               weight: 0,
             };
           } else if (feature.properties.typ === "ort") {
-            style = gtmStyler(svgSize, colorizer, appMode)(feature);
+            //must be radweg
+            style = gtmStyler(svgSize, () => color, appMode)(feature);
+            style.fillColor = color;
+            style.color = color.darken(0.1);
+            console.log("returned style for radweg ", style);
+            returningStyle = style;
           } else {
             // console.log("what else ", feature);
           }
@@ -76,9 +84,8 @@ const getKlimaOrtkarteStyler = (
           returningStyle = style;
         }
       } else {
-        const c = getColorConsideringSeondarySelection(feature.properties, secondarySelection);
-        const style = gtmStyler(svgSize, () => c, appMode)(feature);
-        // console.log("returned style 3", style);
+        const style = gtmStyler(svgSize, () => color, appMode)(feature);
+
         returningStyle = style;
       }
     }
@@ -93,8 +100,10 @@ const getKlimaOrtkarteStyler = (
 };
 
 export default getKlimaOrtkarteStyler;
+const lightGrey = new Color("#D8D8D8");
+export const getColorConsideringSeondarySelection = (props, secondarySelection, geom) => {
+  console.log("geom", geom);
 
-export const getColorConsideringSeondarySelection = (props, secondarySelection) => {
   let color = new Color("red");
   if (props.typ === "route") {
     color = new Color("#92BE4D");
@@ -103,9 +112,12 @@ export const getColorConsideringSeondarySelection = (props, secondarySelection) 
     }
   } else if (props.typ === "ort") {
     color = new Color(props.color);
-
     if (props.routen && props.routen.filter((r) => r.id === secondarySelection?.id).length === 0) {
-      color = color.grayscale();
+      if (geom && geom.type === "Polygon") {
+        color = lightGrey;
+      } else {
+        color = color.grayscale();
+      }
     }
   } else if (props.typ === "aussichtspunkt") {
     //aussichtspunkt
