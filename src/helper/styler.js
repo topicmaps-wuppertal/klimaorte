@@ -74,7 +74,6 @@ const getKlimaOrtkarteStyler = (
             style = gtmStyler(svgSize, () => color, appMode)(feature);
             style.fillColor = color;
             style.color = color.darken(0.1);
-            console.log("returned style for radweg ", style);
             returningStyle = style;
           } else {
             // console.log("what else ", feature);
@@ -102,8 +101,6 @@ const getKlimaOrtkarteStyler = (
 export default getKlimaOrtkarteStyler;
 const lightGrey = new Color("#D8D8D8");
 export const getColorConsideringSeondarySelection = (props, secondarySelection, geom) => {
-  console.log("geom", geom);
-
   let color = new Color("red");
   if (props.typ === "route") {
     color = new Color("#92BE4D");

@@ -47,8 +47,6 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
     };
     return f;
   } else {
-    console.log("itemIn Route", itemIn);
-
     let item = await addSVGToProps(itemIn, (i) => i.icon);
     const info = {
       header: "Klimaroute",

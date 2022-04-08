@@ -21,7 +21,6 @@ const createItemsDictionary = (items) => {
       //
       routen[item.id] = item;
       //orte in routen
-      console.log("xx route", item.id);
 
       for (const ort of item.routenpunkte) {
         if (ort.typ === "klimaort") {
