@@ -61,6 +61,45 @@ const InfoBox = (props) => {
     }
     let config;
 
+    const NEXT = 1;
+    const PREV = -1;
+    const select = (direction, order, typ) => {
+      const orderNum = [];
+      for (const id of order) {
+        orderNum.push(parseInt(id));
+      }
+      const currentId = selectedFeature?.properties?.id;
+      let counter = 0;
+      const doubleOrder = [...orderNum, ...orderNum];
+      let nextId;
+      if (direction === NEXT) {
+        const orderIndexOfSelectedFeature = doubleOrder.indexOf(currentId);
+        nextId = orderIndexOfSelectedFeature + 1;
+      } else {
+        const orderIndexOfSelectedFeature = doubleOrder.indexOf(currentId) + order.length;
+        nextId = orderIndexOfSelectedFeature - 1;
+      }
+      let index = 0;
+      while (counter < shownFeatures.length) {
+        if (
+          shownFeatures[index].properties.typ === typ &&
+          shownFeatures[index].properties.id === doubleOrder[nextId]
+        ) {
+          setSelectedFeatureByPredicate((feature) => {
+            return (
+              feature?.properties?.typ === typ && feature?.properties?.id === doubleOrder[nextId]
+            );
+          });
+          break;
+        }
+        index++;
+        if (index >= shownFeatures.length) {
+          index = 0;
+        }
+        counter++;
+      }
+    };
+
     if (selectedFeature?.properties?.typ === "route") {
       //if a route is the selected element
       config = {
@@ -82,18 +121,10 @@ const InfoBox = (props) => {
             (feature) => feature.preventSelection !== true && feature.properties.typ === "route"
           ).length,
         next: () => {
-          console.log("click next ");
-
-          setNextSelectedFeatureByPredicate((feature) => {
-            console.log("predicate check for feature", feature);
-
-            return feature?.properties?.typ === "route";
-          });
+          select(NEXT, Object.keys(itemsDictionary.routen), "route");
         },
         previous: () => {
-          setPrevSelectedFeatureByPredicate((feature) => {
-            return feature?.properties?.typ === "route";
-          });
+          select(PREV, Object.keys(itemsDictionary.routen), "route");
         },
       };
     } else {
@@ -136,6 +167,12 @@ const InfoBox = (props) => {
           } else {
             return "";
           }
+        },
+        next: () => {
+          select(NEXT, itemsDictionary.angeboteInRouten[secondarySelection.id], "ort");
+        },
+        previous: () => {
+          select(PREV, itemsDictionary.angeboteInRouten[secondarySelection.id], "ort");
         },
       };
     }

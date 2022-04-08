@@ -5,6 +5,8 @@
   "version": "0.2.0",
   "configurations": [
 
+
+
     {
       "type": "pwa-chrome",
       "request": "launch",
@@ -16,7 +18,7 @@
       "type": "pwa-chrome",
       "request": "launch",
       "name": "Klimaroute Süd",
-      "url": "http://localhost:3000/#/orte?lat=51.24354210343733&lng=7.1504125965156575&zoom=10",
+      "url": "http://localhost:3000/#/routen?lat=51.24354210343733&lng=7.1504125965156575&zoom=10",
       "webRoot": "${workspaceFolder}"
     },
     {
@@ -31,6 +33,13 @@
       "request": "launch",
       "name": "Trassen",
       "url": "http://localhost:3000/#/routen?lat=51.22156408619464&lng=7.157864892488778&undefined&zoom=12",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Gelpetal",
+      "url": "http://localhost:3000/#/routen?lat=51.22595155178987&lng=7.171453144414679&zoom=11",
       "webRoot": "${workspaceFolder}"
     }
 
