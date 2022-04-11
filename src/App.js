@@ -35,7 +35,6 @@ function App() {
       mapEPSGCode='25832'
       referenceSystem={MappingConstants.crs25832}
       getFeatureStyler={getKlimaOrtkarteStyler}
-      getFeatureStyler__={getGTMFeatureStyler}
       convertItemToFeature={convertBPKlimaItemsToFeature}
       clusteringEnabled={true}
       itemFilterFunction={itemFilterFunction}
@@ -70,6 +69,9 @@ function App() {
             />
           ),
         },
+      }}
+      clusteringOptions={{
+        iconCreateFunction: getClusterIconCreatorFunction(30, (props) => props.color),
       }}
     >
       <KlimaorteMap />
