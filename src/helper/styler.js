@@ -104,7 +104,7 @@ export const getColorConsideringSeondarySelection = (props, secondarySelection, 
   let color = new Color("red");
   if (props.typ === "route") {
     color = new Color("#92BE4D");
-    if (secondarySelection.id !== props.id) {
+    if (secondarySelection?.id !== props.id) {
       color = color.grayscale();
     }
   } else if (props.typ === "ort") {
