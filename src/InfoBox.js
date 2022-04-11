@@ -84,46 +84,57 @@ const InfoBox = (props) => {
     const select = (direction, order, getType, getId = (obj) => obj) => {
       const orderNum = [];
       for (const obj of order) {
-        orderNum.push({ typ: getType(obj), id: getId(obj) });
+        orderNum.push({ typ: getType(obj), id: getId(obj).toString() });
       }
       const currentTarget = {
         typ: selectedFeature?.properties?.typ,
-        id: selectedFeature?.properties?.id,
+        id: selectedFeature?.properties?.id.toString(),
       };
-      let counter = 0;
+
       const doubleOrder = [...orderNum, ...orderNum];
-      let nextId;
+      let nextIndexOfOrder;
+      let orderCounter = 0;
+      const orderIndexOfSelectedFeature = doubleOrder.findIndex(
+        (tester) => currentTarget.typ === tester.typ && currentTarget.id === tester.id
+      );
+      let hitIndex;
+      //prepare the next id
       if (direction === NEXT) {
-        const orderIndexOfSelectedFeature = doubleOrder.findIndex(
-          (tester) => currentTarget.typ === tester.typ && currentTarget.id === tester.id
-        );
-        nextId = orderIndexOfSelectedFeature + 1;
+        nextIndexOfOrder = orderIndexOfSelectedFeature;
       } else {
-        const orderIndexOfSelectedFeature =
-          doubleOrder.findIndex(
-            (tester) => currentTarget.typ === tester.typ && currentTarget.id === tester.id
-          ) + order.length;
-        nextId = orderIndexOfSelectedFeature - 1;
+        nextIndexOfOrder = orderIndexOfSelectedFeature + order.length;
       }
-      let index = 0;
-      while (counter < shownFeatures.length) {
-        if (
-          shownFeatures[index].properties.typ === doubleOrder[nextId].typ &&
-          shownFeatures[index].properties.id === doubleOrder[nextId].id
-        ) {
-          setSelectedFeatureByPredicate((feature) => {
-            return (
-              feature?.properties?.typ === doubleOrder[nextId].typ &&
-              feature?.properties?.id === doubleOrder[nextId].id
-            );
-          });
-          break;
+      while (hitIndex == undefined && orderCounter < orderNum.length) {
+        if (direction === NEXT) {
+          nextIndexOfOrder = nextIndexOfOrder + 1;
+        } else {
+          nextIndexOfOrder = nextIndexOfOrder - 1;
         }
-        index++;
-        if (index >= shownFeatures.length) {
-          index = 0;
+        let index = 0;
+        let counter = 0;
+        while (counter < shownFeatures.length) {
+          if (
+            shownFeatures[index].properties.typ === doubleOrder[nextIndexOfOrder].typ &&
+            shownFeatures[index].properties.id.toString() === doubleOrder[nextIndexOfOrder].id
+          ) {
+            hitIndex = nextIndexOfOrder;
+            break;
+          }
+          index++;
+          if (index >= shownFeatures.length) {
+            index = 0;
+          }
+          counter++;
         }
-        counter++;
+        orderCounter++;
+      }
+      if (hitIndex !== undefined) {
+        setSelectedFeatureByPredicate((feature) => {
+          return (
+            feature?.properties?.typ === doubleOrder[hitIndex].typ &&
+            feature?.properties?.id.toString() === doubleOrder[hitIndex].id
+          );
+        });
       }
     };
 
@@ -210,8 +221,6 @@ const InfoBox = (props) => {
           );
         },
         fitAll: () => {
-          console.log("yyy fitall");
-
           fitBoundsForCollection(
             allFeatures.filter(
               (f) =>
