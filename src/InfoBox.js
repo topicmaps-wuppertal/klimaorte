@@ -63,31 +63,40 @@ const InfoBox = (props) => {
 
     const NEXT = 1;
     const PREV = -1;
-    const select = (direction, order, typ) => {
+    const select = (direction, order, getType, getId = (obj) => obj) => {
       const orderNum = [];
-      for (const id of order) {
-        orderNum.push(parseInt(id));
+      for (const obj of order) {
+        orderNum.push({ typ: getType(obj), id: getId(obj) });
       }
-      const currentId = selectedFeature?.properties?.id;
+      const currentTarget = {
+        typ: selectedFeature?.properties?.typ,
+        id: selectedFeature?.properties?.id,
+      };
       let counter = 0;
       const doubleOrder = [...orderNum, ...orderNum];
       let nextId;
       if (direction === NEXT) {
-        const orderIndexOfSelectedFeature = doubleOrder.indexOf(currentId);
+        const orderIndexOfSelectedFeature = doubleOrder.findIndex(
+          (tester) => currentTarget.typ === tester.typ && currentTarget.id === tester.id
+        );
         nextId = orderIndexOfSelectedFeature + 1;
       } else {
-        const orderIndexOfSelectedFeature = doubleOrder.indexOf(currentId) + order.length;
+        const orderIndexOfSelectedFeature =
+          doubleOrder.findIndex(
+            (tester) => currentTarget.typ === tester.typ && currentTarget.id === tester.id
+          ) + order.length;
         nextId = orderIndexOfSelectedFeature - 1;
       }
       let index = 0;
       while (counter < shownFeatures.length) {
         if (
-          shownFeatures[index].properties.typ === typ &&
-          shownFeatures[index].properties.id === doubleOrder[nextId]
+          shownFeatures[index].properties.typ === doubleOrder[nextId].typ &&
+          shownFeatures[index].properties.id === doubleOrder[nextId].id
         ) {
           setSelectedFeatureByPredicate((feature) => {
             return (
-              feature?.properties?.typ === typ && feature?.properties?.id === doubleOrder[nextId]
+              feature?.properties?.typ === doubleOrder[nextId].typ &&
+              feature?.properties?.id === doubleOrder[nextId].id
             );
           });
           break;
@@ -121,10 +130,10 @@ const InfoBox = (props) => {
             (feature) => feature.preventSelection !== true && feature.properties.typ === "route"
           ).length,
         next: () => {
-          select(NEXT, Object.keys(itemsDictionary.routen), "route");
+          select(NEXT, Object.keys(itemsDictionary.routen), () => "route");
         },
         previous: () => {
-          select(PREV, Object.keys(itemsDictionary.routen), "route");
+          select(PREV, Object.keys(itemsDictionary.routen), () => "route");
         },
       };
     } else {
@@ -143,12 +152,7 @@ const InfoBox = (props) => {
 
         getTotalNumberOfItems: (items) => {
           if (secondarySelection?.id) {
-            return (
-              itemsDictionary.angeboteInRouten[secondarySelection.id].length +
-              itemsDictionary.standorteInRouten[secondarySelection.id].filter(
-                (s) => s.typ === "aussichtspunkt"
-              ).length
-            );
+            return itemsDictionary.angeboteAndAussichtspunkteInRouten[secondarySelection.id].length;
           } else {
             return "";
           }
@@ -169,10 +173,20 @@ const InfoBox = (props) => {
           }
         },
         next: () => {
-          select(NEXT, itemsDictionary.angeboteInRouten[secondarySelection.id], "ort");
+          select(
+            NEXT,
+            itemsDictionary.angeboteAndAussichtspunkteInRouten[secondarySelection.id],
+            (obj) => (obj.typ === "angebot" ? "ort" : "aussichtspunkt"),
+            (obj) => obj.id
+          );
         },
         previous: () => {
-          select(PREV, itemsDictionary.angeboteInRouten[secondarySelection.id], "ort");
+          select(
+            PREV,
+            itemsDictionary.angeboteAndAussichtspunkteInRouten[secondarySelection.id],
+            (obj) => (obj.typ === "angebot" ? "ort" : "aussichtspunkt"),
+            (obj) => obj.id
+          );
         },
       };
     }

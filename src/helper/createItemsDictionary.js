@@ -1,7 +1,7 @@
 const createItemsDictionary = (items) => {
   const allStandorteInRouten = [];
   const standorteInRouten = {};
-  const angeboteInRouten = {};
+  const angeboteAndAussichtspunkteInRouten = {};
   const angeboteInStandorte = {};
   const routen = {};
   const angebote = {};
@@ -94,13 +94,18 @@ const createItemsDictionary = (items) => {
 
   //add angebote to angeboteInRouten
   for (const routenId of Object.keys(routen)) {
-    angeboteInRouten[routenId] = [];
+    angeboteAndAussichtspunkteInRouten[routenId] = [];
     for (const standortInRoute of standorteInRouten[routenId]) {
       if (standortInRoute.typ === "standort") {
         const standortId = standortInRoute.id;
         for (const angebotId of angeboteInStandorte[standortId]) {
-          angeboteInRouten[routenId].push(angebotId);
+          angeboteAndAussichtspunkteInRouten[routenId].push({ typ: "angebot", id: angebotId });
         }
+      } else if (standortInRoute.typ === "aussichtspunkt") {
+        angeboteAndAussichtspunkteInRouten[routenId].push({
+          typ: "aussichtspunkt",
+          id: standortInRoute.id,
+        });
       }
     }
   }
@@ -110,7 +115,7 @@ const createItemsDictionary = (items) => {
     allStandorteInRouten,
     standorteInRouten,
     angeboteInStandorte,
-    angeboteInRouten,
+    angeboteAndAussichtspunkteInRouten,
     angebote,
     routen,
     additionalSelectableItemsCount,
