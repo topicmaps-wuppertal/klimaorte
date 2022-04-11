@@ -16,7 +16,7 @@ import CustomizationContextProvider from "react-cismap/contexts/CustomizationCon
 
 import Icon from "react-cismap/commons/Icon";
 import { addSVGToProps } from "react-cismap/tools/svgHelper";
-
+import previewFeatureCollection from "./helper/previewFC";
 export const getFilterInfo = (items) => {
   let kategorien = [];
   const katValues = [];
@@ -56,7 +56,7 @@ export const getFilterInfo = (items) => {
 
 const MyMenu = () => {
   const { setAppMenuActiveMenuSection } = useContext(UIDispatchContext);
-  const { filterState, filterMode, filteredItems, shownFeatures } =
+  const { filterState, filterMode, filteredItems, shownFeatures, allFeatures } =
     useContext(FeatureCollectionContext);
   const { setFilterState, setFilterMode } = useContext(FeatureCollectionDispatchContext);
 
@@ -305,7 +305,12 @@ const MyMenu = () => {
             sectionBsStyle='primary'
             sectionContent={<FilterPanel filterConfiguration={filterConfiguration} />}
           />,
-          <DefaultSettingsPanel skipFilterTitleSettings={true} key='settings' />,
+          <DefaultSettingsPanel
+            skipFilterTitleSettings={true}
+            key='settings'
+            previewMapPosition='lat=51.2559579192051&lng=7.14642942709672&zoom=13'
+            previewFeatureCollection={previewFeatureCollection}
+          />,
           <Section
             key='help'
             sectionKey='help'
