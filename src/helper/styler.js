@@ -7,19 +7,18 @@ const selectionColor = new Color("#2664D8");
 const getKlimaOrtkarteStyler = (
   svgSize = 24,
   colorizer = (props) => props.color,
-  appMode,
+  appMode = appModes.ORTE,
   secondarySelection
 ) => {
   const styler = (feature) => {
     let returningStyle;
-    if (appMode === undefined || feature === undefined) {
+    if (feature === undefined) {
       console.log("returned style empty");
       return {};
     }
     if (appMode === appModes.ORTE) {
       const style = gtmStyler(svgSize, colorizer, appMode)(feature);
       style.color = new Color(colorizer(feature.properties));
-      console.log("color", style.color);
 
       style.fillColor = style.color.lighten(0.5);
       // console.log("returned style 0", style);
