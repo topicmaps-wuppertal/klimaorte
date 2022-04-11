@@ -165,12 +165,12 @@ function KlimaorteMap() {
 
   let iconCreateFunction;
 
-  if (appMode === appModes.ORTE) {
-    iconCreateFunction = getClusterIconCreatorFunction(30, (props) => props.color);
-  } else {
+  if (appMode === appModes.ROUTEN) {
     iconCreateFunction = getClusterIconCreatorFunction(30, (props) => {
       return getColorConsideringSeondarySelection(props, secondarySelection);
     });
+  } else {
+    iconCreateFunction = getClusterIconCreatorFunction(30, (props) => props.color);
   }
 
   return (
