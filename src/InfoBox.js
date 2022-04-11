@@ -10,11 +10,9 @@ import { getColorConsideringSeondarySelection } from "./helper/styler";
 
 const InfoBox = (props) => {
   const featureCollectionContext = useContext(FeatureCollectionContext);
-  const {
-    setSelectedFeatureByPredicate,
-    setNextSelectedFeatureByPredicate,
-    setPrevSelectedFeatureByPredicate,
-  } = useContext(FeatureCollectionDispatchContext);
+  const { setSelectedFeatureByPredicate, fitBoundsForCollection } = useContext(
+    FeatureCollectionDispatchContext
+  );
   const {
     filterState,
     shownFeatures,
@@ -22,6 +20,7 @@ const InfoBox = (props) => {
     itemsDictionary,
     selectedFeature,
     secondarySelection,
+    allFeatures,
   } = featureCollectionContext;
 
   const overlappingHeaders = [];
@@ -42,11 +41,30 @@ const InfoBox = (props) => {
                 cursor: "pointer", //is a hand
               }}
               onClick={() => {
-                setSelectedFeatureByPredicate((feature) => {
-                  return (
-                    feature?.properties?.typ === "route" && feature?.properties?.id === route.id
-                  );
-                });
+                setSelectedFeatureByPredicate(
+                  (feature) => {
+                    return (
+                      feature?.properties?.typ === "route" && feature?.properties?.id === route.id
+                    );
+                  },
+                  (foundSomething) => {
+                    if (!foundSomething) {
+                      fitBoundsForCollection(
+                        allFeatures.filter(
+                          (f) => f.properties.typ === "route" && f.properties.id === route.id
+                        )
+                      );
+                      setTimeout(() => {
+                        setSelectedFeatureByPredicate((feature) => {
+                          return (
+                            feature?.properties?.typ === "route" &&
+                            feature?.properties?.id === route.id
+                          );
+                        });
+                      }, 200);
+                    }
+                  }
+                );
               }}
             >
               <InfoBoxHeader
@@ -135,6 +153,9 @@ const InfoBox = (props) => {
         previous: () => {
           select(PREV, Object.keys(itemsDictionary.routen), () => "route");
         },
+        fitAll: () => {
+          fitBoundsForCollection(allFeatures.filter((f) => f.properties.typ === "route"));
+        },
       };
     } else {
       //if a ort or aussichtspunkt is the selected element
@@ -186,6 +207,19 @@ const InfoBox = (props) => {
             itemsDictionary.angeboteAndAussichtspunkteInRouten[secondarySelection.id],
             (obj) => (obj.typ === "angebot" ? "ort" : "aussichtspunkt"),
             (obj) => obj.id
+          );
+        },
+        fitAll: () => {
+          console.log("yyy fitall");
+
+          fitBoundsForCollection(
+            allFeatures.filter(
+              (f) =>
+                f.properties.typ === "ort" &&
+                itemsDictionary.angeboteAndAussichtspunkteInRouten[secondarySelection.id].findIndex(
+                  (agb) => agb.id === f.properties.id && agb.typ === "angebot"
+                ) > -1
+            )
           );
         },
       };
