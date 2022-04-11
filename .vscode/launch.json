@@ -7,6 +7,7 @@
 
 
 
+
     {
       "type": "pwa-chrome",
       "request": "launch",
@@ -41,7 +42,15 @@
       "name": "Gelpetal",
       "url": "http://localhost:3000/#/routen?lat=51.22595155178987&lng=7.171453144414679&zoom=11",
       "webRoot": "${workspaceFolder}"
-    }
+    },
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Botanische Garten (center)",
+      "url": "http://localhost:3000/#/routen?lat=51.264162501397074&lng=7.154058871905874&zoom=14",
+      "webRoot": "${workspaceFolder}"
+    },
+    
 
     
 }
