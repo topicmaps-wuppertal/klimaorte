@@ -5,7 +5,7 @@ const createItemsDictionary = (items) => {
   const angeboteInStandorte = {};
   const routen = {};
   const angebote = {};
-
+  const aussichtspunkte = {};
   //combined run
   // save all standortids in angeboteInStandorte
   // save all ort.id's that are in routen
@@ -34,7 +34,7 @@ const createItemsDictionary = (items) => {
           }
         } else if (ort.typ === "aussichtspunkt") {
           additionalSelectableItemsCount++;
-
+          aussichtspunkte[ort.id] = ort;
           const currentStandortInCache = standorteInRouten[item.id];
 
           if (currentStandortInCache) {
@@ -110,6 +110,15 @@ const createItemsDictionary = (items) => {
     }
   }
 
+  //add angebote to aussichtspunkte
+  for (const aussichtspunktid of Object.keys(aussichtspunkte)) {
+    const aussichtspunkt = aussichtspunkte[aussichtspunktid];
+    aussichtspunkt.angebote = [];
+    for (const klimaort of aussichtspunkt.klimaorte) {
+      aussichtspunkt.angebote.push(...angeboteInStandorte[klimaort.id]);
+    }
+  }
+
   const dict = {
     items,
     allStandorteInRouten,
@@ -119,6 +128,7 @@ const createItemsDictionary = (items) => {
     angebote,
     routen,
     additionalSelectableItemsCount,
+    aussichtspunkte,
   };
   console.log("yyy dictionary", dict);
 

@@ -108,9 +108,12 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
               info: {
                 header: "Aussichtspunkt auf Klimaroute",
                 title: rp?.name,
-                additionalInfo: `Von diesem Aussichtspunkt aus sehen Sie ${
-                  rp?.klimaorte?.length
-                } Klimaort${rp?.klimaorte?.length === 1 ? "" : "e"}.`,
+                additionalInfo: (feature) => {
+                  //will be called as a function because the needed info is added later on
+                  return `Von diesem Aussichtspunkt aus sehen Sie ${
+                    feature?.properties?.angebote?.length
+                  } Klimaort${feature?.properties?.angebote?.length === 1 ? "" : "e"}.`;
+                },
                 subtitle: (
                   <span>
                     {item?.standort?.strasse} {item?.standort?.hausnummer}
