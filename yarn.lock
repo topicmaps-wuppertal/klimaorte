@@ -11713,7 +11713,7 @@ react-chartkick@^0.4.1:
     chartkick "^3.2.0"
 
 "react-cismap@file:../../060-react-cismap/dist":
-  version "1.8.0-SNAPSHOT.7"
+  version "1.8.0-SNAPSHOT.8"
   dependencies:
     "@fortawesome/fontawesome-free" "^5.12.0"
     "@fortawesome/fontawesome-svg-core" "^1.2.26"
