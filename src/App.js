@@ -72,6 +72,7 @@ function App() {
       }}
       clusteringOptions={{
         iconCreateFunction: getClusterIconCreatorFunction(30, (props) => props.color),
+        disableClusteringAtZoom: 20,
       }}
     >
       <KlimaorteMap />
