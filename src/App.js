@@ -29,6 +29,7 @@ function App() {
       convertItemToFeature={convertBPKlimaItemsToFeature}
       clusteringOptions={{
         iconCreateFunction: getClusterIconCreatorFunction(30, (props) => props.color),
+        disableClusteringAtZoom: 20,
       }}
       clusteringEnabled={true}
       itemFilterFunction={itemFilterFunction}
