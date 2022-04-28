@@ -67,6 +67,8 @@ function KlimaorteMap() {
     <TopicMapComponent
       applicationMenuTooltipString='Filter | Einstellungen | Anleitung'
       locatorControl={true}
+      maxZoom={19}
+      minZoom={8}
       modalMenu={<MyMenu />}
       gazData={gazData}
       gazetteerSearchPlaceholder='Klimaort | Stadtteil | Adresse'
