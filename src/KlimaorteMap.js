@@ -184,6 +184,8 @@ function KlimaorteMap() {
         }}
       />
       <TopicMapComponent
+        maxZoom={19}
+        minZoom={8}
         applicationMenuTooltipString='Filter | Einstellungen | Anleitung'
         locatorControl={true}
         modalMenu={<MyMenu mode={appMode} />}
