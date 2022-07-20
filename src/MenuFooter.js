@@ -9,7 +9,7 @@ const Footer = () => {
 
   return (
     <div style={{ fontSize: "11px" }}>
-      <b>Hintergrundkarten</b>: Stadtkarte 2.0 © RVR | True Orthophoto 2020 © Stadt Wuppertal{" "}
+      <b>Hintergrundkarten</b>: Stadtkarte 2.0 © RVR | True Orthophoto 2022 © Stadt Wuppertal{" "}
       <a
         className='pleaseRenderAsLink'
         onClick={() => {
