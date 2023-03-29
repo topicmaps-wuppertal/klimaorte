@@ -1,6 +1,6 @@
 # builder container
 # Use an official node image
-FROM node:14-alpine AS builder
+FROM  --platform=$BUILDPLATFORM node:14-alpine AS builder
 RUN apk update && apk upgrade && \
     apk add --no-cache bash git openssh
 # Reads args and use them to configure the build, setting
