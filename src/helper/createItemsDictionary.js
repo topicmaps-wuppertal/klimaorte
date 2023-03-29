@@ -40,7 +40,9 @@ const createItemsDictionary = (items) => {
           if (currentStandortInCache) {
             currentStandortInCache.push({ typ: "aussichtspunkt", id: ort.id });
           } else {
-            standorteInRouten[item.id] = [{ typ: "aussichtspunkt", id: ort.id }];
+            standorteInRouten[item.id] = [
+              { typ: "aussichtspunkt", id: ort.id },
+            ];
           }
 
           //add routen subobject to aussichtspunkt
@@ -55,9 +57,14 @@ const createItemsDictionary = (items) => {
             allStandorteInRouten.push(aussichtspunktort.id);
             const currentStandortInCache = standorteInRouten[item.id];
             if (currentStandortInCache) {
-              currentStandortInCache.push({ typ: "standort", id: aussichtspunktort.id });
+              currentStandortInCache.push({
+                typ: "standort",
+                id: aussichtspunktort.id,
+              });
             } else {
-              standorteInRouten[item.id] = [{ typ: "standort", id: aussichtspunktort.id }];
+              standorteInRouten[item.id] = [
+                { typ: "standort", id: aussichtspunktort.id },
+              ];
             }
           }
         }
@@ -72,17 +79,21 @@ const createItemsDictionary = (items) => {
       }
     }
   }
-  //add routen subobject to angebote
 
+  //add routen subobject to angebote
   for (const route of Object.values(routen)) {
     for (const standortInRoute of standorteInRouten[route.id]) {
       if (standortInRoute.typ === "standort") {
         const standortId = standortInRoute.id;
-        for (const angebotId of angeboteInStandorte[standortId]) {
+        for (const angebotId of angeboteInStandorte[standortId] || []) {
           const angebot = angebote[angebotId];
           if (angebot.routen) {
             if (angebot.routen.filter((r) => r.id === route.id).length === 0) {
-              angebot.routen.push({ id: route.id, typ: "route", name: route.name });
+              angebot.routen.push({
+                id: route.id,
+                typ: "route",
+                name: route.name,
+              });
             }
           } else {
             angebot.routen = [{ id: route.id, typ: "route", name: route.name }];
@@ -98,8 +109,24 @@ const createItemsDictionary = (items) => {
     for (const standortInRoute of standorteInRouten[routenId]) {
       if (standortInRoute.typ === "standort") {
         const standortId = standortInRoute.id;
-        for (const angebotId of angeboteInStandorte[standortId]) {
-          angeboteAndAussichtspunkteInRouten[routenId].push({ typ: "angebot", id: angebotId });
+
+        if (!angeboteInStandorte[standortId]) {
+          console.warn(
+            "attention!!! angeboteInStandorte[standortId]===undefined",
+            {
+              "angeboteInStandorte[standortId]":
+                angeboteInStandorte[standortId],
+              angeboteInStandorte,
+              standortId,
+            }
+          );
+        }
+
+        for (const angebotId of angeboteInStandorte[standortId] || []) {
+          angeboteAndAussichtspunkteInRouten[routenId].push({
+            typ: "angebot",
+            id: angebotId,
+          });
         }
       } else if (standortInRoute.typ === "aussichtspunkt") {
         angeboteAndAussichtspunkteInRouten[routenId].push({
