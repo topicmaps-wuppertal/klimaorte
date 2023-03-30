@@ -27,12 +27,12 @@ function App() {
     <TopicMapContextProvider
       appKey={appKey}
       featureTooltipFunction={(feature) => feature?.text}
-      featureItemsURL={dataHost + "/data/klimaortkarte.data.json"}
+      featureItemsURL={dataHost + "/data/klimaortkarte.data.2fix.json"}
       featureItemsURL__={"/data/klimaortkarte.data.json"}
       createFeatureItemsDictionary={createItemsDictionary}
       deriveSecondarySelection={deriveSecondarySelection}
       referenceSystemDefinition={MappingConstants.proj4crs25832def}
-      mapEPSGCode='25832'
+      mapEPSGCode="25832"
       referenceSystem={MappingConstants.crs25832}
       getFeatureStyler={getKlimaOrtkarteStyler}
       convertItemToFeature={convertBPKlimaItemsToFeature}
@@ -59,11 +59,11 @@ function App() {
           layer: (
             <StyledWMSTileLayer
               key={"fernwaermewsw"}
-              url='https://maps.wuppertal.de/deegree/wms'
-              layers='fernwaermewsw '
-              format='image/png'
-              tiled='true'
-              transparent='true'
+              url="https://maps.wuppertal.de/deegree/wms"
+              layers="fernwaermewsw "
+              format="image/png"
+              tiled="true"
+              transparent="true"
               maxZoom={19}
               opacity={0.7}
             />
@@ -71,7 +71,10 @@ function App() {
         },
       }}
       clusteringOptions={{
-        iconCreateFunction: getClusterIconCreatorFunction(30, (props) => props.color),
+        iconCreateFunction: getClusterIconCreatorFunction(
+          30,
+          (props) => props.color
+        ),
         disableClusteringAtZoom: 20,
       }}
     >

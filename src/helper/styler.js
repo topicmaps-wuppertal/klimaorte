@@ -69,7 +69,11 @@ const getKlimaOrtkarteStyler = (
               weight: 0,
             };
           } else if (feature.properties.typ === "ort") {
-            //must be radweg
+            style = gtmStyler(svgSize, () => color, appMode)(feature);
+            style.fillColor = color;
+            style.color = color.darken(0.1);
+            returningStyle = style;
+          } else if (feature.properties.typ === "zwischenstopp") {
             style = gtmStyler(svgSize, () => color, appMode)(feature);
             style.fillColor = color;
             style.color = color.darken(0.1);
@@ -99,7 +103,11 @@ const getKlimaOrtkarteStyler = (
 
 export default getKlimaOrtkarteStyler;
 const lightGrey = new Color("#D8D8D8");
-export const getColorConsideringSeondarySelection = (props, secondarySelection, geom) => {
+export const getColorConsideringSeondarySelection = (
+  props,
+  secondarySelection,
+  geom
+) => {
   let color = new Color("red");
   if (props.typ === "route") {
     color = new Color("#92BE4D");
@@ -108,7 +116,10 @@ export const getColorConsideringSeondarySelection = (props, secondarySelection, 
     }
   } else if (props.typ === "ort") {
     color = new Color(props.color);
-    if (props.routen && props.routen.filter((r) => r.id === secondarySelection?.id).length === 0) {
+    if (
+      props.routen &&
+      props.routen.filter((r) => r.id === secondarySelection?.id).length === 0
+    ) {
       if (geom && geom.type === "Polygon") {
         color = lightGrey;
       } else {
@@ -118,11 +129,38 @@ export const getColorConsideringSeondarySelection = (props, secondarySelection, 
   } else if (props.typ === "aussichtspunkt") {
     //aussichtspunkt
     color = new Color("#655756");
-    if (props.routen && props.routen.filter((r) => r.id === secondarySelection?.id).length === 0) {
+    if (
+      props.routen &&
+      props.routen.filter((r) => r.id === secondarySelection?.id).length === 0
+    ) {
       color = color.grayscale();
     }
   } else if (props.typ === "blickfeld") {
     color = new Color("#00000040");
+  } else if (props.typ === "poi") {
+    color = new Color(props.color);
+    if (
+      props.routen &&
+      props.routen.filter((r) => r.id === secondarySelection?.id).length === 0
+    ) {
+      if (geom && geom.type === "Polygon") {
+        color = lightGrey;
+      } else {
+        color = color.grayscale();
+      }
+    }
+  } else if (props.typ === "zwischenstopp") {
+    color = new Color(props.color);
+    if (
+      props.routen &&
+      props.routen.filter((r) => r.id === secondarySelection?.id).length === 0
+    ) {
+      if (geom && geom.type === "Polygon") {
+        color = lightGrey;
+      } else {
+        color = color.grayscale();
+      }
+    }
   }
   return color;
 };

@@ -1,20 +1,24 @@
 const createItemsDictionary = (items) => {
   const allStandorteInRouten = [];
+  const allZwischenstoppsInRouten = [];
+  const allPoisInRouten = [];
   const standorteInRouten = {};
+  const zwischenstoppsInRouten = {};
+  const poisInRouten = {};
+
   const angeboteAndAussichtspunkteInRouten = {};
   const angeboteInStandorte = {};
   const routen = {};
   const angebote = {};
+  const zwischenstopps = {};
+  const pois = {};
   const aussichtspunkte = {};
+
   //combined run
   // save all standortids in angeboteInStandorte
   // save all ort.id's that are in routen
 
   let additionalSelectableItemsCount = 0;
-  console.log(
-    "xx items ",
-    items.filter((item) => item.typ === "route")
-  );
 
   for (const item of items) {
     if (item.typ === "route") {
@@ -67,6 +71,27 @@ const createItemsDictionary = (items) => {
               ];
             }
           }
+        } else if (ort.typ === "zwischenstopp") {
+          allZwischenstoppsInRouten.push(ort.id);
+          const currentZwischenstopInCache = zwischenstoppsInRouten[item.id];
+          if (currentZwischenstopInCache) {
+            currentZwischenstopInCache.push({
+              typ: "zwischenstopp",
+              id: ort.id,
+            });
+          } else {
+            zwischenstoppsInRouten[item.id] = [
+              { typ: "zwischenstopp", id: ort.id },
+            ];
+          }
+        } else if (ort.typ === "poi") {
+          allPoisInRouten.push(ort.id);
+          const currentPoiInCache = poisInRouten[item.id];
+          if (currentPoiInCache) {
+            poisInRouten[item.id].push({ typ: "poi", id: ort.id });
+          } else {
+            poisInRouten[item.id] = [{ typ: "poi", id: ort.id }];
+          }
         }
       }
     } else if (item.typ === "ort") {
@@ -77,11 +102,15 @@ const createItemsDictionary = (items) => {
       } else {
         angeboteInStandorte[item.standort.id] = [item.id];
       }
+    } else if (item.typ === "zwischenstopp") {
+      zwischenstopps[item.id] = item;
+    } else if (item.typ === "poi") {
+      pois[item.id] = item;
     }
   }
 
-  //add routen subobject to angebote
   for (const route of Object.values(routen)) {
+    //add routen subobject to angebote
     for (const standortInRoute of standorteInRouten[route.id]) {
       if (standortInRoute.typ === "standort") {
         const standortId = standortInRoute.id;
@@ -98,6 +127,30 @@ const createItemsDictionary = (items) => {
           } else {
             angebot.routen = [{ id: route.id, typ: "route", name: route.name }];
           }
+        }
+      }
+    }
+    // add routen subobject to zwischenstopps
+
+    for (const zwischenstoppInRoute of zwischenstoppsInRouten[route.id] || []) {
+      if (zwischenstoppInRoute.typ === "zwischenstopp") {
+        const zwischenstoppId = zwischenstoppInRoute.id;
+
+        const zwischenstopp = zwischenstopps[zwischenstoppId];
+        if (zwischenstopp.routen) {
+          if (
+            zwischenstopp.routen.filter((r) => r.id === route.id).length === 0
+          ) {
+            zwischenstopp.routen.push({
+              id: route.id,
+              typ: "route",
+              name: route.name,
+            });
+          }
+        } else {
+          zwischenstopp.routen = [
+            { id: route.id, typ: "route", name: route.name },
+          ];
         }
       }
     }
@@ -149,13 +202,19 @@ const createItemsDictionary = (items) => {
   const dict = {
     items,
     allStandorteInRouten,
+    allZwischenstoppsInRouten,
+    allPoisInRouten,
     standorteInRouten,
     angeboteInStandorte,
     angeboteAndAussichtspunkteInRouten,
     angebote,
     routen,
+    pois,
+    zwischenstopps,
     additionalSelectableItemsCount,
     aussichtspunkte,
+    zwischenstoppsInRouten,
+    poisInRouten,
   };
   console.log("yyy dictionary", dict);
 

@@ -28,7 +28,8 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
     item.info = info;
     item.url = item?.website;
     if (item.bild) {
-      item.foto = "https://www.wuppertal.de/geoportal/standort_klima/fotos/" + item.bild;
+      item.foto =
+        "https://www.wuppertal.de/geoportal/standort_klima/fotos/" + item.bild;
     }
 
     const f = {
@@ -46,7 +47,7 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
       featuretype: "ort",
     };
     return f;
-  } else {
+  } else if (itemIn.typ === "route") {
     let item = await addSVGToProps(itemIn, (i) => i.icon);
     const info = {
       header: "Klimaroute",
@@ -88,7 +89,10 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
     if (item.routenpunkte) {
       for (const rp of item.routenpunkte) {
         if (rp.typ === "aussichtspunkt") {
-          const rpWithIcon = await addSVGToProps(rp, (i) => "Icon_Aussichtsturm_farbig.svg");
+          const rpWithIcon = await addSVGToProps(
+            rp,
+            (i) => "Icon_Aussichtsturm_farbig.svg"
+          );
           const aussichtspunkt = {
             featuretype: "aussichtspunkt",
 
@@ -112,7 +116,9 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
                   //will be called as a function because the needed info is added later on
                   return `Von diesem Aussichtspunkt aus sehen Sie ${
                     feature?.properties?.angebote?.length
-                  } Klimaort${feature?.properties?.angebote?.length === 1 ? "" : "e"}.`;
+                  } Klimaort${
+                    feature?.properties?.angebote?.length === 1 ? "" : "e"
+                  }.`;
                 },
                 subtitle: (
                   <span>
@@ -147,6 +153,44 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
       }
     }
     return result;
+  } else if (itemIn.typ === "zwischenstopp") {
+    let item = await addSVGToProps(itemIn, (i) => "undefined");
+    //item.svg = DEFAULT_SVG.code;
+    const type = "Feature";
+    const selected = false;
+    const geometry = item?.geojson;
+    item.color = "orange";
+    item.styleinfo = {};
+    item.styleinfo.weight = 2;
+    item.styleinfo.darkenFactor = 0.01;
+
+    //set additionalInfo to the first 160 chars of beschreibung and add ...
+    const additionalInfo = item?.beschreibung?.substring(0, 320) + "...";
+    const text = item.name;
+    const info = {
+      header: "Zwischenstopp",
+      title: text,
+      additionalInfo,
+    };
+    item.info = info;
+    const f = {
+      text,
+      type,
+      selected,
+      geometry,
+      crs: {
+        type: "name",
+        properties: {
+          name: "urn:ogc:def:crs:EPSG::25832",
+        },
+      },
+      properties: item,
+      featuretype: "zwischenstopp",
+    };
+    return f;
+  } else if ((itemIn.typ = "poi")) {
+  } else {
+    console.warn("unknown item type", itemIn);
   }
 };
 
