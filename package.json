@@ -35,7 +35,7 @@
     "postbuild": "ls -d build > /dev/null && git rev-parse --short HEAD && echo $npm_package_version && git rev-parse --short HEAD > build/githash && echo $npm_package_version > build/version",
     "build:docker": "VERSION=`echo $npm_package_version| sed 's/\\.[0-9]*-SNAPSHOT.*$/-SNAPSHOT/'`; docker buildx build --platform=linux/amd64,linux/arm64 -t cismet/$npm_package_name -t cismet/$npm_package_name:$VERSION .",
     "publish:docker": "VERSION=`echo $npm_package_version| sed 's/\\.[0-9]*-SNAPSHOT.*$/-SNAPSHOT/'`; docker buildx build --push --platform=linux/amd64,linux/arm64 -t cismet/$npm_package_name -t cismet/$npm_package_name:$VERSION .",
-    "bumpAndUpdateAlpha": "yarn run bumpSnapshot && yarn run publish:docker && yarn run updateAlpha && say -v Petra  Belis alpha aktualisiert",
+    "bumpAndUpdateAlpha": "yarn run bumpSnapshot && yarn run publish:docker && yarn run updateAlpha && say -v Petra  Klimarouten alpha aktualisiert",
     "extractfrom:docker": "yarn run build:docker; rm -rf dist; VERSION=`echo $npm_package_version| sed 's/\\.[0-9]*-SNAPSHOT.*$/-SNAPSHOT/'`; DOCKERID=$(docker create cismet/$npm_package_name:$VERSION); docker cp $DOCKERID:/usr/share/nginx/html .; mv html dist ; docker rm -v $DOCKERID"
   },
   "eslintConfig": {
