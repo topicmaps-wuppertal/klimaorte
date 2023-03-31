@@ -31,7 +31,7 @@ const itemFilterFunction = ({
         return itemsDictionary.allStandorteInRouten.includes(item.standort.id);
       } else if (item.typ === "zwischenstopp") {
         return itemsDictionary.allZwischenstoppsInRouten.includes(item.id);
-      } else if (item.typ === "poi___disabled") {
+      } else if (item.typ === "poi") {
         return itemsDictionary.allPoisInRouten.includes(item.id);
       }
     };

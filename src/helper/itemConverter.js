@@ -1,6 +1,8 @@
 import { addSVGToProps, DEFAULT_SVG } from "react-cismap/tools/svgHelper";
+import Color from "color";
+import { getColorForProperties } from "./fromStadtplan";
 
-const convertBPKlimaItemsToFeature = async (itemIn) => {
+const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
   if (itemIn.typ === "ort") {
     let item = await addSVGToProps(itemIn, (i) => i.thema.icon);
     const text = item?.standort?.name || "Kein Standort";
@@ -154,7 +156,7 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
     }
     return result;
   } else if (itemIn.typ === "zwischenstopp") {
-    let item = await addSVGToProps(itemIn, (i) => "undefined");
+    let item = await addSVGToProps(itemIn, (i) => "Platz.svg");
     //item.svg = DEFAULT_SVG.code;
     const type = "Feature";
     const selected = false;
@@ -188,10 +190,51 @@ const convertBPKlimaItemsToFeature = async (itemIn) => {
       featuretype: "zwischenstopp",
     };
     return f;
-  } else if ((itemIn.typ = "poi")) {
+  } else if (itemIn.typ === "poi") {
+    let clonedItem = JSON.parse(JSON.stringify(itemIn));
+
+    let item = await addSVGToProps(clonedItem, (i) => getSignature(i));
+    const headerColor = Color(getColorForProperties(item, poiColors));
+    const info = {
+      header: (item?.mainlocationtype?.lebenslagen || []).join(", "),
+      title: item.name,
+      additionalInfo: item.info,
+      subtitle: item?.adresse,
+    };
+    item.info = info;
+    item.color = headerColor;
+    const id = item.id;
+    const type = "Feature";
+    const selected = false;
+    const geometry = item.geojson;
+    const text = item.name;
+
+    return {
+      id,
+      text,
+      type,
+      selected,
+      geometry,
+      crs: {
+        type: "name",
+        properties: {
+          name: "urn:ogc:def:crs:EPSG::25832",
+        },
+      },
+      properties: item,
+    };
   } else {
     console.warn("unknown item type", itemIn);
   }
 };
 
 export default convertBPKlimaItemsToFeature;
+
+const getSignature = (properties) => {
+  if (properties.signatur) {
+    return properties.signatur;
+  } else if (properties.mainlocationtype.signatur) {
+    return properties.mainlocationtype.signatur;
+  }
+  return "Platz.svg"; //TODO sinnvoller default
+};

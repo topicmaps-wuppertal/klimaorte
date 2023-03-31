@@ -130,8 +130,8 @@ const createItemsDictionary = (items) => {
         }
       }
     }
-    // add routen subobject to zwischenstopps
 
+    // add routen subobject to zwischenstopps
     for (const zwischenstoppInRoute of zwischenstoppsInRouten[route.id] || []) {
       if (zwischenstoppInRoute.typ === "zwischenstopp") {
         const zwischenstoppId = zwischenstoppInRoute.id;
@@ -151,6 +151,22 @@ const createItemsDictionary = (items) => {
           zwischenstopp.routen = [
             { id: route.id, typ: "route", name: route.name },
           ];
+        }
+      }
+    }
+
+    // add routen subobject to pois
+    for (const poiInRoute of poisInRouten[route.id] || []) {
+      if (poiInRoute.typ === "poi") {
+        const poiId = poiInRoute.id;
+
+        const poi = pois[poiId];
+        if (poi.routen) {
+          if (poi.routen.filter((r) => r.id === route.id).length === 0) {
+            poi.routen.push({ id: route.id, typ: "route", name: route.name });
+          }
+        } else {
+          poi.routen = [{ id: route.id, typ: "route", name: route.name }];
         }
       }
     }
