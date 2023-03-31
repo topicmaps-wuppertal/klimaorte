@@ -23,74 +23,75 @@ const createItemsDictionary = (items) => {
   for (const item of items) {
     if (item.typ === "route") {
       //
-      routen[item.id] = item;
+      const routenId = item.id;
+      routen[routenId] = item;
       //orte in routen
 
       for (const ort of item.routenpunkte) {
         if (ort.typ === "klimaort") {
           allStandorteInRouten.push(ort.id);
-          const currentStandortInCache = standorteInRouten[item.id];
+          const currentStandortInCache = standorteInRouten[routenId];
 
           if (currentStandortInCache) {
             currentStandortInCache.push({ typ: "standort", id: ort.id });
           } else {
-            standorteInRouten[item.id] = [{ typ: "standort", id: ort.id }];
+            standorteInRouten[routenId] = [{ typ: "standort", id: ort.id }];
           }
         } else if (ort.typ === "aussichtspunkt") {
           additionalSelectableItemsCount++;
           aussichtspunkte[ort.id] = ort;
-          const currentStandortInCache = standorteInRouten[item.id];
+          const currentStandortInCache = standorteInRouten[routenId];
 
           if (currentStandortInCache) {
             currentStandortInCache.push({ typ: "aussichtspunkt", id: ort.id });
           } else {
-            standorteInRouten[item.id] = [
+            standorteInRouten[routenId] = [
               { typ: "aussichtspunkt", id: ort.id },
             ];
           }
 
           //add routen subobject to aussichtspunkt
           if (ort.routen) {
-            if (ort.routen.filter((r) => r.id === item.id).length === -1) {
-              ort.routen.push({ id: item.id, typ: "route", name: item.name });
+            if (ort.routen.filter((r) => r.id === routenId).length === -1) {
+              ort.routen.push({ id: routenId, typ: "route", name: item.name });
             }
           } else {
-            ort.routen = [{ id: item.id, typ: "route", name: item.name }];
+            ort.routen = [{ id: routenId, typ: "route", name: item.name }];
           }
           for (const aussichtspunktort of ort.klimaorte) {
             allStandorteInRouten.push(aussichtspunktort.id);
-            const currentStandortInCache = standorteInRouten[item.id];
+            const currentStandortInCache = standorteInRouten[routenId];
             if (currentStandortInCache) {
               currentStandortInCache.push({
                 typ: "standort",
                 id: aussichtspunktort.id,
               });
             } else {
-              standorteInRouten[item.id] = [
+              standorteInRouten[routenId] = [
                 { typ: "standort", id: aussichtspunktort.id },
               ];
             }
           }
         } else if (ort.typ === "zwischenstopp") {
           allZwischenstoppsInRouten.push(ort.id);
-          const currentZwischenstopInCache = zwischenstoppsInRouten[item.id];
+          const currentZwischenstopInCache = zwischenstoppsInRouten[routenId];
           if (currentZwischenstopInCache) {
             currentZwischenstopInCache.push({
               typ: "zwischenstopp",
               id: ort.id,
             });
           } else {
-            zwischenstoppsInRouten[item.id] = [
+            zwischenstoppsInRouten[routenId] = [
               { typ: "zwischenstopp", id: ort.id },
             ];
           }
         } else if (ort.typ === "poi") {
           allPoisInRouten.push(ort.id);
-          const currentPoiInCache = poisInRouten[item.id];
+          const currentPoiInCache = poisInRouten[routenId];
           if (currentPoiInCache) {
-            poisInRouten[item.id].push({ typ: "poi", id: ort.id });
+            poisInRouten[routenId].push({ typ: "poi", id: ort.id });
           } else {
-            poisInRouten[item.id] = [{ typ: "poi", id: ort.id }];
+            poisInRouten[routenId] = [{ typ: "poi", id: ort.id }];
           }
         }
       }
@@ -173,7 +174,7 @@ const createItemsDictionary = (items) => {
   }
 
   //add stationen to stationenInRouten
-
+  // stationen define as angebote, pois, zwischenstopps ansd aussichtspunkte
   for (const routenId of Object.keys(routen)) {
     stationenInRouten[routenId] = [];
 
@@ -199,6 +200,22 @@ const createItemsDictionary = (items) => {
             typ: "angebot",
             id: angebotId,
           });
+        }
+      } else if (station.typ === "aussichtspunkt") {
+        //add the aussichtspunkt itself
+        stationenInRouten[routenId].push({
+          typ: station.typ,
+          id: station.id,
+        });
+        //add the angebote of the aussichtspunkt vi the standorte
+        const aussichtspunkt = aussichtspunkte[station.id];
+        for (const klimaort of aussichtspunkt.klimaorte) {
+          for (const angebotId of angeboteInStandorte[klimaort.id] || []) {
+            stationenInRouten[routenId].push({
+              typ: "angebot", // via Aussichtspunkt
+              id: angebotId,
+            });
+          }
         }
       } else {
         stationenInRouten[routenId].push({

@@ -226,7 +226,6 @@ const InfoBox = (props) => {
             NEXT,
             itemsDictionary.stationenInRouten[secondarySelection.id],
             (obj) => {
-              console.log("yyy obj", obj);
               if (obj.typ === "angebot") {
                 return "ort";
               } else {
@@ -241,7 +240,6 @@ const InfoBox = (props) => {
             PREV,
             itemsDictionary.stationenInRouten[secondarySelection.id],
             (obj) => {
-              console.log("yyy obj", obj);
               if (obj.typ === "angebot") {
                 return "ort";
               } else {
