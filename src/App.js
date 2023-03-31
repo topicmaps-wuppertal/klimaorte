@@ -40,7 +40,7 @@ function App() {
   const [poiColors, setPoiColors] = useState();
   useEffect(() => {
     getPOIColors(setPoiColors);
-    document.title = "Online-Stadtplan Wuppertal";
+    document.title = "Klimaortkarte Wuppertal (alpha)";
   }, []);
 
   return (
