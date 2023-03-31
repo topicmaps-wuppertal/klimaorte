@@ -37,21 +37,25 @@ const InfoBox = (props) => {
               style={{
                 width: 390,
                 paddingBottom: 3,
-                paddingLeft: (selectedFeature.properties.routen.length - counter) * 10,
+                paddingLeft:
+                  (selectedFeature.properties.routen.length - counter) * 10,
                 cursor: "pointer", //is a hand
               }}
               onClick={() => {
                 setSelectedFeatureByPredicate(
                   (feature) => {
                     return (
-                      feature?.properties?.typ === "route" && feature?.properties?.id === route.id
+                      feature?.properties?.typ === "route" &&
+                      feature?.properties?.id === route.id
                     );
                   },
                   (foundSomething) => {
                     if (!foundSomething) {
                       fitBoundsForCollection(
                         allFeatures.filter(
-                          (f) => f.properties.typ === "route" && f.properties.id === route.id
+                          (f) =>
+                            f.properties.typ === "route" &&
+                            f.properties.id === route.id
                         )
                       );
                       setTimeout(() => {
@@ -68,7 +72,10 @@ const InfoBox = (props) => {
               }}
             >
               <InfoBoxHeader
-                headerColor={getColorConsideringSeondarySelection(route, secondarySelection)}
+                headerColor={getColorConsideringSeondarySelection(
+                  route,
+                  secondarySelection
+                )}
                 content={"Klimaroute " + route.name}
               ></InfoBoxHeader>
             </div>
@@ -95,7 +102,8 @@ const InfoBox = (props) => {
       let nextIndexOfOrder;
       let orderCounter = 0;
       const orderIndexOfSelectedFeature = doubleOrder.findIndex(
-        (tester) => currentTarget.typ === tester.typ && currentTarget.id === tester.id
+        (tester) =>
+          currentTarget.typ === tester.typ && currentTarget.id === tester.id
       );
       let hitIndex;
       //prepare the next id
@@ -114,8 +122,10 @@ const InfoBox = (props) => {
         let counter = 0;
         while (counter < shownFeatures.length) {
           if (
-            shownFeatures[index].properties.typ === doubleOrder[nextIndexOfOrder].typ &&
-            shownFeatures[index].properties.id.toString() === doubleOrder[nextIndexOfOrder].id
+            shownFeatures[index].properties.typ ===
+              doubleOrder[nextIndexOfOrder].typ &&
+            shownFeatures[index].properties.id.toString() ===
+              doubleOrder[nextIndexOfOrder].id
           ) {
             hitIndex = nextIndexOfOrder;
             break;
@@ -156,7 +166,9 @@ const InfoBox = (props) => {
         },
         getNumberOfShownFeatures: (featureCollection) =>
           featureCollection.filter(
-            (feature) => feature.preventSelection !== true && feature.properties.typ === "route"
+            (feature) =>
+              feature.preventSelection !== true &&
+              feature.properties.typ === "route"
           ).length,
         next: () => {
           select(NEXT, Object.keys(itemsDictionary.routen), () => "route");
@@ -165,7 +177,9 @@ const InfoBox = (props) => {
           select(PREV, Object.keys(itemsDictionary.routen), () => "route");
         },
         fitAll: () => {
-          fitBoundsForCollection(allFeatures.filter((f) => f.properties.typ === "route"));
+          fitBoundsForCollection(
+            allFeatures.filter((f) => f.properties.typ === "route")
+          );
         },
       };
     } else {
@@ -184,7 +198,8 @@ const InfoBox = (props) => {
 
         getTotalNumberOfItems: (items) => {
           if (secondarySelection?.id) {
-            return itemsDictionary.angeboteAndAussichtspunkteInRouten[secondarySelection.id].length;
+            return itemsDictionary.stationenInRouten[secondarySelection.id]
+              .length;
           } else {
             return "";
           }
@@ -196,7 +211,9 @@ const InfoBox = (props) => {
               (feature) =>
                 feature.preventSelection !== true &&
                 feature.properties.routen &&
-                feature.properties.routen.filter((r) => r.id === secondarySelection.id).length > 0
+                feature.properties.routen.filter(
+                  (r) => r.id === secondarySelection.id
+                ).length > 0
             );
 
             return featuresThatCount.length;
@@ -207,16 +224,31 @@ const InfoBox = (props) => {
         next: () => {
           select(
             NEXT,
-            itemsDictionary.angeboteAndAussichtspunkteInRouten[secondarySelection.id],
-            (obj) => (obj.typ === "angebot" ? "ort" : "aussichtspunkt"),
+            itemsDictionary.stationenInRouten[secondarySelection.id],
+            (obj) => {
+              console.log("yyy obj", obj);
+              if (obj.typ === "angebot") {
+                return "ort";
+              } else {
+                return obj.typ;
+              }
+            },
             (obj) => obj.id
           );
         },
         previous: () => {
           select(
             PREV,
-            itemsDictionary.angeboteAndAussichtspunkteInRouten[secondarySelection.id],
-            (obj) => (obj.typ === "angebot" ? "ort" : "aussichtspunkt"),
+            itemsDictionary.stationenInRouten[secondarySelection.id],
+            (obj) => {
+              console.log("yyy obj", obj);
+              if (obj.typ === "angebot") {
+                return "ort";
+              } else {
+                return obj.typ;
+              }
+            },
+
             (obj) => obj.id
           );
         },
@@ -225,7 +257,9 @@ const InfoBox = (props) => {
             allFeatures.filter(
               (f) =>
                 f.properties.typ === "ort" &&
-                itemsDictionary.angeboteAndAussichtspunkteInRouten[secondarySelection.id].findIndex(
+                itemsDictionary.stationenInRouten[
+                  secondarySelection.id
+                ].findIndex(
                   (agb) => agb.id === f.properties.id && agb.typ === "angebot"
                 ) > -1
             )
@@ -239,7 +273,10 @@ const InfoBox = (props) => {
         <GenericInfoBoxFromFeature
           {...props}
           config={config}
-          secondaryInfoBoxElements={[overlappingHeaders, ...(props.secondaryInfoBoxElements || [])]}
+          secondaryInfoBoxElements={[
+            overlappingHeaders,
+            ...(props.secondaryInfoBoxElements || []),
+          ]}
         />
       </div>
     );
