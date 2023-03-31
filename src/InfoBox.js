@@ -189,11 +189,11 @@ const InfoBox = (props) => {
         city: "Wuppertal",
         navigator: {
           noun: {
-            singular: "Klimaort auf dieser Route",
-            plural: "Klimaorte auf dieser Route",
+            singular: "Station auf dieser Route",
+            plural: "Stationen auf dieser Route",
           },
         },
-        noCurrentFeatureTitle: "Keine Klimaorte gefunden",
+        noCurrentFeatureTitle: "Keine Stationen gefunden",
         noCurrentFeatureContent: "",
 
         getTotalNumberOfItems: (items) => {
