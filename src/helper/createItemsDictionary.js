@@ -6,7 +6,7 @@ const createItemsDictionary = (items) => {
   const zwischenstoppsInRouten = {};
   const poisInRouten = {};
 
-  const angeboteAndAussichtspunkteInRouten = {};
+  const stationenInRouten = {};
   const angeboteInStandorte = {};
   const routen = {};
   const angebote = {};
@@ -172,13 +172,16 @@ const createItemsDictionary = (items) => {
     }
   }
 
-  //add angebote to angeboteInRouten
-  for (const routenId of Object.keys(routen)) {
-    angeboteAndAussichtspunkteInRouten[routenId] = [];
-    for (const standortInRoute of standorteInRouten[routenId]) {
-      if (standortInRoute.typ === "standort") {
-        const standortId = standortInRoute.id;
+  //add stationen to stationenInRouten
 
+  for (const routenId of Object.keys(routen)) {
+    stationenInRouten[routenId] = [];
+
+    const route = routen[routenId];
+
+    for (const station of route.routenpunkte) {
+      if (station.typ === "klimaort") {
+        const standortId = station.id;
         if (!angeboteInStandorte[standortId]) {
           console.warn(
             "attention!!! angeboteInStandorte[standortId]===undefined",
@@ -192,15 +195,15 @@ const createItemsDictionary = (items) => {
         }
 
         for (const angebotId of angeboteInStandorte[standortId] || []) {
-          angeboteAndAussichtspunkteInRouten[routenId].push({
+          stationenInRouten[routenId].push({
             typ: "angebot",
             id: angebotId,
           });
         }
-      } else if (standortInRoute.typ === "aussichtspunkt") {
-        angeboteAndAussichtspunkteInRouten[routenId].push({
-          typ: "aussichtspunkt",
-          id: standortInRoute.id,
+      } else {
+        stationenInRouten[routenId].push({
+          typ: station.typ,
+          id: station.id,
         });
       }
     }
@@ -222,7 +225,7 @@ const createItemsDictionary = (items) => {
     allPoisInRouten,
     standorteInRouten,
     angeboteInStandorte,
-    angeboteAndAussichtspunkteInRouten,
+    stationenInRouten,
     angebote,
     routen,
     pois,

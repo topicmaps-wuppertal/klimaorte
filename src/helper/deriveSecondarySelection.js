@@ -1,6 +1,11 @@
 const derive = (props) => {
-  const { selectedFeature, appMode, itemsDictionary, featureCollection, secondarySelection } =
-    props;
+  const {
+    selectedFeature,
+    appMode,
+    itemsDictionary,
+    featureCollection,
+    secondarySelection,
+  } = props;
   let newSecondarySelection;
   if (selectedFeature) {
     if (selectedFeature.properties.typ === "route") {
@@ -10,7 +15,10 @@ const derive = (props) => {
         name: selectedFeature.properties.name,
       };
     } else {
-      if (selectedFeature.properties.routen && selectedFeature.properties.routen.length === 1) {
+      if (
+        selectedFeature.properties.routen &&
+        selectedFeature.properties.routen.length === 1
+      ) {
         newSecondarySelection = selectedFeature.properties.routen[0];
       } else if (
         selectedFeature.properties.routen &&
@@ -22,7 +30,9 @@ const derive = (props) => {
         if (secondarySelection && secondarySelection.typ === "route") {
           const secondaryRoutenId = secondarySelection.id;
           if (
-            selectedFeature.properties.routen.filter((r) => r.id === secondaryRoutenId).length === 1
+            selectedFeature.properties.routen.filter(
+              (r) => r.id === secondaryRoutenId
+            ).length === 1
           ) {
             newSecondarySelection = secondarySelection;
           } else {
