@@ -4477,7 +4477,7 @@ color-convert@^2.0.1:
   dependencies:
     color-name "~1.1.4"
 
-color-hash@^2.0.2:
+color-hash@^2.0.1, color-hash@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/color-hash/-/color-hash-2.0.2.tgz#abf735705da71874ddec7dcef50cd7479e7d64e9"
   integrity sha512-6exeENAqBTuIR1wIo36mR8xVVBv6l1hSLd7Qmvf6158Ld1L15/dbahR9VUOiX7GmGJBCnQyS0EY+I8x+wa7egg==
@@ -9091,10 +9091,10 @@ leaflet-snap@^0.0.4:
   optionalDependencies:
     leaflet-draw "^0.3.2"
 
-leaflet.locatecontrol@^0.63.0:
-  version "0.63.0"
-  resolved "https://registry.yarnpkg.com/leaflet.locatecontrol/-/leaflet.locatecontrol-0.63.0.tgz#a93b9af0c36a0edcac50dc336aa718d2c6f91f54"
-  integrity sha512-SPhIbVTPo99YBon2YAPPCvfZa2w5MnifDFTYIXk/2YA3eShg56cPKi0A2CoXLKHel762JvheHrLEnSJduDWIlg==
+leaflet.locatecontrol@0.76.1:
+  version "0.76.1"
+  resolved "https://registry.yarnpkg.com/leaflet.locatecontrol/-/leaflet.locatecontrol-0.76.1.tgz#03eb8e98e0c54fee457f930a63624479a6177de0"
+  integrity sha512-qA92Mxs2N1jgVx+EdmxtDrdzFD+f2llPJbqaKvmW1epZMSIvD6KNsBjpQYUIxz4XtJkOleqRSwWQcrm5P5NnYw==
 
 leaflet.markercluster@^1.4.0:
   version "1.5.3"
@@ -10635,7 +10635,7 @@ polygon-clipping@^0.15.3:
   dependencies:
     splaytree "^3.1.0"
 
-polylabel@mapbox/polylabel:
+"polylabel@github:mapbox/polylabel":
   version "1.1.0"
   resolved "https://codeload.github.com/mapbox/polylabel/tar.gz/07c112091b4c9ffeb412af33c575133168893b4a"
   dependencies:
@@ -11732,10 +11732,10 @@ react-chartkick@^0.4.1:
   dependencies:
     chartkick "^3.2.0"
 
-react-cismap@1.9.4:
-  version "1.9.4"
-  resolved "https://registry.yarnpkg.com/react-cismap/-/react-cismap-1.9.4.tgz#7c5b41af59b86c9725ee9a2005e2bbc27cb93185"
-  integrity sha512-96bl2FCLzCuH+igf7AeoVwqLcGT3UEs8LYYSdUK9h7pqOUCV31og2Q0VLyuJrd0xb6V4y5Q0Yejnrwk16Jz9/Q==
+react-cismap@~1.14.0:
+  version "1.14.4"
+  resolved "https://registry.yarnpkg.com/react-cismap/-/react-cismap-1.14.4.tgz#062ef9d3e40185d3efa3cf9d94f0f45da56c06b0"
+  integrity sha512-d+i0rRsl5ZC5NhPbgdR7JYtu7JMBtzZDNAXonuJG9JOpsjYaWFQIYFD0eEYTFIE4PKMrOvxq74nfWk/LOrJvLQ==
   dependencies:
     "@fortawesome/fontawesome-free" "^5.12.0"
     "@fortawesome/fontawesome-svg-core" "^1.2.26"
@@ -11760,6 +11760,7 @@ react-cismap@1.9.4:
     chart.js "^2.9.4"
     chroma-js "^2.1.1"
     color "^3.1.3"
+    color-hash "^2.0.1"
     console-feed "^3.2.2"
     create-svg-pie "^1.0.0"
     d3v4 "^4.2.2"
@@ -11778,7 +11779,7 @@ react-cismap@1.9.4:
     leaflet-extra-markers "^1.2.1"
     leaflet-fullscreen-custom-container-fork "^1.0.7"
     leaflet-snap "^0.0.4"
-    leaflet.locatecontrol "^0.63.0"
+    leaflet.locatecontrol "0.76.1"
     leaflet.markercluster "^1.4.0"
     leaflet.nontiledlayer "^1.0.9"
     leaflet.path.drag "^0.0.6"
