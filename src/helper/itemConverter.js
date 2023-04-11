@@ -132,6 +132,8 @@ const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
               },
             },
           };
+          console.log("yyy aussichtspunkt", aussichtspunkt);
+
           result.push(aussichtspunkt);
           const aussichtsview = {
             featuretype: "view",
