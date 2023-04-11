@@ -47,7 +47,7 @@ function App() {
     <TopicMapContextProvider
       appKey={appKey}
       featureTooltipFunction={(feature) => feature?.text}
-      featureItemsURL={dataHost + "/data/klimaortkarte.data.2fix.json"}
+      featureItemsURL={dataHost + "/data/klimaortkarte.data.2.json"}
       featureItemsURL__={"/data/klimaortkarte.data.json"}
       createFeatureItemsDictionary={createItemsDictionary}
       deriveSecondarySelection={deriveSecondarySelection}
