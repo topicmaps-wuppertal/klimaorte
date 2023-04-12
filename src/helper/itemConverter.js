@@ -51,16 +51,20 @@ const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
     return f;
   } else if (itemIn.typ === "route") {
     let item = await addSVGToProps(itemIn, (i) => i.icon);
+    //round distanz to 1 digit
+    const dist = Math.round(item.distanz * 10) / 10;
     const info = {
       header: "Klimaroute",
       title: item?.name,
       additionalInfo: item?.beschreibung,
+
       subtitle: (
-        <span>
-          {item?.standort?.strasse} {item?.standort?.hausnummer}
+        <h6>
+          Schwierigkeit: {item?.schwierigkeitsgrad}
           <br />
-          {item?.standort?.plz} {item?.standort?.stadt}
-        </span>
+          Distanz: {dist} km, Dauer: {item?.dauer}{" "}
+          {item?.dauer === "1:00" ? "Stunde" : "Stunden"}
+        </h6>
       ),
     };
 
@@ -132,7 +136,6 @@ const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
               },
             },
           };
-          console.log("yyy aussichtspunkt", aussichtspunkt);
 
           result.push(aussichtspunkt);
           const aussichtsview = {
