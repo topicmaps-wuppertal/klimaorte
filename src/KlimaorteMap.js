@@ -33,10 +33,19 @@ const getGazData = async (setGazData) => {
   const prefix = "GazDataForStories";
   const sources = {};
 
-  sources.adressen = await md5FetchText(prefix, dataHost + "/data/adressen.json");
+  sources.adressen = await md5FetchText(
+    prefix,
+    dataHost + "/data/adressen.json"
+  );
   sources.bezirke = await md5FetchText(prefix, dataHost + "/data/bezirke.json");
-  sources.quartiere = await md5FetchText(prefix, dataHost + "/data/quartiere.json");
-  sources.bpklimastandorte = await md5FetchText(prefix, dataHost + "/data/bpklimastandorte.json");
+  sources.quartiere = await md5FetchText(
+    prefix,
+    dataHost + "/data/quartiere.json"
+  );
+  sources.bpklimastandorte = await md5FetchText(
+    prefix,
+    dataHost + "/data/bpklimastandorte.json"
+  );
 
   const gazData = getGazDataForTopicIds(sources, [
     "bpklimastandorte",
@@ -49,9 +58,8 @@ const getGazData = async (setGazData) => {
 };
 
 function KlimaorteMap() {
-  const { setSelectedFeatureByPredicate, setFilterState, setFilterMode } = useContext(
-    FeatureCollectionDispatchContext
-  );
+  const { setSelectedFeatureByPredicate, setFilterState, setFilterMode } =
+    useContext(FeatureCollectionDispatchContext);
   const lightBoxDispatchContext = useContext(LightBoxDispatchContext);
   const {
     selectedFeature,
@@ -86,11 +94,15 @@ function KlimaorteMap() {
       const foundShow = show != null;
       if (foundShow === true) {
         //check whether the feature is already shown
-        const foundFeature = shownFeatures.find((f) => f.properties.standort.id === parseInt(show));
+        const foundFeature = shownFeatures.find(
+          (f) => f.properties.standort.id === parseInt(show)
+        );
         if (foundFeature !== undefined) {
           setSelectedFeatureByPredicate((feature) => {
             try {
-              return parseInt(feature.properties.standort.id) === parseInt(show);
+              return (
+                parseInt(feature.properties.standort.id) === parseInt(show)
+              );
             } catch (e) {
               return false;
             }
@@ -98,7 +110,9 @@ function KlimaorteMap() {
           history.push(removeQueryPart(search, "show"));
         } else {
           //check whether the feature is in the items list
-          const foundFeature = items.find((i) => i.standort.id === parseInt(show));
+          const foundFeature = items.find(
+            (i) => i.standort.id === parseInt(show)
+          );
 
           if (foundFeature !== undefined) {
             const { themen } = getFilterInfo(items);
@@ -125,22 +139,44 @@ function KlimaorteMap() {
   }, [history, shownFeatures, items]);
 
   let weitereAngebote;
-  const angebot = selectedFeature?.properties;
+  const item = selectedFeature?.properties;
   let moreDataAvailable = false;
-  if (angebot) {
-    weitereAngebote = items.filter(
-      (testItem) =>
-        testItem.typ === "ort" &&
-        testItem?.standort.id === angebot?.standort?.id &&
-        testItem.id !== angebot.id
-    );
-    moreDataAvailable =
-      weitereAngebote.length > 0 ||
-      selectedFeature?.properties?.bemerkung !== undefined ||
-      selectedFeature?.properties?.kommentar !== undefined;
+  console.log("xxx  selectedFeature.featuretype", selectedFeature?.featuretype);
+
+  //case switch for  selectedFeature.featuretype
+  switch (selectedFeature?.featuretype) {
+    case "route":
+      moreDataAvailable = true;
+      break;
+    case "zwischenstopp":
+      moreDataAvailable = true;
+      break;
+    case "ort":
+      const angebot = item;
+      if (angebot) {
+        weitereAngebote = items.filter(
+          (testItem) =>
+            testItem.typ === "ort" &&
+            testItem?.standort.id === angebot?.standort?.id &&
+            testItem.id !== angebot.id
+        );
+        moreDataAvailable =
+          weitereAngebote.length > 0 ||
+          selectedFeature?.properties?.bemerkung !== undefined ||
+          selectedFeature?.properties?.kommentar !== undefined;
+      }
+      break;
+    case "aussichtspunkt":
+      break;
+    case "poi":
+      break;
+    default:
+      break;
   }
 
-  const linkProduction = new URLSearchParams(history.location.search).get("linkProduction");
+  const linkProduction = new URLSearchParams(history.location.search).get(
+    "linkProduction"
+  );
   const linkProductionEnabled = linkProduction != null;
 
   let secondaryInfoBoxElements = [
@@ -153,9 +189,13 @@ function KlimaorteMap() {
   if (linkProductionEnabled) {
     secondaryInfoBoxElements.push(
       <a
-        href={window.location.href + "&show=" + selectedFeature?.properties?.standort?.id}
-        target='_blank'
-        rel='noreferrer'
+        href={
+          window.location.href +
+          "&show=" +
+          selectedFeature?.properties?.standort?.id
+        }
+        target="_blank"
+        rel="noreferrer"
       >
         π
       </a>
@@ -170,7 +210,10 @@ function KlimaorteMap() {
       return getColorConsideringSeondarySelection(props, secondarySelection);
     });
   } else {
-    iconCreateFunction = getClusterIconCreatorFunction(30, (props) => props.color);
+    iconCreateFunction = getClusterIconCreatorFunction(
+      30,
+      (props) => props.color
+    );
   }
 
   return (
@@ -186,11 +229,11 @@ function KlimaorteMap() {
       <TopicMapComponent
         maxZoom={19}
         minZoom={8}
-        applicationMenuTooltipString='Filter | Einstellungen | Anleitung'
+        applicationMenuTooltipString="Filter | Einstellungen | Anleitung"
         locatorControl={true}
         modalMenu={<MyMenu mode={appMode} />}
         gazData={gazData}
-        gazetteerSearchPlaceholder='Klimaort | Stadtteil | Adresse'
+        gazetteerSearchPlaceholder="Klimaort | Stadtteil | Adresse"
         infoBox={
           <InfoBox
             key={JSON.stringify(selectedFeature)}
@@ -207,7 +250,8 @@ function KlimaorteMap() {
           if (Array.isArray(hits) && hits[0]?.more?.id) {
             setSelectedFeatureByPredicate((feature) => {
               try {
-                const check = parseInt(feature.properties.standort.id) === hits[0].more.id;
+                const check =
+                  parseInt(feature.properties.standort.id) === hits[0].more.id;
                 if (check === true) {
                   zoomToFeature(feature);
                 }

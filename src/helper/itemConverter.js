@@ -172,7 +172,18 @@ const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
     item.styleinfo.darkenFactor = 0.01;
 
     //set additionalInfo to the first 160 chars of beschreibung and add ...
-    const additionalInfo = item?.beschreibung?.substring(0, 320) + "...";
+    // check if there is a linebreak within the first 320 chars
+    // if yes, set additional info to the first line
+    let additionalInfo = "";
+
+    const linebreakIndex = item?.beschreibung?.indexOf("\n");
+
+    if (linebreakIndex > 0 && linebreakIndex < 320) {
+      additionalInfo = item?.beschreibung?.substring(0, linebreakIndex);
+    } else {
+      additionalInfo = item?.beschreibung?.substring(0, 320) + "...";
+    }
+
     const text = item.name;
     const info = {
       header: "Zwischenstopp",
@@ -227,6 +238,7 @@ const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
         },
       },
       properties: item,
+      featuretype: "poi",
     };
   } else {
     console.warn("unknown item type", itemIn);
