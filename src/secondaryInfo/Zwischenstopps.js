@@ -24,15 +24,14 @@ const InfoPanel = () => {
       titleIconName="info-circle"
       title={"Zwischenstopp: " + item.name}
       mainSection={
-        <div style={{ width: "100%" }}>
-          <div style={{ fontSize: "115%", padding: "10px", paddingTop: "0px" }}>
-            {item.beschreibung && (
-              <p>
-                {text}
-                <br />
-              </p>
-            )}
-          </div>
+        <div
+          style={{
+            width: "100%",
+            fontSize: "115%",
+            padding: "10px",
+          }}
+        >
+          {item.beschreibung && <p>{text}</p>}
         </div>
       }
       footer={<Footer />}
