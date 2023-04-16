@@ -4,7 +4,7 @@ import SecondaryInfoPanelSection from "react-cismap/topicmaps/SecondaryInfoPanel
 import SecondaryInfo from "react-cismap/topicmaps/SecondaryInfo";
 import Footer from "./Footer";
 
-import { Col, Descriptions, Timeline } from "antd";
+import { Descriptions, Timeline } from "antd";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -54,36 +54,6 @@ const InfoPanel = () => {
       bsStyle="success"
     >
       <ElevationChart elevationData={elevationData} />
-      {/* <LineChart xtitle="Verlauf" ytitle="Höhe" data={linechartData} /> */}
-      {/* <AreaChart
-        elements={{ radius: 0 }}
-        xtitle="Verlauf"
-        ytitle="Höhe"
-        data={linechartData}
-        library={{
-         
-          elements: {
-            point: {
-              radius: 0,
-            },
-            scales: {
-              x: {
-                type: "linear",
-                ticks: {
-                  callback: function (value, index, values) {
-                    // show label only for every 10th data point
-                    return index % 1000 === 0 ? value : "";
-                  },
-                },
-              },
-              y: {
-                type: "linear",
-                beginAtZero: true,
-              },
-            },
-          },
-        }}
-      /> */}
     </SecondaryInfoPanelSection>
   );
 
