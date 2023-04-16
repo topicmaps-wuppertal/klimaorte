@@ -185,7 +185,8 @@ const InfoPanel = () => {
               <img
                 height="30"
                 alt="Komoot"
-                src="/logo_komoot_green_RGB_v2-1.svg"
+                src="/logo_komoot_green_h30.png"
+                // src="/logo_komoot_green_RGB_v2-1.svg"
               />
             </a>
           </div>
