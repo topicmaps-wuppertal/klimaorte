@@ -3,6 +3,7 @@ import { FeatureCollectionContext } from "react-cismap/contexts/FeatureCollectio
 import SecondaryInfoPanelSection from "react-cismap/topicmaps/SecondaryInfoPanelSection";
 import SecondaryInfo from "react-cismap/topicmaps/SecondaryInfo";
 import Footer from "./Footer";
+import SVGInline from "react-svg-inline";
 
 import { Descriptions, Timeline } from "antd";
 
@@ -15,11 +16,14 @@ import {
   faFlagCheckered,
 } from "@fortawesome/free-solid-svg-icons";
 import ElevationChart from "./ElevationChart";
+import { getSymbolSVGGetter } from "react-cismap/tools/uiHelper";
 
 const productionMode = process.env.NODE_ENV === "production";
 
 const InfoPanel = () => {
-  const { selectedFeature, items } = useContext(FeatureCollectionContext);
+  const { selectedFeature, items, allFeatures, itemsDictionary } = useContext(
+    FeatureCollectionContext
+  );
 
   const item = selectedFeature?.properties;
 
@@ -38,14 +42,11 @@ const InfoPanel = () => {
 
   const subsections = [];
 
-  console.log("yyy item", item);
-
   const elevationData = {};
   let i = 0;
   for (const station of item.stations || []) {
     elevationData[Math.round(station)] = item.zvals[i++];
   }
-  console.log("yy   linchartData", elevationData);
 
   subsections.push(
     <SecondaryInfoPanelSection
@@ -64,11 +65,77 @@ const InfoPanel = () => {
       children: "Startpunkt",
     },
   ];
+  console.log("yy allFeatures", allFeatures);
 
-  for (const zwischenstop of item.routenpunkte || []) {
+  for (const routenpunkt of item.routenpunkte || []) {
+    let typ;
+    let id;
+    let dot = [];
+    let dotPadding = 0;
+    if (routenpunkt.typ === "klimaort") {
+      const angebote = itemsDictionary.angeboteInStandorte[routenpunkt.id];
+      let counter = 0;
+      for (const angebotId of angebote || []) {
+        console.log("yy angebotId", angebotId, "for", routenpunkt.id);
+        const feature4Punkt = allFeatures.find(
+          (f) => f.properties.id === angebotId && f.featuretype === "ort"
+        );
+        console.log("yy ", routenpunkt.name, feature4Punkt);
+
+        dot.push(
+          getSymbolSVGGetter(
+            feature4Punkt?.properties?.svgBadge,
+            feature4Punkt?.properties?.svgBadgeDimension
+          )(25, feature4Punkt?.properties.color, "angebot_" + angebotId)
+        );
+        dotPadding += 12;
+      }
+    } else {
+      //handelt zwischenstopps &  pois
+      const feature4Punkt = allFeatures.find(
+        (f) =>
+          f.properties.id === routenpunkt.id &&
+          f.featuretype === routenpunkt.typ
+      );
+      console.log(
+        "yy zwischenstopp or poi",
+        feature4Punkt?.properties.color,
+        feature4Punkt
+      );
+
+      dot = [
+        getSymbolSVGGetter(
+          feature4Punkt?.properties?.svgBadge,
+          feature4Punkt?.properties?.svgBadgeDimension
+        )(
+          25,
+          feature4Punkt?.properties.color,
+          "badgefor_" + routenpunkt.typ + "_" + routenpunkt.id
+        ),
+      ];
+      console.log(
+        'y_y routenpunkt.typ + "." + routenpunkt.id',
+        routenpunkt.typ +
+          "." +
+          routenpunkt.id +
+          "." +
+          feature4Punkt?.properties.color,
+        dot
+      );
+    }
+
+    // console.log("yy routenpunkt", routenpunkt, feature4Punkt);
+
     routenverlauf4Timeline.push({
-      label: Math.round(zwischenstop.station / 100) * 100 + " m",
-      children: zwischenstop.name,
+      label: (
+        <span style={{ paddingRight: dot.length * 13 }}>
+          {Math.round(routenpunkt.station / 100) * 100 + " m"}
+        </span>
+      ),
+      children: (
+        <span style={{ paddingLeft: dot.length * 13 }}>{routenpunkt.name}</span>
+      ),
+      dot,
     });
   }
 
