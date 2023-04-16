@@ -14,6 +14,8 @@ import {
   faPlay,
   faFlagCheckered,
 } from "@fortawesome/free-solid-svg-icons";
+import ElevationChart from "./ElevationChart";
+
 const productionMode = process.env.NODE_ENV === "production";
 
 const InfoPanel = () => {
@@ -35,13 +37,53 @@ const InfoPanel = () => {
   }
 
   const subsections = [];
+
+  console.log("yyy item", item);
+
+  const elevationData = {};
+  let i = 0;
+  for (const station of item.stations || []) {
+    elevationData[Math.round(station)] = item.zvals[i++];
+  }
+  console.log("yy   linchartData", elevationData);
+
   subsections.push(
     <SecondaryInfoPanelSection
       key="hoehenprofil"
       header="Höhenprofil"
       bsStyle="success"
     >
-      <div></div>
+      <ElevationChart elevationData={elevationData} />
+      {/* <LineChart xtitle="Verlauf" ytitle="Höhe" data={linechartData} /> */}
+      {/* <AreaChart
+        elements={{ radius: 0 }}
+        xtitle="Verlauf"
+        ytitle="Höhe"
+        data={linechartData}
+        library={{
+         
+          elements: {
+            point: {
+              radius: 0,
+            },
+            scales: {
+              x: {
+                type: "linear",
+                ticks: {
+                  callback: function (value, index, values) {
+                    // show label only for every 10th data point
+                    return index % 1000 === 0 ? value : "";
+                  },
+                },
+              },
+              y: {
+                type: "linear",
+                beginAtZero: true,
+              },
+            },
+          },
+        }}
+      /> */}
     </SecondaryInfoPanelSection>
   );
 
