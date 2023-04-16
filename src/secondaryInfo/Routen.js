@@ -65,7 +65,6 @@ const InfoPanel = () => {
       children: "Startpunkt",
     },
   ];
-  console.log("yy allFeatures", allFeatures);
 
   for (const routenpunkt of item.routenpunkte || []) {
     let typ;
@@ -76,11 +75,9 @@ const InfoPanel = () => {
       const angebote = itemsDictionary.angeboteInStandorte[routenpunkt.id];
       let counter = 0;
       for (const angebotId of angebote || []) {
-        console.log("yy angebotId", angebotId, "for", routenpunkt.id);
         const feature4Punkt = allFeatures.find(
           (f) => f.properties.id === angebotId && f.featuretype === "ort"
         );
-        console.log("yy ", routenpunkt.name, feature4Punkt);
 
         dot.push(
           getSymbolSVGGetter(
@@ -97,11 +94,6 @@ const InfoPanel = () => {
           f.properties.id === routenpunkt.id &&
           f.featuretype === routenpunkt.typ
       );
-      console.log(
-        "yy zwischenstopp or poi",
-        feature4Punkt?.properties.color,
-        feature4Punkt
-      );
 
       dot = [
         getSymbolSVGGetter(
@@ -113,15 +105,6 @@ const InfoPanel = () => {
           "badgefor_" + routenpunkt.typ + "_" + routenpunkt.id
         ),
       ];
-      console.log(
-        'y_y routenpunkt.typ + "." + routenpunkt.id',
-        routenpunkt.typ +
-          "." +
-          routenpunkt.id +
-          "." +
-          feature4Punkt?.properties.color,
-        dot
-      );
     }
 
     // console.log("yy routenpunkt", routenpunkt, feature4Punkt);
