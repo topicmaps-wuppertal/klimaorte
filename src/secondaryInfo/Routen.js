@@ -54,7 +54,10 @@ const InfoPanel = () => {
       header="Höhenprofil"
       bsStyle="success"
     >
-      <ElevationChart elevationData={elevationData} />
+      <ElevationChart
+        key={"ElevationChart" + item.id}
+        elevationData={elevationData}
+      />
     </SecondaryInfoPanelSection>
   );
 
@@ -67,13 +70,9 @@ const InfoPanel = () => {
   ];
 
   for (const routenpunkt of item.routenpunkte || []) {
-    let typ;
-    let id;
     let dot = [];
-    let dotPadding = 0;
     if (routenpunkt.typ === "klimaort") {
       const angebote = itemsDictionary.angeboteInStandorte[routenpunkt.id];
-      let counter = 0;
       for (const angebotId of angebote || []) {
         const feature4Punkt = allFeatures.find(
           (f) => f.properties.id === angebotId && f.featuretype === "ort"
@@ -85,7 +84,6 @@ const InfoPanel = () => {
             feature4Punkt?.properties?.svgBadgeDimension
           )(25, feature4Punkt?.properties.color, "angebot_" + angebotId)
         );
-        dotPadding += 12;
       }
     } else {
       //handelt zwischenstopps &  pois

@@ -23,53 +23,6 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
-  animation: false,
-  onHover: function (e, item) {
-    // add hover here!!!
-  },
-  responsive: true,
-  interaction: {
-    intersect: false,
-    mode: "index",
-  },
-  tooltip: {
-    position: "nearest",
-  },
-  plugins: {
-    title: {
-      align: "end",
-      display: false,
-      text: "Distanz, m / Höhe, m",
-    },
-    legend: {
-      display: false,
-    },
-    tooltip: {
-      displayColors: false,
-      position: "nearest",
-
-      callbacks: {
-        title: (tooltipItems) => {
-          return "Entfernung: " + tooltipItems[0].label + "m";
-        },
-        label: (tooltipItem) => {
-          return "Höhe: " + tooltipItem.raw + "m";
-        },
-      },
-    },
-  },
-  scales: {
-    x: {
-      type: "linear",
-    },
-    y: {
-      type: "linear",
-      beginAtZero: true,
-    },
-  },
-};
-
 export default function ElevationChart({ elevationData }) {
   const stations = [];
   const elevations = [];
@@ -79,6 +32,56 @@ export default function ElevationChart({ elevationData }) {
   }
 
   const labels = stations;
+
+  const options = {
+    animation: false,
+    onHover: function (e, item) {
+      // add hover here!!!
+    },
+    responsive: true,
+    interaction: {
+      intersect: false,
+      mode: "index",
+    },
+
+    tooltip: {
+      position: "nearest",
+    },
+    plugins: {
+      title: {
+        align: "end",
+        display: false,
+        text: "Distanz, m / Höhe, m",
+      },
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        displayColors: false,
+        position: "nearest",
+
+        callbacks: {
+          title: (tooltipItems) => {
+            return "Entfernung: " + tooltipItems[0].label + "m";
+          },
+          label: (tooltipItem) => {
+            return "Höhe: " + tooltipItem.raw + "m";
+          },
+        },
+      },
+    },
+    scales: {
+      x: {
+        type: "linear",
+        beginAtZero: true,
+        max: Math.round(labels[labels.length - 1]),
+      },
+      y: {
+        type: "linear",
+        beginAtZero: true,
+      },
+    },
+  };
 
   const data = {
     labels,
