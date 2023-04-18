@@ -3,20 +3,17 @@ import { FeatureCollectionContext } from "react-cismap/contexts/FeatureCollectio
 import SecondaryInfoPanelSection from "react-cismap/topicmaps/SecondaryInfoPanelSection";
 import SecondaryInfo from "react-cismap/topicmaps/SecondaryInfo";
 import Footer from "./Footer";
-import SVGInline from "react-svg-inline";
 
-import { Descriptions, Timeline } from "antd";
+import { Descriptions } from "antd";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBicycle,
   faRoute,
   faWalking,
-  faPlay,
-  faFlagCheckered,
 } from "@fortawesome/free-solid-svg-icons";
 import ElevationChart from "./ElevationChart";
-import { getSymbolSVGGetter } from "react-cismap/tools/uiHelper";
+import Verlauf from "./Verlauf";
 
 const productionMode = process.env.NODE_ENV === "production";
 
@@ -61,71 +58,6 @@ const InfoPanel = () => {
     </SecondaryInfoPanelSection>
   );
 
-  const routenverlauf4Timeline = [
-    {
-      dot: <FontAwesomeIcon icon={faPlay} />,
-      // label: "0 m",
-      children: "Startpunkt",
-    },
-  ];
-
-  for (const routenpunkt of item.routenpunkte || []) {
-    let dot = [];
-    if (routenpunkt.typ === "klimaort") {
-      const angebote = itemsDictionary.angeboteInStandorte[routenpunkt.id];
-      for (const angebotId of angebote || []) {
-        const feature4Punkt = allFeatures.find(
-          (f) => f.properties.id === angebotId && f.featuretype === "ort"
-        );
-
-        dot.push(
-          getSymbolSVGGetter(
-            feature4Punkt?.properties?.svgBadge,
-            feature4Punkt?.properties?.svgBadgeDimension
-          )(25, feature4Punkt?.properties.color, "angebot_" + angebotId)
-        );
-      }
-    } else {
-      //handelt zwischenstopps &  pois
-      const feature4Punkt = allFeatures.find(
-        (f) =>
-          f.properties.id === routenpunkt.id &&
-          f.featuretype === routenpunkt.typ
-      );
-
-      dot = [
-        getSymbolSVGGetter(
-          feature4Punkt?.properties?.svgBadge,
-          feature4Punkt?.properties?.svgBadgeDimension
-        )(
-          25,
-          feature4Punkt?.properties.color,
-          "badgefor_" + routenpunkt.typ + "_" + routenpunkt.id
-        ),
-      ];
-    }
-
-    // console.log("yy routenpunkt", routenpunkt, feature4Punkt);
-
-    routenverlauf4Timeline.push({
-      label: (
-        <span style={{ paddingRight: dot.length * 13 }}>
-          {Math.round(routenpunkt.station / 100) * 100 + " m"}
-        </span>
-      ),
-      children: (
-        <span style={{ paddingLeft: dot.length * 13 }}>{routenpunkt.name}</span>
-      ),
-      dot,
-    });
-  }
-
-  routenverlauf4Timeline.push({
-    //label: "x m",
-    dot: <FontAwesomeIcon icon={faFlagCheckered} />,
-    children: "Zielpunkt",
-  });
-
   subsections.push(
     <SecondaryInfoPanelSection
       key="routenverlauf"
@@ -133,7 +65,7 @@ const InfoPanel = () => {
       bsStyle="info"
     >
       <div>
-        <Timeline mode="left" items={routenverlauf4Timeline} />
+        <Verlauf />
       </div>
     </SecondaryInfoPanelSection>
   );
@@ -166,15 +98,27 @@ const InfoPanel = () => {
           }}
         >
           {item.beschreibung && <p>{item.beschreibung}</p>}
-          <Descriptions bordered>
+          <Descriptions
+            bordered
+            column={{
+              xxl: 3,
+              xl: 3,
+              lg: 3,
+              md: 1,
+              sm: 1,
+              xs: 1,
+            }}
+          >
             <Descriptions.Item label="Dauer">
-              {item.dauer} Stunden
+              <span style={{ whiteSpace: "nowrap" }}>{item.dauer} Stunden</span>
             </Descriptions.Item>
             <Descriptions.Item label="Länge">
-              {item.distanz} km
+              <span style={{ whiteSpace: "nowrap" }}>{item.distanz} km</span>
             </Descriptions.Item>
             <Descriptions.Item label="Schwierigkeitsgrad">
-              {item.schwierigkeitsgrad}
+              <span style={{ whiteSpace: "nowrap" }}>
+                {item.schwierigkeitsgrad}
+              </span>
             </Descriptions.Item>
           </Descriptions>
           <div style={{ padding: 20, paddingLeft: 0 }}>
