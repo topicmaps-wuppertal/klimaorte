@@ -161,7 +161,7 @@ const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
     }
     return result;
   } else if (itemIn.typ === "zwischenstopp") {
-    let item = await addSVGToProps(itemIn, (i) => "Platz.svg");
+    let item = await addSVGToProps(itemIn, (i) => "Icon_Platz_farbig.svg");
     //item.svg = DEFAULT_SVG.code;
     const type = "Feature";
     const selected = false;
