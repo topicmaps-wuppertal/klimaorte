@@ -14,6 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ElevationChart from "./ElevationChart";
 import Verlauf from "./Verlauf";
+import { ResponsiveTopicMapContext } from "react-cismap/contexts/ResponsiveTopicMapContextProvider";
 
 const productionMode = process.env.NODE_ENV === "production";
 
@@ -21,6 +22,7 @@ const InfoPanel = () => {
   const { selectedFeature, items, allFeatures, itemsDictionary } = useContext(
     FeatureCollectionContext
   );
+  const { windowSize } = useContext(ResponsiveTopicMapContext);
 
   const item = selectedFeature?.properties;
 
@@ -52,7 +54,7 @@ const InfoPanel = () => {
       bsStyle="success"
     >
       <ElevationChart
-        key={"ElevationChart" + item.id}
+        key={"ElevationChart" + item.id + "." + windowSize.width}
         elevationData={elevationData}
       />
     </SecondaryInfoPanelSection>

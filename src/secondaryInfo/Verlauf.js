@@ -7,10 +7,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faFlagCheckered } from "@fortawesome/free-solid-svg-icons";
 import { getSymbolSVGGetter } from "react-cismap/tools/uiHelper";
 import "./verlauf.css";
+import { ResponsiveTopicMapContext } from "react-cismap/contexts/ResponsiveTopicMapContextProvider";
+
 export default function Verlauf() {
   const { selectedFeature, items, allFeatures, itemsDictionary } = useContext(
     FeatureCollectionContext
   );
+
+  const { windowSize } = useContext(ResponsiveTopicMapContext);
+
+  console.log("windowSize", windowSize);
   const item = selectedFeature?.properties;
 
   const routenverlauf4Timeline = [
@@ -20,7 +26,7 @@ export default function Verlauf() {
       children: "Startpunkt",
     },
   ];
-
+  let maxDotLength = 0;
   for (const routenpunkt of item.routenpunkte || []) {
     let dot = [];
     if (routenpunkt.typ === "klimaort") {
@@ -34,7 +40,7 @@ export default function Verlauf() {
           getSymbolSVGGetter(
             feature4Punkt?.properties?.svgBadge,
             feature4Punkt?.properties?.svgBadgeDimension
-          )(25, feature4Punkt?.properties.color, "angebot_" + angebotId)
+          )(24, feature4Punkt?.properties.color, "angebot_" + angebotId)
         );
       }
     } else {
@@ -50,37 +56,80 @@ export default function Verlauf() {
           feature4Punkt?.properties?.svgBadge,
           feature4Punkt?.properties?.svgBadgeDimension
         )(
-          25,
+          24,
           feature4Punkt?.properties.color,
           "badgefor_" + routenpunkt.typ + "_" + routenpunkt.id
         ),
       ];
     }
 
+    maxDotLength = Math.max(maxDotLength, dot.length);
     // console.log("yy routenpunkt", routenpunkt, feature4Punkt);
 
-    routenverlauf4Timeline.push({
-      label: (
-        <span style={{ paddingRight: dot.length * 13 }}>
-          {(Math.round(routenpunkt.station / 100) * 100).toLocaleString() +
-            " m"}
-        </span>
-      ),
-      children: (
-        <span style={{ paddingLeft: dot.length * 13 }}>{routenpunkt.name}</span>
-      ),
-      dot,
-    });
+    if (windowSize.width < 500) {
+      routenverlauf4Timeline.push({
+        children: (
+          <div
+            style={{
+              _border: "1px solid red",
+              paddingLeft: (dot.length - 1) * 12,
+            }}
+          >
+            <b>
+              {(Math.round(routenpunkt.station / 100) * 100).toLocaleString() +
+                " m"}
+            </b>
+            {": "}
+            {routenpunkt.name}{" "}
+          </div>
+        ),
+
+        dot,
+      });
+    } else {
+      routenverlauf4Timeline.push({
+        label: (
+          <div
+            style={{
+              paddingRight: (dot.length - 1) * 12,
+              whiteSpace: "nowrap",
+            }}
+          >
+            {(Math.round(routenpunkt.station / 100) * 100).toLocaleString() +
+              " m"}
+          </div>
+        ),
+        children: (
+          <div style={{ paddingLeft: (dot.length - 1) * 12 }}>
+            {routenpunkt.name}
+          </div>
+        ),
+        dot,
+      });
+    }
   }
 
   routenverlauf4Timeline.push({
-    //label: "x m",
     dot: <FontAwesomeIcon icon={faFlagCheckered} />,
     children: "Zielpunkt",
   });
-  return (
-    <div className="timeline_container">
-      <Timeline mode="left" items={routenverlauf4Timeline} />
-    </div>
-  );
+
+  if (windowSize.width < 500) {
+    return (
+      <div className="left_oriented_timeline_container_without_labels">
+        <Timeline
+          colorBgContainer="#ff0000"
+          mode="left"
+          items={routenverlauf4Timeline}
+          style={{ padding: 5, paddingLeft: maxDotLength * 12 }}
+        />
+      </div>
+    );
+  } else {
+    return (
+      <div className="left_oriented_timeline_container_with_content_on_both_sides">
+        <Timeline mode="left" items={routenverlauf4Timeline} />
+      </div>
+    );
+  }
 }
