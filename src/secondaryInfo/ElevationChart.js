@@ -96,5 +96,5 @@ export default function ElevationChart({ elevationData }) {
       },
     ],
   };
-  return <Line options={options} data={data} />;
+  return <Line style={{ maxHeight: 200 }} options={options} data={data} />;
 }
