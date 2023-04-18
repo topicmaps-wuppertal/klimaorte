@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import {
   FeatureCollectionContext,
   FeatureCollectionDispatchContext,
@@ -7,25 +7,38 @@ import GenericInfoBoxFromFeature from "react-cismap/topicmaps/GenericInfoBoxFrom
 import InfoBoxHeader from "react-cismap/topicmaps/InfoBoxHeader";
 import { appModes } from "./helper/modeParser";
 import { getColorConsideringSeondarySelection } from "./helper/styler";
+import useComponentSize from "@rehooks/component-size";
+import { ResponsiveTopicMapContext } from "react-cismap/contexts/ResponsiveTopicMapContextProvider";
 
 const InfoBox = (props) => {
+  let boxConfig = null;
+  let secondaryInfoBoxElements = [];
+
   const featureCollectionContext = useContext(FeatureCollectionContext);
   const { setSelectedFeatureByPredicate, fitBoundsForCollection } = useContext(
     FeatureCollectionDispatchContext
   );
   const {
-    filterState,
     shownFeatures,
-    filteredItems,
     itemsDictionary,
     selectedFeature,
     secondarySelection,
     allFeatures,
   } = featureCollectionContext;
+  const { responsiveState, gap, windowSize, infoBoxPixelWidth } = useContext(
+    ResponsiveTopicMapContext
+  );
 
   const overlappingHeaders = [];
   let counter = 1;
   const isActive = () => true; // //itemFilterFunction({ filterState });
+  let actualWidth = 500;
+
+  if (responsiveState === "normal") {
+    actualWidth = infoBoxPixelWidth;
+  } else if (responsiveState === "small") {
+    actualWidth = windowSize.width - gap;
+  }
 
   if (props.appMode === appModes.ROUTEN) {
     if (selectedFeature?.properties?.routen) {
@@ -35,7 +48,7 @@ const InfoBox = (props) => {
             <div
               key={"overlapping." + route.name}
               style={{
-                width: 390,
+                width: actualWidth - counter * 10,
                 paddingBottom: 3,
                 paddingLeft:
                   (selectedFeature.properties.routen.length - counter) * 10,
@@ -266,39 +279,32 @@ const InfoBox = (props) => {
       };
     }
 
-    return (
-      <div>
-        <GenericInfoBoxFromFeature
-          {...props}
-          config={config}
-          secondaryInfoBoxElements={[
-            overlappingHeaders,
-            ...(props.secondaryInfoBoxElements || []),
-          ]}
-        />
-      </div>
-    );
+    boxConfig = config;
+    secondaryInfoBoxElements = [
+      overlappingHeaders,
+      ...(props.secondaryInfoBoxElements || []),
+    ];
   } else {
-    return (
-      <div>
-        <GenericInfoBoxFromFeature
-          {...props}
-          config={{
-            displaySecondaryInfoAction: props.moreDataAvailable,
-            city: "Wuppertal",
-            navigator: {
-              noun: {
-                singular: "Klimaort",
-                plural: "Klimaorte",
-              },
-            },
-            noCurrentFeatureTitle: "Keine Klimaorte gefunden",
-            noCurrentFeatureContent: "",
-          }}
-        />
-      </div>
-    );
+    boxConfig = {
+      displaySecondaryInfoAction: props.moreDataAvailable,
+      city: "Wuppertal",
+      navigator: {
+        noun: {
+          singular: "Klimaort",
+          plural: "Klimaorte",
+        },
+      },
+      noCurrentFeatureTitle: "Keine Klimaorte gefunden",
+      noCurrentFeatureContent: "",
+    };
   }
+  return (
+    <GenericInfoBoxFromFeature
+      {...props}
+      config={boxConfig}
+      secondaryInfoBoxElements={secondaryInfoBoxElements}
+    />
+  );
 };
 
 export default InfoBox;
