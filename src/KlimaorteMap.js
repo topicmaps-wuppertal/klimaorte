@@ -141,8 +141,6 @@ function KlimaorteMap() {
   let weitereAngebote;
   const item = selectedFeature?.properties;
   let moreDataAvailable = false;
-  console.log("xxx  selectedFeature.featuretype", selectedFeature?.featuretype);
-
   //case switch for  selectedFeature.featuretype
   switch (selectedFeature?.featuretype) {
     case "route":

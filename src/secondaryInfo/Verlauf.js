@@ -6,7 +6,7 @@ import { Timeline } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faFlagCheckered } from "@fortawesome/free-solid-svg-icons";
 import { getSymbolSVGGetter } from "react-cismap/tools/uiHelper";
-
+import "./verlauf.css";
 export default function Verlauf() {
   const { selectedFeature, items, allFeatures, itemsDictionary } = useContext(
     FeatureCollectionContext
@@ -62,7 +62,8 @@ export default function Verlauf() {
     routenverlauf4Timeline.push({
       label: (
         <span style={{ paddingRight: dot.length * 13 }}>
-          {Math.round(routenpunkt.station / 100) * 100 + " m"}
+          {(Math.round(routenpunkt.station / 100) * 100).toLocaleString() +
+            " m"}
         </span>
       ),
       children: (
@@ -77,5 +78,9 @@ export default function Verlauf() {
     dot: <FontAwesomeIcon icon={faFlagCheckered} />,
     children: "Zielpunkt",
   });
-  return <Timeline mode="left" items={routenverlauf4Timeline} />;
+  return (
+    <div className="timeline_container">
+      <Timeline mode="left" items={routenverlauf4Timeline} />
+    </div>
+  );
 }
