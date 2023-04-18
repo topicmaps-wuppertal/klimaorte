@@ -48,10 +48,10 @@ const InfoBox = (props) => {
             <div
               key={"overlapping." + route.name}
               style={{
-                width: actualWidth - counter * 10,
+                width: actualWidth,
                 paddingBottom: 3,
                 paddingLeft:
-                  (selectedFeature.properties.routen.length - counter) * 10,
+                  (selectedFeature.properties.routen.length - counter + 1) * 10,
                 cursor: "pointer", //is a hand
               }}
               onClick={() => {
