@@ -24,14 +24,13 @@ const createItemsDictionary = (items) => {
     if (item.typ === "route") {
       //
       const routenId = item.id;
-      routen[routenId] = item;
       //orte in routen
 
       for (const ort of item.routenpunkte) {
         if (ort.typ === "klimaort") {
           allStandorteInRouten.push(ort.id);
           const currentStandortInCache = standorteInRouten[routenId];
-
+          ort.enhanced = true;
           if (currentStandortInCache) {
             currentStandortInCache.push({ typ: "standort", id: ort.id });
           } else {
@@ -95,6 +94,7 @@ const createItemsDictionary = (items) => {
           }
         }
       }
+      routen[routenId] = item;
     } else if (item.typ === "ort") {
       angebote[item.id] = item;
       const currentStandortInCache = angeboteInStandorte[item.standort.id];
