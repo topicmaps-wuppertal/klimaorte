@@ -42,10 +42,24 @@ const InfoPanel = () => {
   const subsections = [];
 
   const elevationData = {};
+  const routePoints = {};
   let i = 0;
   for (const station of item.stations || []) {
-    elevationData[Math.round(station)] = item.zvals[i++];
+    elevationData[Math.round(station)] = { z: item.zvals[i++] };
   }
+
+  // add routepoints
+  // console.log("# routepoints", item.routenpunkte.length);
+  // console.log("# stations", item.stations.length);
+  for (const rp of item.routenpunkte || []) {
+    //check if station is already in elevationData
+    if (elevationData[Math.round(rp.station)]) {
+      elevationData[Math.round(rp.station)].routepoint = rp;
+    } else {
+      elevationData[Math.round(rp.station)] = { routepoint: rp };
+    }
+  }
+  // attention: the elevationData is not sorted by station
 
   subsections.push(
     <SecondaryInfoPanelSection
@@ -56,6 +70,7 @@ const InfoPanel = () => {
       <ElevationChart
         key={"ElevationChart" + item.id + "." + windowSize.width}
         elevationData={elevationData}
+        routePoints={routePoints}
       />
     </SecondaryInfoPanelSection>
   );
