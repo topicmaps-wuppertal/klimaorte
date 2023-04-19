@@ -62,30 +62,14 @@ const InfoPanel = () => {
   // attention: the elevationData is not sorted by station
 
   subsections.push(
-    <SecondaryInfoPanelSection
-      key="hoehenprofil"
-      header="Höhenprofil"
-      bsStyle="success"
-    >
-      <ElevationChart
-        key={"ElevationChart" + item.id + "." + windowSize.width}
-        elevationData={elevationData}
-        routePoints={routePoints}
-      />
-    </SecondaryInfoPanelSection>
+    <ElevationChart
+      key={"ElevationChart" + item.id + "." + windowSize.width}
+      elevationData={elevationData}
+      routePoints={routePoints}
+    />
   );
 
-  subsections.push(
-    <SecondaryInfoPanelSection
-      key="routenverlauf"
-      header="Routenverlauf"
-      bsStyle="info"
-    >
-      <div>
-        <Verlauf />
-      </div>
-    </SecondaryInfoPanelSection>
-  );
+  subsections.push(<Verlauf />);
   if (!productionMode) {
     subsections.push(
       <SecondaryInfoPanelSection

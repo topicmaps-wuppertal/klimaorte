@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 import { FeatureCollectionContext } from "react-cismap/contexts/FeatureCollectionContextProvider";
+// import SecondaryInfoPanelSection from "react-cismap/topicmaps/SecondaryInfoPanelSection";
+import SecondaryInfoPanelSection from "./SecondaryInfoPanelSection";
 
 import { Timeline } from "antd";
 
@@ -18,7 +20,7 @@ export default function Verlauf() {
 
   console.log("windowSize", windowSize);
   const item = selectedFeature?.properties;
-
+  let timeline;
   const routenverlauf4Timeline = [
     {
       dot: <FontAwesomeIcon icon={faPlay} />,
@@ -115,7 +117,7 @@ export default function Verlauf() {
   });
 
   if (windowSize.width < 500) {
-    return (
+    timeline = (
       <div className="left_oriented_timeline_container_without_labels">
         <Timeline
           colorBgContainer="#ff0000"
@@ -126,10 +128,20 @@ export default function Verlauf() {
       </div>
     );
   } else {
-    return (
+    timeline = (
       <div className="left_oriented_timeline_container_with_content_on_both_sides">
         <Timeline mode="left" items={routenverlauf4Timeline} />
       </div>
     );
   }
+
+  return (
+    <SecondaryInfoPanelSection
+      key="routenverlauf"
+      header="Routenverlauf"
+      bsStyle="info"
+    >
+      <div>{timeline}</div>
+    </SecondaryInfoPanelSection>
+  );
 }

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,21 +11,29 @@ import {
   Legend,
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
+import zoomPlugin from "chartjs-plugin-zoom";
+// import SecondaryInfoPanelSection from "react-cismap/topicmaps/SecondaryInfoPanelSection";
+import SecondaryInfoPanelSection from "./SecondaryInfoPanelSection";
 import {
   faBicycle,
   faRoute,
   faWalking,
+  faMagn,
+  faSlash,
+  faMagnifyingGlass,
+  faMagnifyingGlassMinus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FeatureCollectionContext } from "react-cismap/contexts/FeatureCollectionContextProvider";
 import { getSymbolSVGGetter } from "react-cismap/tools/uiHelper";
+import { Button } from "react-bootstrap";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
-
+  zoomPlugin,
   Title,
   Tooltip,
   Filler,
@@ -37,6 +45,9 @@ export default function ElevationChart({ elevationData }) {
   const { selectedFeature, items, allFeatures, itemsDictionary } = useContext(
     FeatureCollectionContext
   );
+  const chartRef = useRef(null);
+  const zoomRef = useRef(null);
+  //const [zoom, setZoom] = React.useState(1);
   const sampleSvg = allFeatures[0].properties.svgBadge;
   const sampleSvgDimensions = allFeatures[0].properties.svgBadgeDimension;
   let maxElevation = 0;
@@ -142,6 +153,30 @@ export default function ElevationChart({ elevationData }) {
           },
         },
       },
+      zoom: {
+        zoom: {
+          wheel: {
+            enabled: false,
+          },
+          pinch: {
+            enabled: true,
+          },
+          drag: {
+            enabled: true,
+          },
+          pan: {
+            enabled: true,
+          },
+          mode: "x",
+          // onZoom: (e) => {
+          //   setZoom(e.chart.getZoomLevel());
+          // },
+          // onZoomComplete: (e) => {
+          //   // setZoom(e.chart.getZoomLevel());
+          //   zoomRef.current = e.chart.getZoomLevel();
+          // },
+        },
+      },
     },
     scales: {
       x: {
@@ -216,5 +251,32 @@ export default function ElevationChart({ elevationData }) {
       },
     ],
   };
-  return <Chart style={{ maxHeight: 200 }} options={options} data={data} />;
+  // console.log("zoom", zoomRef.current);
+
+  return (
+    <SecondaryInfoPanelSection
+      key={"hoehenprofil"}
+      header="Höhenprofil"
+      bsStyle="success"
+      extra={
+        <FontAwesomeIcon
+          style={{ color: "grey" }}
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            console.log("click");
+            chartRef.current.resetZoom();
+          }}
+          icon={faMagnifyingGlassMinus}
+        ></FontAwesomeIcon>
+      }
+    >
+      <Chart
+        ref={chartRef}
+        style={{ maxHeight: 200 }}
+        options={options}
+        data={data}
+      />
+    </SecondaryInfoPanelSection>
+  );
 }
