@@ -9,6 +9,7 @@ import {
   Tooltip,
   Filler,
   Legend,
+  registerables,
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
 import zoomPlugin from "chartjs-plugin-zoom";
@@ -28,17 +29,19 @@ import { FeatureCollectionContext } from "react-cismap/contexts/FeatureCollectio
 import { getSymbolSVGGetter } from "react-cismap/tools/uiHelper";
 import { Button } from "react-bootstrap";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  zoomPlugin,
-  Title,
-  Tooltip,
-  Filler,
-  Legend
-);
+// ChartJS.register(
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+//   zoomPlugin,
+//   Title,
+//   Tooltip,
+//   Filler,
+//   Legend
+// );
+
+ChartJS.register(...registerables, zoomPlugin);
 
 export default function ElevationChart({ elevationData }) {
   // attention: the elevationData is not sorted by station
