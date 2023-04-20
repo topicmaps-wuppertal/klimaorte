@@ -1,6 +1,8 @@
 import { addSVGToProps, DEFAULT_SVG } from "react-cismap/tools/svgHelper";
 import Color from "color";
 import { getColorForProperties } from "./fromStadtplan";
+import { getWegeartIcon } from "./iconFactory";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
   if (itemIn.typ === "ort") {
@@ -55,7 +57,11 @@ const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
     const dist = Math.round(item.distanz * 10) / 10;
     const info = {
       header: "Klimaroute",
-      title: item?.name,
+      title: (
+        <span>
+          {item?.name} <FontAwesomeIcon icon={getWegeartIcon(item?.wegeart)} />
+        </span>
+      ),
       additionalInfo: item?.beschreibung,
 
       subtitle: (
