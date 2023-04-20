@@ -167,12 +167,15 @@ const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
     }
     return result;
   } else if (itemIn.typ === "zwischenstopp") {
-    let item = await addSVGToProps(itemIn, (i) => "Icon_Platz_farbig.svg");
+    let item = await addSVGToProps(
+      itemIn,
+      (i) => "Klimaroute_Icon_Zwischenstopp_farbig.svg"
+    );
     //item.svg = DEFAULT_SVG.code;
     const type = "Feature";
     const selected = false;
     const geometry = item?.geojson;
-    item.color = "orange";
+    item.color = "#226c32";
     item.styleinfo = {};
     item.styleinfo.weight = 2;
     item.styleinfo.darkenFactor = 0.01;
