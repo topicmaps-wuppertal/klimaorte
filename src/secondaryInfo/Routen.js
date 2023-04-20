@@ -3,15 +3,11 @@ import { FeatureCollectionContext } from "react-cismap/contexts/FeatureCollectio
 import SecondaryInfoPanelSection from "react-cismap/topicmaps/SecondaryInfoPanelSection";
 import SecondaryInfo from "react-cismap/topicmaps/SecondaryInfo";
 import Footer from "./Footer";
-
+import { getWegeartIcon } from "../helper/iconFactory";
 import { Descriptions } from "antd";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBicycle,
-  faRoute,
-  faWalking,
-} from "@fortawesome/free-solid-svg-icons";
+
 import ElevationChart from "./ElevationChart";
 import Verlauf from "./Verlauf";
 import { ResponsiveTopicMapContext } from "react-cismap/contexts/ResponsiveTopicMapContextProvider";
@@ -26,18 +22,7 @@ const InfoPanel = () => {
 
   const item = selectedFeature?.properties;
 
-  let iconV;
-  switch (item?.wegeart) {
-    case "mit dem Rad":
-      iconV = faBicycle;
-      break;
-    case "zu Fuß":
-      iconV = faWalking;
-      break;
-    default:
-      iconV = faRoute;
-      break;
-  }
+  let iconV = getWegeartIcon(item?.wegeart);
 
   const subsections = [];
 
