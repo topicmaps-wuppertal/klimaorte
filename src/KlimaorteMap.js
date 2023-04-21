@@ -65,6 +65,7 @@ function KlimaorteMap() {
     selectedFeature,
     items,
     shownFeatures,
+    allFeatures,
     filterState,
     filterMode,
     filteredItems,
@@ -84,59 +85,83 @@ function KlimaorteMap() {
   }, []);
 
   useEffect(() => {
-    const handleShow = (search) => {
-      //check whether shownFeatures is undefined
-      //then the map is not ready wait for it
-      if (shownFeatures === undefined || items === undefined) {
-        return;
-      }
-      const show = new URLSearchParams(search).get("show");
-      const foundShow = show != null;
-      if (foundShow === true) {
-        //check whether the feature is already shown
-        const foundFeature = shownFeatures.find(
-          (f) => f.properties.standort.id === parseInt(show)
-        );
-        if (foundFeature !== undefined) {
-          setSelectedFeatureByPredicate((feature) => {
-            try {
-              return (
-                parseInt(feature.properties.standort.id) === parseInt(show)
-              );
-            } catch (e) {
-              return false;
-            }
-          });
-          history.push(removeQueryPart(search, "show"));
-        } else {
-          //check whether the feature is in the items list
-          const foundFeature = items.find(
-            (i) => i.standort.id === parseInt(show)
-          );
+    if (allFeatures !== undefined) {
+      const handleShow = (search) => {
+        //check whether shownFeatures is undefined
+        //then the map is not ready wait for it
+        if (shownFeatures === undefined || items === undefined) {
+          return;
+        }
+        const show = new URLSearchParams(search).get("show");
+        const foundShow = show != null;
+
+        //http://localhost:3000/app#/orte?lat=51.23910202395776&lng=7.194871992741512&zoom=8&show=ort.10
+        //http://localhost:3000/app#/routen?lat=51.23910202395776&lng=7.194871992741512&zoom=8&show=route.beyenburg
+
+        if (foundShow === true) {
+          //split the show paramter (seperated by . in type and key)
+          const [type, key] = show.split(".");
+          console.log("type", type);
+          console.log("key", key);
+
+          //todo check if the show type matches the current mode
+          // if not ignore the show parameter
+
+          let predicate = () => false;
+          if (type === "ort") {
+            predicate = (feature) => {
+              try {
+                return (
+                  parseInt(feature.properties.standort.id) === parseInt(key) // in this case is key=id
+                );
+              } catch (e) {
+                return false;
+              }
+            };
+          } else if (type === "route") {
+            predicate = (feature) => {
+              try {
+                return (
+                  feature.properties.key === key // in this case is key=key
+                );
+              } catch (e) {
+                return false;
+              }
+            };
+          }
+
+          //check whether the feature is already shown
+          const foundFeature = shownFeatures.find(predicate);
 
           if (foundFeature !== undefined) {
-            const { themen } = getFilterInfo(items);
-            setFilterState({ ...filterState, themen });
-            // reset the filter
+            setSelectedFeatureByPredicate(predicate);
+            zoomToFeature(foundFeature);
           } else {
-            console.log("Objekt mit Standort.ID=" + show + " nicht gefunden");
-            history.push(removeQueryPart(search, "show"));
+            //check whether the feature is in the items list
+            const foundFeature = allFeatures.find(predicate);
+
+            if (foundFeature !== undefined) {
+              zoomToFeature(foundFeature);
+            } else {
+              console.log("Objekt mit Standort.ID=" + show + " nicht gefunden");
+            }
           }
+          history.push(removeQueryPart(search, "show"));
+
+          // setFilterState({ kampagnen: [] });
+          // setAppMenuVisible(true);
+          // setTimeout(() => {
+          //   setAppMenuActiveMenuSection("filter");
+          // }, 50);
         }
+      };
 
-        // setFilterState({ kampagnen: [] });
-        // setAppMenuVisible(true);
-        // setTimeout(() => {
-        //   setAppMenuActiveMenuSection("filter");
-        // }, 50);
-      }
-    };
-
-    handleShow(history.location.search);
-    return history.listen(() => {
       handleShow(history.location.search);
-    });
-  }, [history, shownFeatures, items]);
+      return history.listen(() => {
+        handleShow(history.location.search);
+      });
+    }
+  }, [history, shownFeatures, items, allFeatures]);
 
   let weitereAngebote;
   const item = selectedFeature?.properties;
