@@ -175,7 +175,10 @@ export default function ElevationChart({ revertedOrder }) {
               if (rp) {
                 const name = rp.name;
                 const type = rp.type;
-                return name + " (" + elevations[tooltipItem.dataIndex] + "m)";
+                return [
+                  name,
+                  "Höhe: " + elevations[tooltipItem.dataIndex] + "m",
+                ];
               } else {
                 return null;
               }
