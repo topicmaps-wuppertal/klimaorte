@@ -1,6 +1,6 @@
 {
   "name": "klimaortkarte",
-  "version": "2.0.0-SNAPSHOT.54",
+  "version": "2.0.0-SNAPSHOT.55",
   "private": true,
   "config": {
     "dockerRegistryPath": "cismet",
