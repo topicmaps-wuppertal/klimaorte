@@ -43,11 +43,32 @@ import { Button } from "react-bootstrap";
 
 ChartJS.register(...registerables, zoomPlugin);
 
-export default function ElevationChart({ elevationData }) {
-  // attention: the elevationData is not sorted by station
+export default function ElevationChart({ revertedOrder }) {
   const { selectedFeature, items, allFeatures, itemsDictionary } = useContext(
     FeatureCollectionContext
   );
+  const item = selectedFeature?.properties;
+  const geomlength = item.geomlength;
+
+  const elevationData = {};
+  const routePoints = {};
+  let i = 0;
+  for (const station of item.stations || []) {
+    elevationData[Math.round(station)] = { z: item.zvals[i++] };
+  }
+
+  // add routepoints
+  for (const rp of item.routenpunkte || []) {
+    //check if station is already in elevationData
+    if (elevationData[Math.round(rp.station)]) {
+      elevationData[Math.round(rp.station)].routepoint = rp;
+    } else {
+      elevationData[Math.round(rp.station)] = { routepoint: rp };
+    }
+  }
+
+  // attention: the elevationData is not sorted by station
+
   const chartRef = useRef(null);
   const zoomRef = useRef(null);
   //const [zoom, setZoom] = React.useState(1);
@@ -56,14 +77,14 @@ export default function ElevationChart({ elevationData }) {
   let maxElevation = 0;
   const stations = [];
   const elevations = [];
-  const routePointsInStations = [];
+  const combinedData = [];
 
   for (const station of Object.keys(elevationData)) {
     stations.push(station);
   }
 
   stations.sort((a, b) => a - b);
-  let i = 0;
+  i = 0;
   for (const station of stations) {
     if (elevationData[station].z) {
       elevations.push(elevationData[station].z);
@@ -92,17 +113,27 @@ export default function ElevationChart({ elevationData }) {
   i = 0;
   for (const station of stations) {
     if (elevationData[station].routepoint) {
-      routePointsInStations.push({
+      combinedData.push({
+        station: Math.round(station),
+        station_reverted: Math.round(geomlength - station),
         routepoint: elevationData[station].routepoint,
         z: elevations[i],
       });
     } else {
-      routePointsInStations.push(null);
+      combinedData.push({
+        station: Math.round(station),
+        station_reverted: Math.round(geomlength - station),
+        z: elevations[i],
+      });
     }
     i++;
   }
   const labels = stations;
 
+  let combinedDataInTheRightOrder = combinedData;
+  if (revertedOrder) {
+    combinedDataInTheRightOrder = combinedData.slice().reverse();
+  }
   const options = {
     animation: false,
     onHover: function (e, item) {
@@ -139,12 +170,8 @@ export default function ElevationChart({ elevationData }) {
             if (tooltipItem.dataset.name === "elevation") {
               return "Höhe: " + tooltipItem.raw + "m";
             } else {
-              // console.log(
-              //   "routePointsInStations[tooltipItem.dataIndex].routepoint",
-              //   routePointsInStations[tooltipItem.dataIndex]
-              // );
               const rp =
-                routePointsInStations[tooltipItem.dataIndex]?.routepoint;
+                combinedDataInTheRightOrder[tooltipItem.dataIndex]?.routepoint;
               if (rp) {
                 const name = rp.name;
                 const type = rp.type;
@@ -211,7 +238,9 @@ export default function ElevationChart({ elevationData }) {
   const virtualElevationForRoutePoints = Math.ceil(maxElevation / 50) * 50;
 
   const data = {
-    labels,
+    labels: revertedOrder
+      ? combinedDataInTheRightOrder.map((item) => item.station_reverted)
+      : combinedDataInTheRightOrder.map((item) => item.station),
     datasets: [
       {
         type: "bubble",
@@ -224,8 +253,8 @@ export default function ElevationChart({ elevationData }) {
           return img;
         },
         pointStyle: "rect",
-        data: routePointsInStations.map((item) => {
-          if (item?.z) {
+        data: combinedDataInTheRightOrder.map((item) => {
+          if (item?.routepoint) {
             return virtualElevationForRoutePoints;
           } else {
             return null;
@@ -248,18 +277,19 @@ export default function ElevationChart({ elevationData }) {
         pointHoverRadius: 0,
         pointHitRadius: 0,
         pointRadius: 0,
-        data: elevations,
+        data: combinedDataInTheRightOrder.map((item) => item.z),
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
     ],
   };
-  // console.log("zoom", zoomRef.current);
 
   return (
     <SecondaryInfoPanelSection
       key={"hoehenprofil"}
-      header="Höhenprofil"
+      header={
+        "Höhenprofil" + (revertedOrder ? " (umgekehrte Reihenfolge)" : "")
+      }
       bsStyle="success"
       extra={
         <FontAwesomeIcon

@@ -11,16 +11,16 @@ import { getSymbolSVGGetter } from "react-cismap/tools/uiHelper";
 import "./verlauf.css";
 import { ResponsiveTopicMapContext } from "react-cismap/contexts/ResponsiveTopicMapContextProvider";
 
-export default function Verlauf() {
+export default function Verlauf({ revertedOrder }) {
   const { selectedFeature, items, allFeatures, itemsDictionary } = useContext(
     FeatureCollectionContext
   );
 
   const { windowSize } = useContext(ResponsiveTopicMapContext);
 
-  console.log("windowSize", windowSize);
   const item = selectedFeature?.properties;
   let timeline;
+
   const routenverlauf4Timeline = [
     {
       dot: <FontAwesomeIcon icon={faPlay} />,
@@ -29,7 +29,16 @@ export default function Verlauf() {
     },
   ];
   let maxDotLength = 0;
-  for (const routenpunkt of item.routenpunkte || []) {
+
+  let rps;
+
+  if (revertedOrder) {
+    rps = (item.routenpunkte || []).slice().reverse(); //cerate a copy first then reverse
+  } else {
+    rps = item.routenpunkte || [];
+  }
+
+  for (const routenpunkt of rps) {
     let dot = [];
     if (routenpunkt.typ === "klimaort") {
       const angebote = itemsDictionary.angeboteInStandorte[routenpunkt.id];
@@ -78,8 +87,13 @@ export default function Verlauf() {
             }}
           >
             <b>
-              {(Math.round(routenpunkt.station / 100) * 100).toLocaleString() +
-                " m"}
+              {!revertedOrder &&
+                (Math.round(routenpunkt.station / 100) * 100).toLocaleString() +
+                  " m"}
+              {revertedOrder &&
+                (
+                  Math.round(routenpunkt.station_reverted / 100) * 100
+                ).toLocaleString() + " m"}
             </b>
             {": "}
             {routenpunkt.name}{" "}
@@ -97,8 +111,13 @@ export default function Verlauf() {
               whiteSpace: "nowrap",
             }}
           >
-            {(Math.round(routenpunkt.station / 100) * 100).toLocaleString() +
-              " m"}
+            {!revertedOrder &&
+              (Math.round(routenpunkt.station / 100) * 100).toLocaleString() +
+                " m"}
+            {revertedOrder &&
+              (
+                Math.round(routenpunkt.station_reverted / 100) * 100
+              ).toLocaleString() + " m"}
           </div>
         ),
         children: (
@@ -138,7 +157,9 @@ export default function Verlauf() {
   return (
     <SecondaryInfoPanelSection
       key="routenverlauf"
-      header="Routenverlauf"
+      header={
+        "Routenverlauf" + (revertedOrder ? " (umgekehrte Reihenfolge)" : "")
+      }
       bsStyle="info"
     >
       <div>{timeline}</div>

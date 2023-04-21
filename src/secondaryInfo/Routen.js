@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FeatureCollectionContext } from "react-cismap/contexts/FeatureCollectionContextProvider";
 import SecondaryInfoPanelSection from "react-cismap/topicmaps/SecondaryInfoPanelSection";
 import SecondaryInfo from "react-cismap/topicmaps/SecondaryInfo";
 import Footer from "./Footer";
 import { getWegeartIcon } from "../helper/iconFactory";
-import { Descriptions } from "antd";
+import { Button, Descriptions } from "antd";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -19,6 +19,7 @@ const InfoPanel = () => {
     FeatureCollectionContext
   );
   const { windowSize } = useContext(ResponsiveTopicMapContext);
+  const [revertedOrder, setRevertedOrder] = useState(false);
 
   const item = selectedFeature?.properties;
 
@@ -26,35 +27,14 @@ const InfoPanel = () => {
 
   const subsections = [];
 
-  const elevationData = {};
-  const routePoints = {};
-  let i = 0;
-  for (const station of item.stations || []) {
-    elevationData[Math.round(station)] = { z: item.zvals[i++] };
-  }
-
-  // add routepoints
-  // console.log("# routepoints", item.routenpunkte.length);
-  // console.log("# stations", item.stations.length);
-  for (const rp of item.routenpunkte || []) {
-    //check if station is already in elevationData
-    if (elevationData[Math.round(rp.station)]) {
-      elevationData[Math.round(rp.station)].routepoint = rp;
-    } else {
-      elevationData[Math.round(rp.station)] = { routepoint: rp };
-    }
-  }
-  // attention: the elevationData is not sorted by station
-
   subsections.push(
     <ElevationChart
       key={"ElevationChart" + item.id + "." + windowSize.width}
-      elevationData={elevationData}
-      routePoints={routePoints}
+      revertedOrder={revertedOrder}
     />
   );
 
-  subsections.push(<Verlauf />);
+  subsections.push(<Verlauf revertedOrder={revertedOrder} />);
   if (!productionMode) {
     subsections.push(
       <SecondaryInfoPanelSection
@@ -118,6 +98,24 @@ const InfoPanel = () => {
               />
             </a>
           </div>
+          {!revertedOrder && (
+            <Button
+              onClick={() => {
+                setRevertedOrder(true);
+              }}
+            >
+              umgekehrte Reihenfolge anzeigen
+            </Button>
+          )}
+          {revertedOrder && (
+            <Button
+              onClick={() => {
+                setRevertedOrder(false);
+              }}
+            >
+              ursprüngliche Reihenfolge anzeigen{" "}
+            </Button>
+          )}
         </div>
       }
       footer={<Footer />}
