@@ -436,7 +436,7 @@ const MyMenu = () => {
                 <FontAwesomeIcon icon={faInfoCircle} /> der Link zur externen
                 Datenquelle befindet. Weitere Objekte, welche sich in einem
                 Abstand von{" "}
-                <span style={{ whiteSpace: "nowrap" }}>2 Metern</span> zur
+                <span style={{ whiteSpace: "nowrap" }}>60 Metern</span> zur
                 Klimaroute befinden, werden ebenfalls präsentiert bzw. der Route
                 zugeordnet:
                 <ul>
