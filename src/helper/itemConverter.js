@@ -55,6 +55,12 @@ const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
     let item = await addSVGToProps(itemIn, (i) => i.icon);
     //round distanz to 1 digit
     const dist = Math.round(item.distanz * 10) / 10;
+
+    console.log("route", item);
+    const additionalText = `An dieser Route befinden sich ${
+      item?.routenpunkte?.length > 0 ? item?.routenpunkte?.length : "keine"
+    } ${item?.routenpunkte?.length === 1 ? "Station" : "Stationen"}.`;
+
     const info = {
       header: "Klimaroute",
       title: (
@@ -62,7 +68,8 @@ const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
           {item?.name} <FontAwesomeIcon icon={getWegeartIcon(item?.wegeart)} />
         </span>
       ),
-      additionalInfo: item?.beschreibung,
+      additionalInfo:
+        (item?.beschreibung ? item?.beschreibung : "") + " " + additionalText,
 
       subtitle: (
         <h6>
