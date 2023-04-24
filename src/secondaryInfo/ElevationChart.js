@@ -23,6 +23,7 @@ import {
   faSlash,
   faMagnifyingGlass,
   faMagnifyingGlassMinus,
+  faStop,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FeatureCollectionContext } from "react-cismap/contexts/FeatureCollectionContextProvider";
@@ -294,25 +295,74 @@ export default function ElevationChart({ revertedOrder }) {
         "Höhenprofil" + (revertedOrder ? " (umgekehrte Reihenfolge)" : "")
       }
       bsStyle="success"
-      extra={
-        <FontAwesomeIcon
-          style={{ color: "grey" }}
-          onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            console.log("click");
-            chartRef.current.resetZoom();
-          }}
-          icon={faMagnifyingGlassMinus}
-        ></FontAwesomeIcon>
-      }
+      // extra={
+      //   <FontAwesomeIcon
+      //     style={{ color: "grey" }}
+      //     onClick={(e) => {
+      //       e.stopPropagation();
+      //       e.preventDefault();
+      //       console.log("click");
+      //       chartRef.current.resetZoom();
+      //     }}
+      //     icon={faMagnifyingGlassMinus}
+      //   ></FontAwesomeIcon>
+      // }
     >
+      <p>
+        In der Graphik wird Ihnen das Höhenprofil (in Meter) der jeweiligen
+        Klimaroute auf der komoot-Datengrundlage als blaue Linie präsentiert.
+        Dadurch sind Bereiche mit flachem Terrain oder großem Gefälle/ großer
+        Steigung schnell ersichtlich. Besonders für Wuppertal mit der markanten
+        Topographie kann dies beim Erkunden der Klimaroute hilfreich sein. Per
+        Mouseover oder Fingertipp auf die blaue Linie können Sie die
+        entsprechenden Höhenwerte und eine Distanz zum Startpunkt der Klimaroute
+        ermitteln. Am oberen Ende der Graphik befinden sich{" "}
+        <span style={{ whiteSpace: "nowrap" }}>
+          Markierungen{" "}
+          <FontAwesomeIcon style={{ color: "#dddddd" }} icon={faStop} />,
+        </span>{" "}
+        welche auf die an der Klimaroute befindlichen Stationen hinweisen.
+        Ähnlich wie zuvor, lassen sich für die Stationen die Höhenwerte oder
+        Distanzwerte zum Klimaroutenstartpunkt ermitteln. Für die genauere
+        Betrachtung eines Routenabschnitts bzgl. des Höhenprofils markieren Sie
+        mit der Maus den gewünschten Bereich oder verwenden Sie die
+        Zoom-In-Geste (oder Zoom-Out) auf Ihrem mobilen Endgerät. Ein
+        Zurücksetzen des Zooms ist mit einem Klick auf das Lupen-Symbol{" "}
+        <FontAwesomeIcon icon={faMagnifyingGlassMinus} /> möglich.
+      </p>
       <Chart
         ref={chartRef}
         style={{ maxHeight: 200 }}
         options={options}
         data={data}
       />
+
+      <FontAwesomeIcon
+        title="Zoom zurücksetzen"
+        style={{
+          position: "relative",
+          left: 40,
+          top: -50,
+          color: "#00000099",
+          cursor: "pointer",
+        }}
+        icon={faMagnifyingGlassMinus}
+        onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          console.log("click");
+          chartRef.current.resetZoom();
+        }}
+      />
+      <p>
+        Sie möchten das Höhenprofil bzw. den Routenverlauf in umgekehrter
+        Reihenfolge anzeigen lassen? Im Kopfbereich des Datenblattes befindet
+        sich hierzu die Schaltfläche "umgekehrte Reihenfolge anzeigen". Ein
+        Klick darauf wechselt anschließend die Verlaufsrichtung der Graphiken.
+        Ein weiterer Klick auf die jetzt "ursprüngliche Reihenfolge anzeigen"
+        benannte Schaltfläche, setzt die Sortierung wieder in die Ausgangslage
+        zurück.
+      </p>
     </SecondaryInfoPanelSection>
   );
 }

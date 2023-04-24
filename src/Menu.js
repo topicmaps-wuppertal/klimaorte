@@ -430,7 +430,20 @@ const MyMenu = () => {
             sectionTitle={getFilterHeader()}
             sectionBsStyle="primary"
             sectionContent={
-              <FilterPanel filterConfiguration={filterConfiguration} />
+              <>
+                <FilterPanel filterConfiguration={filterConfiguration} />
+                <p style={{ paddingTop: 10 }}>
+                  Die getroffene Filterung wirkt sich nur auf den Bereich{" "}
+                  <a className="styleaslink">
+                    <FontAwesomeIcon icon={faRandom} /> Klimaorte
+                  </a>{" "}
+                  aus (nicht auf den Bereich{" "}
+                  <a className="styleaslink">
+                    <FontAwesomeIcon icon={faRandom} /> Klimarouten
+                  </a>
+                  ).
+                </p>
+              </>
             }
           />,
           <DefaultSettingsPanel
