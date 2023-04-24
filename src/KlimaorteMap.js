@@ -252,7 +252,11 @@ function KlimaorteMap() {
       <TopicMapComponent
         maxZoom={19}
         minZoom={8}
-        applicationMenuTooltipString="Filter | Einstellungen | Anleitung"
+        applicationMenuTooltipString={
+          appMode === "ORTE"
+            ? "Filter | Einstellungen | Anleitung"
+            : "Einstellungen | Anleitung"
+        }
         locatorControl={true}
         modalMenu={<MyMenu mode={appMode} />}
         gazData={gazData}

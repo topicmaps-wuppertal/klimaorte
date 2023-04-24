@@ -27,6 +27,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { getSymbolSVGGetter } from "react-cismap/tools/uiHelper";
 import { featureSamples4Icons } from "./helper/iconFactory";
+import { TopicMapContext } from "react-cismap/contexts/TopicMapContextProvider";
 export const getFilterInfo = (items) => {
   let kategorien = [];
   const katValues = [];
@@ -70,11 +71,13 @@ export const getFilterInfo = (items) => {
 
 const MyMenu = () => {
   const { setAppMenuActiveMenuSection } = useContext(UIDispatchContext);
-  const { filterState, filterMode, filteredItems, shownFeatures, allFeatures } =
-    useContext(FeatureCollectionContext);
+  const { filterState, filterMode, filteredItems, shownFeatures } = useContext(
+    FeatureCollectionContext
+  );
   const { setFilterState, setFilterMode } = useContext(
     FeatureCollectionDispatchContext
   );
+  const { appMode } = useContext(TopicMapContext);
 
   //use this code to get values for the featureSamples4Icons const
   // const [samples, setSamples] = useState({});
@@ -262,6 +265,18 @@ const MyMenu = () => {
       type: "REACTCOMP",
       content: (
         <div>
+          <p>
+            Wenn Sie ein Objekt in der Karte markiert haben, werden Ihnen
+            Objektangaben in der Infobox präsentiert. Bei manchen TopicMaps
+            übersteigt die Menge an Informationen zu diesem Objekt (oder auch
+            der Gestaltungsspielraum) die Möglichkeiten der Infobox, z. B. bei
+            der Präsentation von Messwerten über einen längeren Zeitraum in Form
+            von Diagrammen. Daher wird bei manchen TopicMaps ein ergänzendes
+            Datenblatt angeboten, welches Sie über die Schaltfläche{" "}
+            <FontAwesomeIcon icon={faInfoCircle} /> in der Infobox erreichen.
+            Für das Datenblatt einer Klimaroute folgen die Erläuterungen zu den
+            einzelnen Abschnitten und möglichen Funktionen.
+          </p>
           <h5>
             <b>Höhenprofil</b>
           </h5>
@@ -455,23 +470,32 @@ const MyMenu = () => {
     >
       <ModalApplicationMenu
         menuIcon={"bars"}
-        menuTitle={"Meine Klimaorte, Einstellungen und Kompaktanleitung"}
+        menuTitle={
+          appMode === "ORTE"
+            ? "Meine Klimaorte, Einstellungen und Kompaktanleitung"
+            : "Einstellungen und Kompaktanleitung"
+        }
         menuFooter={<MenuFooter />}
         menuIntroduction={
           <span>
-            Benutzen Sie die Auswahlmöglichkeiten unter{" "}
-            <Link
-              className="useAClassNameToRenderProperLink"
-              to="filter"
-              containerId="myMenu"
-              smooth={true}
-              delay={100}
-              onClick={() => setAppMenuActiveMenuSection("filter")}
-            >
-              Meine Klimaorte
-            </Link>
-            , um die in der Karte angezeigten vorbildlichen Klimaorte auf die
-            für Sie relevanten Themen zu beschränken. Über{" "}
+            {appMode === "ORTE" && (
+              <span>
+                Benutzen Sie die Auswahlmöglichkeiten unter{" "}
+                <Link
+                  className="useAClassNameToRenderProperLink"
+                  to="filter"
+                  containerId="myMenu"
+                  smooth={true}
+                  delay={100}
+                  onClick={() => setAppMenuActiveMenuSection("filter")}
+                >
+                  Meine Klimaorte
+                </Link>
+                , um die in der Karte angezeigten vorbildlichen Klimaorte auf
+                die für Sie relevanten Themen zu beschränken.
+              </span>
+            )}
+            Über{" "}
             <Link
               className="useAClassNameToRenderProperLink"
               to="settings"
@@ -498,28 +522,30 @@ const MyMenu = () => {
           </span>
         }
         menuSections={[
-          <Section
-            key="filter"
-            sectionKey="filter"
-            sectionTitle={getFilterHeader()}
-            sectionBsStyle="primary"
-            sectionContent={
-              <>
-                <FilterPanel filterConfiguration={filterConfiguration} />
-                <p style={{ paddingTop: 10 }}>
-                  Die getroffene Filterung wirkt sich nur auf den Bereich{" "}
-                  <a className="styleaslink">
-                    <FontAwesomeIcon icon={faRandom} /> Klimaorte
-                  </a>{" "}
-                  aus (nicht auf den Bereich{" "}
-                  <a className="styleaslink">
-                    <FontAwesomeIcon icon={faRandom} /> Klimarouten
-                  </a>
-                  ).
-                </p>
-              </>
-            }
-          />,
+          appMode === "ORTE" ? (
+            <Section
+              key="filter"
+              sectionKey="filter"
+              sectionTitle={getFilterHeader()}
+              sectionBsStyle="primary"
+              sectionContent={
+                <>
+                  <FilterPanel filterConfiguration={filterConfiguration} />
+                  <p style={{ paddingTop: 10 }}>
+                    Die getroffene Filterung wirkt sich nur auf den Bereich{" "}
+                    <a className="styleaslink">
+                      <FontAwesomeIcon icon={faRandom} /> Klimaorte
+                    </a>{" "}
+                    aus (nicht auf den Bereich{" "}
+                    <a className="styleaslink">
+                      <FontAwesomeIcon icon={faRandom} /> Klimarouten
+                    </a>
+                    ).
+                  </p>
+                </>
+              }
+            />
+          ) : undefined,
           <DefaultSettingsPanel
             skipFilterTitleSettings={true}
             key="settings"
