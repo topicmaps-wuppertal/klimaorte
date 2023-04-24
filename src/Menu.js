@@ -24,6 +24,7 @@ import {
   faRandom,
 } from "@fortawesome/free-solid-svg-icons";
 import { getSymbolSVGGetter } from "react-cismap/tools/uiHelper";
+import { featureSamples4Icons } from "./helper/iconFactory";
 export const getFilterInfo = (items) => {
   let kategorien = [];
   const katValues = [];
@@ -73,23 +74,27 @@ const MyMenu = () => {
     FeatureCollectionDispatchContext
   );
 
-  const [samples, setSamples] = useState({});
-  useEffect(() => {
-    if (allFeatures !== undefined) {
-      // find a Aussichtspunktfature and a Zwischenstoppfeature and st them as samples
-      const sampleAussichtspunkt = allFeatures.find(
-        (feature) => feature.featuretype === "aussichtspunkt"
-      );
-      const sampleZwischenstopp = allFeatures.find(
-        (feature) => feature.featuretype === "zwischenstopp"
-      );
+  //use this code to get values for the featureSamples4Icons const
+  // const [samples, setSamples] = useState({});
+  // useEffect(() => {
+  //   if (allFeatures !== undefined) {
+  //     // find a Aussichtspunktfature and a Zwischenstoppfeature and st them as samples
+  //     const sampleAussichtspunkt = allFeatures.find(
+  //       (feature) => feature.featuretype === "aussichtspunkt"
+  //     );
+  //     const sampleZwischenstopp = allFeatures.find(
+  //       (feature) => feature.featuretype === "zwischenstopp"
+  //     );
 
-      setSamples({
-        zwischenstopp: sampleZwischenstopp,
-        aussichtspunkt: sampleAussichtspunkt,
-      });
-    }
-  }, [allFeatures]);
+  //     const samples = {
+  //       zwischenstopp: sampleZwischenstopp,
+  //       aussichtspunkt: sampleAussichtspunkt,
+  //     };
+  //     console.log("yyy samples", samples);
+
+  //     setSamples(samples);
+  //   }
+  // }, [allFeatures]);
 
   const { items } = useContext(FeatureCollectionContext);
 
@@ -142,13 +147,13 @@ const MyMenu = () => {
         <p>
           Die Möglichkeiten zum Klima- und Umweltschutz werden aktuell global
           diskutiert, wobei bereits auf kommunaler Ebene viele Akteure und
-          Einrichtungen an deren Umsetzung beteiligt sind. An diesen
-          "Klimaorten" wird das Thema Klimaschutz praktiziert und vermittelt;
-          hier wird der Klimaschutz für die Bürger\\*innen erlebbar. Viele
-          dieser Klimaorte sind im Rahmen von innovativen Projekten durch den
-          Wissenstransfer und das Engagement von Unternehmen, Vereinen,
-          Verbänden sowie Quartiersbewohner\\*innen entstanden, die sich aktiv
-          für Lösungen zum Klima- und Umweltschutz in ihrem Quartier und für die
+          Einrichtungen an deren Umsetzung beteiligt sind. An den im Kartenbild
+          gezeigten "Klimaorten" wird das Thema Klimaschutz praktiziert und
+          vermittelt; hier wird der Klimaschutz für die Bürger:innen erlebbar.
+          Viele dieser Klimaorte sind im Rahmen von innovativen Projekten durch
+          den Wissenstransfer und das Engagement von Unternehmen, Vereinen,
+          Verbänden sowie Quartiersbewohner:innen entstanden, die sich aktiv für
+          Lösungen zum Klima- und Umweltschutz in ihrem Quartier und für die
           Stadt Wuppertal einsetzen. Zu den zielführenden Projekten gehören z.B.
           Wuppertals Klimasiedlungen, Anlagen zur effizienten und/oder
           regenerativen Energieerzeugung, Projekte der Verkehrswende sowie der
@@ -161,24 +166,30 @@ const MyMenu = () => {
           Verschiedene Routen (zu Fuß oder mit dem Fahrrad) führen Sie an
           ausgewählten Klimaorten vorbei: Aussichtspunkte{" "}
           {getSymbolSVGGetter(
-            samples.aussichtspunkt?.properties?.svgBadge,
-            samples.aussichtspunkt?.properties?.svgBadgeDimension
+            featureSamples4Icons.aussichtspunkt?.properties?.svgBadge,
+            featureSamples4Icons.aussichtspunkt?.properties?.svgBadgeDimension
           )(
             20,
-            samples.aussichtspunkt?.properties.color,
+            featureSamples4Icons.aussichtspunkt?.properties.color,
             "aussichtspunktsample_"
           )}{" "}
           ermöglichen Ihnen den Blick auf weitere Klimaorte aus größerer
           Entfernung zu werfen und Zwischenstopps{" "}
           {getSymbolSVGGetter(
-            samples.zwischenstopp?.properties?.svgBadge,
-            samples.zwischenstopp?.properties?.svgBadgeDimension
+            featureSamples4Icons.zwischenstopp?.properties?.svgBadge,
+            featureSamples4Icons.zwischenstopp?.properties?.svgBadgeDimension
           )(
             20,
-            samples.zwischenstopp?.properties.color,
+            featureSamples4Icons.zwischenstopp?.properties.color,
             "zwischenstoppsample_"
           )}{" "}
           bieten Ihnen ausgewählte Highlights im Routenverlauf an.
+        </p>
+        <p>
+          Ergänzt wird dieses Angebot durch weitere interessante Orte (Point of
+          Interest, POI) entlang des Routenverlaufs. Begeben Sie sich auf
+          Erkundungstour: die Welt des Klimaschutzes und nachhaltiger Ideen
+          erwarten Sie.
         </p>
       </div>
     ),
@@ -338,7 +349,7 @@ const MyMenu = () => {
                 Klimarouten, aus dem Open-Data-Angebot (dieses befindet sich in
                 Vorbereitung) der Stadt Wuppertal dar, welche ausgewählte
                 Fahrrad- und Fußwegrouten symbolisieren (
-                <span style={{ whiteSpace: "nowrap" }}>60 Meter</span> Puffer um
+                <span style={{ whiteSpace: "nowrap" }}>2 Meter</span> Puffer um
                 Linienstruktur). Die Routen sind in Kooperation mit{" "}
                 <a href="https://www.komoot.de/" target="_komoot">
                   komoot{" "}
@@ -347,7 +358,7 @@ const MyMenu = () => {
                 <FontAwesomeIcon icon={faInfoCircle} /> der Link zur externen
                 Datenquelle befindet. Weitere Objekte, welche sich in einem
                 Abstand von{" "}
-                <span style={{ whiteSpace: "nowrap" }}>60 Metern</span> zur
+                <span style={{ whiteSpace: "nowrap" }}>2 Metern</span> zur
                 Klimaroute befinden, werden ebenfalls präsentiert bzw. der Route
                 zugeordnet:
                 <ul>
@@ -370,7 +381,7 @@ const MyMenu = () => {
                       Interessante Orte Wuppertal
                     </a>
                     , Anpassung des Open-Data-Angebots befindet sich in
-                    Vorbereitung)
+                    Vorbereitung).
                   </li>
                 </ul>
               </div>
