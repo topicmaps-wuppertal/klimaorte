@@ -47,6 +47,17 @@ const InfoPanel = () => {
       </SecondaryInfoPanelSection>
     );
   }
+  let text;
+  if (item?.beschreibung) {
+    text = item.beschreibung.split("\n").map((item, key) => {
+      return (
+        <span key={key}>
+          {item}
+          <br />
+        </span>
+      );
+    });
+  }
   return (
     <SecondaryInfo
       titleIconName="info-circle"
@@ -63,7 +74,7 @@ const InfoPanel = () => {
             padding: "10px",
           }}
         >
-          {item.beschreibung && <p>{item.beschreibung}</p>}
+          {item.beschreibung && <p>{text}</p>}
           <Descriptions
             bordered
             column={{

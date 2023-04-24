@@ -3,7 +3,27 @@ import Color from "color";
 import { getColorForProperties } from "./fromStadtplan";
 import { getWegeartIcon } from "./iconFactory";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const shortenOnLinebreak = (
+  text,
+  maxLineLength = 320,
+  overflowString = "..."
+) => {
+  if (!text) {
+    return undefined;
+  }
+  const linebreakIndex = text.indexOf("\n");
+  let additionalInfo;
 
+  if (linebreakIndex > 0 && linebreakIndex < maxLineLength) {
+    additionalInfo = text.substring(0, linebreakIndex);
+  } else if (text.length > maxLineLength) {
+    additionalInfo = text.substring(0, maxLineLength) + overflowString;
+  } else {
+    additionalInfo = text;
+  }
+
+  return additionalInfo;
+};
 const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
   if (itemIn.typ === "ort") {
     let item = await addSVGToProps(itemIn, (i) => i.thema.icon);
@@ -61,6 +81,8 @@ const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
       item?.routenpunkte?.length > 0 ? item?.routenpunkte?.length : "keine"
     } ${item?.routenpunkte?.length === 1 ? "Station" : "Stationen"}.`;
 
+    const additionalInfo = shortenOnLinebreak(item?.beschreibung, 320, "...");
+
     const info = {
       header: "Klimaroute",
       title: (
@@ -69,7 +91,7 @@ const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
         </span>
       ),
       additionalInfo:
-        (item?.beschreibung ? item?.beschreibung : "") + " " + additionalText,
+        (additionalInfo ? additionalInfo + "\n" : "") + " " + additionalText,
 
       subtitle: (
         <h6>
@@ -192,13 +214,7 @@ const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
     // if yes, set additional info to the first line
     let additionalInfo = "";
 
-    const linebreakIndex = item?.beschreibung?.indexOf("\n");
-
-    if (linebreakIndex > 0 && linebreakIndex < 320) {
-      additionalInfo = item?.beschreibung?.substring(0, linebreakIndex);
-    } else {
-      additionalInfo = item?.beschreibung?.substring(0, 320) + "...";
-    }
+    additionalInfo = shortenOnLinebreak(item?.beschreibung);
 
     const text = item.name;
     const info = {
