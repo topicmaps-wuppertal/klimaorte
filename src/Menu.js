@@ -281,15 +281,15 @@ const MyMenu = () => {
             <b>Höhenprofil</b>
           </h5>
           <p>
-            In der Graphik wird Ihnen das Höhenprofil (in Meter) der jeweiligen
-            Klimaroute auf der komoot-Datengrundlage als blaue Linie
-            präsentiert. Dadurch sind Bereiche mit flachem Terrain oder großem
-            Gefälle/ großer Steigung schnell ersichtlich. Besonders für
-            Wuppertal mit der markanten Topographie kann dies beim Erkunden der
-            Klimaroute hilfreich sein. Per Mouseover oder Fingertipp auf die
-            blaue Linie können Sie die entsprechenden Höhenwerte und einen
-            Abstand zum Startpunkt der Klimaroute ermitteln. Am oberen Ende der
-            Graphik befinden sich{" "}
+            In der Graphik wird Ihnen das Höhenprofil der jeweiligen Klimaroute
+            auf der komoot-Datengrundlage als blaue Linie präsentiert (Höhen-
+            und Entfernungswerte auf 1 Meter gerundet). Dadurch sind Bereiche
+            mit flachem Terrain oder großem Gefälle/ großer Steigung schnell
+            ersichtlich. Besonders für Wuppertal mit der markanten Topographie
+            kann dies beim Erkunden der Klimaroute hilfreich sein. Per Mouseover
+            oder Fingertipp auf die blaue Linie können Sie die entsprechenden
+            Höhenwerte und einen Abstand zum Startpunkt der Klimaroute
+            ermitteln. Am oberen Ende der Graphik befinden sich{" "}
             <span style={{ whiteSpace: "nowrap" }}>
               Markierungen{" "}
               <FontAwesomeIcon style={{ color: "#dddddd" }} icon={faStop} />,
