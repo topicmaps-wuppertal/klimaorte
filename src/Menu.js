@@ -287,8 +287,8 @@ const MyMenu = () => {
             Gefälle/ großer Steigung schnell ersichtlich. Besonders für
             Wuppertal mit der markanten Topographie kann dies beim Erkunden der
             Klimaroute hilfreich sein. Per Mouseover oder Fingertipp auf die
-            blaue Linie können Sie die entsprechenden Höhenwerte und eine
-            Distanz zum Startpunkt der Klimaroute ermitteln. Am oberen Ende der
+            blaue Linie können Sie die entsprechenden Höhenwerte und einen
+            Abstand zum Startpunkt der Klimaroute ermitteln. Am oberen Ende der
             Graphik befinden sich{" "}
             <span style={{ whiteSpace: "nowrap" }}>
               Markierungen{" "}
@@ -296,7 +296,7 @@ const MyMenu = () => {
             </span>{" "}
             welche auf die an der Klimaroute befindlichen Stationen hinweisen.
             Ähnlich wie zuvor, lassen sich für die Stationen die Höhenwerte oder
-            Distanzwerte zum Klimaroutenstartpunkt ermitteln. Für die genauere
+            Entfernungen zum Klimaroutenstartpunkt ermitteln. Für die genauere
             Betrachtung eines Routenabschnitts bzgl. des Höhenprofils markieren
             Sie mit der Maus den gewünschten Bereich oder verwenden Sie die
             Zoom-In-Geste (oder Zoom-Out) auf Ihrem mobilen Endgerät. Ein
@@ -310,9 +310,9 @@ const MyMenu = () => {
           <p>
             In der Graphik wird Ihnen in einer Verlaufsansicht die
             Stationsabfolge an einer Klimaroute präsentiert: Station folgt auf
-            Station entlang der Klimaroute. Die Distanz zum
-            Klimaroutenstartpunkt (in Meter) wird Ihnen im linken Bereich der
-            Verlaufsansicht geboten.
+            Station entlang der Klimaroute. Die Entfernung zum
+            Klimaroutenstartpunkt (auf 100 Meter gerundet) wird Ihnen im linken
+            Bereich der Verlaufsansicht geboten.
           </p>
 
           <h5>
