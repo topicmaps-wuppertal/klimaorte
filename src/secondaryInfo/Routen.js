@@ -34,7 +34,12 @@ const InfoPanel = () => {
     />
   );
 
-  subsections.push(<Verlauf revertedOrder={revertedOrder} />);
+  subsections.push(
+    <Verlauf
+      key={"VerlaufElement" + item.id + "." + windowSize.width}
+      revertedOrder={revertedOrder}
+    />
+  );
   if (!productionMode) {
     subsections.push(
       <SecondaryInfoPanelSection

@@ -23,6 +23,7 @@ export default function Verlauf({ revertedOrder }) {
 
   const routenverlauf4Timeline = [
     {
+      key: "start",
       dot: <FontAwesomeIcon icon={faPlay} />,
       // label: "0 m",
       children: "Startpunkt",
@@ -48,10 +49,12 @@ export default function Verlauf({ revertedOrder }) {
         );
 
         dot.push(
-          getSymbolSVGGetter(
-            feature4Punkt?.properties?.svgBadge,
-            feature4Punkt?.properties?.svgBadgeDimension
-          )(24, feature4Punkt?.properties.color, "angebot_" + angebotId)
+          <span key={"dot." + routenpunkt.id + "." + angebotId}>
+            {getSymbolSVGGetter(
+              feature4Punkt?.properties?.svgBadge,
+              feature4Punkt?.properties?.svgBadgeDimension
+            )(24, feature4Punkt?.properties.color, "angebot_" + angebotId)}
+          </span>
         );
       }
     } else {
@@ -63,14 +66,16 @@ export default function Verlauf({ revertedOrder }) {
       );
 
       dot = [
-        getSymbolSVGGetter(
-          feature4Punkt?.properties?.svgBadge,
-          feature4Punkt?.properties?.svgBadgeDimension
-        )(
-          24,
-          feature4Punkt?.properties.color,
-          "badgefor_" + routenpunkt.typ + "_" + routenpunkt.id
-        ),
+        <span key={"dot." + routenpunkt.id}>
+          {getSymbolSVGGetter(
+            feature4Punkt?.properties?.svgBadge,
+            feature4Punkt?.properties?.svgBadgeDimension
+          )(
+            24,
+            feature4Punkt?.properties.color,
+            "badgefor_" + routenpunkt.typ + "_" + routenpunkt.id
+          )}
+        </span>,
       ];
     }
 
@@ -79,6 +84,7 @@ export default function Verlauf({ revertedOrder }) {
 
     if (windowSize.width < 500) {
       routenverlauf4Timeline.push({
+        key: "routenpunkt." + routenpunkt.id,
         children: (
           <div
             style={{
@@ -104,10 +110,11 @@ export default function Verlauf({ revertedOrder }) {
       });
     } else {
       routenverlauf4Timeline.push({
+        key: "routenpunkt." + routenpunkt.id,
         label: (
           <div
             style={{
-              paddingRight: (dot.length - 1) * 12,
+              paddingRight: ((dot?.length || 1) - 1) * 12,
               whiteSpace: "nowrap",
             }}
           >
@@ -121,7 +128,7 @@ export default function Verlauf({ revertedOrder }) {
           </div>
         ),
         children: (
-          <div style={{ paddingLeft: (dot.length - 1) * 12 }}>
+          <div style={{ paddingLeft: ((dot?.length || 1) - 1) * 12 }}>
             {routenpunkt.name}
           </div>
         ),
@@ -131,6 +138,7 @@ export default function Verlauf({ revertedOrder }) {
   }
 
   routenverlauf4Timeline.push({
+    key: "end",
     dot: <FontAwesomeIcon icon={faFlagCheckered} />,
     children: "Zielpunkt",
   });
