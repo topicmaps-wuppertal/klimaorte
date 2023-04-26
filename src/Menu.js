@@ -406,15 +406,15 @@ const MyMenu = () => {
                 <span style={{ whiteSpace: "nowrap" }}>
                   <a className="styleaslink">
                     <FontAwesomeIcon icon={faRandom} /> Klimaorte
-                  </a>{" "}
-                  stellt die Klimaortkarte Wuppertal zusätzlich die Daten der{" "}
-                  <a
-                    href="https://offenedaten-wuppertal.de/dataset/klimaorte-wuppertal"
-                    target="_opendata"
-                  >
-                    Klimaorte
                   </a>
                 </span>{" "}
+                stellt die Klimaortkarte Wuppertal zusätzlich die Daten der{" "}
+                <a
+                  href="https://offenedaten-wuppertal.de/dataset/klimaorte-wuppertal"
+                  target="_opendata"
+                >
+                  Klimaorte
+                </a>{" "}
                 und eine Auswahl der{" "}
                 <a
                   href="https://offenedaten-wuppertal.de/dataset/radrouten-wuppertal"
@@ -540,13 +540,17 @@ const MyMenu = () => {
                   <FilterPanel filterConfiguration={filterConfiguration} />
                   <p style={{ paddingTop: 10 }}>
                     Die getroffene Filterung wirkt sich nur auf den Bereich{" "}
-                    <a className="styleaslink">
-                      <FontAwesomeIcon icon={faRandom} /> Klimaorte
-                    </a>{" "}
+                    <span style={{ whiteSpace: "nowrap" }}>
+                      <a className="styleaslink">
+                        <FontAwesomeIcon icon={faRandom} /> Klimaorte
+                      </a>
+                    </span>{" "}
                     aus (nicht auf den Bereich{" "}
-                    <a className="styleaslink">
-                      <FontAwesomeIcon icon={faRandom} /> Klimarouten
-                    </a>
+                    <span style={{ whiteSpace: "nowrap" }}>
+                      <a className="styleaslink">
+                        <FontAwesomeIcon icon={faRandom} /> Klimarouten
+                      </a>
+                    </span>
                     ).
                   </p>
                 </>
