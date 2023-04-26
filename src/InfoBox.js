@@ -85,10 +85,12 @@ const InfoBox = (props) => {
               }}
             >
               <InfoBoxHeader
-                headerColor={getColorConsideringSeondarySelection(
-                  route,
-                  secondarySelection
-                )}
+                headerColor={
+                  getColorConsideringSeondarySelection(
+                    route,
+                    secondarySelection
+                  ).string() || "grey"
+                }
                 content={"Klimaroute " + route.name}
               ></InfoBoxHeader>
             </div>
