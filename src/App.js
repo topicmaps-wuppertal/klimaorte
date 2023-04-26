@@ -40,7 +40,7 @@ function App() {
   const [poiColors, setPoiColors] = useState();
   useEffect(() => {
     getPOIColors(setPoiColors);
-    document.title = "Klimaortkarte Wuppertal (alpha)";
+    document.title = "Klimaortkarte Wuppertal";
   }, []);
 
   return (
