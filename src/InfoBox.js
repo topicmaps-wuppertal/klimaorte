@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 import {
   FeatureCollectionContext,
   FeatureCollectionDispatchContext,
@@ -7,7 +7,6 @@ import GenericInfoBoxFromFeature from "react-cismap/topicmaps/GenericInfoBoxFrom
 import InfoBoxHeader from "react-cismap/topicmaps/InfoBoxHeader";
 import { appModes } from "./helper/modeParser";
 import { getColorConsideringSeondarySelection } from "./helper/styler";
-import useComponentSize from "@rehooks/component-size";
 import { ResponsiveTopicMapContext } from "react-cismap/contexts/ResponsiveTopicMapContextProvider";
 
 const InfoBox = (props) => {
@@ -127,7 +126,7 @@ const InfoBox = (props) => {
       } else {
         nextIndexOfOrder = orderIndexOfSelectedFeature + order.length;
       }
-      while (hitIndex == undefined && orderCounter < orderNum.length) {
+      while (hitIndex === undefined && orderCounter < orderNum.length) {
         if (direction === NEXT) {
           nextIndexOfOrder = nextIndexOfOrder + 1;
         } else {

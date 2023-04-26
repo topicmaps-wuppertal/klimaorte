@@ -24,19 +24,18 @@ export const getColorFromLebenslagenCombination = (
   combination,
   poiColors = POI_COLORS
 ) => {
-  let qColorRules;
+  // let qColorRules;
   let colorCandidate;
-  let lookup = null;
+  // let lookup = null;
   try {
-    qColorRules = undefined; //queryString.parse(store.getState().routing.location.search).colorRules;
-
-    if (qColorRules) {
-      try {
-        lookup = JSON.parse(qColorRules);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    // qColorRules = undefined; //queryString.parse(store.getState().routing.location.search).colorRules;
+    // if (qColorRules) {
+    //   try {
+    //     lookup = JSON.parse(qColorRules);
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // }
   } catch (error) {
     //problem dduring colorRulesn override
   }
@@ -55,7 +54,7 @@ export const getColorFromLebenslagenCombination = (
     // );
     return c;
   }
-  return "#A83F6A";
+  // return "#A83F6A";
 };
 
 export let POI_COLORS = {

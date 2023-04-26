@@ -1,34 +1,13 @@
-import React, { useContext, useEffect, useRef } from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend,
-  registerables,
-} from "chart.js";
+import React, { useContext, useRef } from "react";
+import { Chart as ChartJS, registerables } from "chart.js";
 import { Chart } from "react-chartjs-2";
 import zoomPlugin from "chartjs-plugin-zoom";
-// import SecondaryInfoPanelSection from "react-cismap/topicmaps/SecondaryInfoPanelSection";
+
 import SecondaryInfoPanelSection from "./SecondaryInfoPanelSection";
-import {
-  faBicycle,
-  faRoute,
-  faWalking,
-  faMagn,
-  faSlash,
-  faMagnifyingGlass,
-  faMagnifyingGlassMinus,
-  faStop,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlassMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FeatureCollectionContext } from "react-cismap/contexts/FeatureCollectionContextProvider";
-import { getSymbolSVGGetter } from "react-cismap/tools/uiHelper";
-import { Button } from "react-bootstrap";
+// import { getSymbolSVGGetter } from "react-cismap/tools/uiHelper";
 
 // ChartJS.register(
 //   CategoryScale,
@@ -45,14 +24,11 @@ import { Button } from "react-bootstrap";
 ChartJS.register(...registerables, zoomPlugin);
 
 export default function ElevationChart({ revertedOrder }) {
-  const { selectedFeature, items, allFeatures, itemsDictionary } = useContext(
-    FeatureCollectionContext
-  );
+  const { selectedFeature } = useContext(FeatureCollectionContext);
   const item = selectedFeature?.properties;
   const geomlength = item.geomlength;
 
   const elevationData = {};
-  const routePoints = {};
   let i = 0;
   for (const station of item.stations || []) {
     elevationData[Math.round(station)] = { z: item.zvals[i++] };
@@ -71,10 +47,9 @@ export default function ElevationChart({ revertedOrder }) {
   // attention: the elevationData is not sorted by station
 
   const chartRef = useRef(null);
-  const zoomRef = useRef(null);
   //const [zoom, setZoom] = React.useState(1);
-  const sampleSvg = allFeatures[0].properties.svgBadge;
-  const sampleSvgDimensions = allFeatures[0].properties.svgBadgeDimension;
+  // const sampleSvg = allFeatures[0].properties.svgBadge;
+  // const sampleSvgDimensions = allFeatures[0].properties.svgBadgeDimension;
   let maxElevation = 0;
   const stations = [];
   const elevations = [];
@@ -175,7 +150,6 @@ export default function ElevationChart({ revertedOrder }) {
                 combinedDataInTheRightOrder[tooltipItem.dataIndex]?.routepoint;
               if (rp) {
                 const name = rp.name;
-                const type = rp.type;
                 return [
                   name,
                   "Höhe: " + elevations[tooltipItem.dataIndex] + "m",
@@ -225,18 +199,18 @@ export default function ElevationChart({ revertedOrder }) {
       },
     },
   };
-  const svgCode = getSymbolSVGGetter(sampleSvg, sampleSvgDimensions)(
-    24,
-    "green",
-    "angebot_4711"
-  );
-  const blob = new Blob([sampleSvg], { type: "image/svg+xml" });
-  const url = URL.createObjectURL(blob);
+  // const svgCode = getSymbolSVGGetter(sampleSvg, sampleSvgDimensions)(
+  //   24,
+  //   "green",
+  //   "angebot_4711"
+  // );
+  // const blob = new Blob([sampleSvg], { type: "image/svg+xml" });
+  // const url = URL.createObjectURL(blob);
 
-  const img = new Image();
-  // img.src =
-  //   "https://wunda-geoportal.cismet.de/poi-signaturen/Icon_Platz_farbig.svg";
-  img.src = url;
+  // const img = new Image();
+  // // img.src =
+  // //   "https://wunda-geoportal.cismet.de/poi-signaturen/Icon_Platz_farbig.svg";
+  // img.src = url;
 
   //calculate the y Value of the routepoints as a round up to the next 50 from maxElevation
   const virtualElevationForRoutePoints = Math.ceil(maxElevation / 50) * 50;
@@ -253,9 +227,9 @@ export default function ElevationChart({ revertedOrder }) {
         pointRadius: 10,
         pointHoverRadius: 0,
         pointHitRadius: 100,
-        _pointStyle: (context) => {
-          return img;
-        },
+        // _pointStyle: (context) => {
+        //   return img;
+        // },
         pointStyle: "rect",
         data: combinedDataInTheRightOrder.map((item) => {
           if (item?.routepoint) {

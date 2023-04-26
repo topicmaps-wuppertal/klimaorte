@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import {
   FeatureCollectionContext,
   FeatureCollectionDispatchContext,
@@ -15,11 +15,9 @@ import MenuFooter from "./MenuFooter";
 import CustomizationContextProvider from "react-cismap/contexts/CustomizationContextProvider";
 
 import Icon from "react-cismap/commons/Icon";
-import { addSVGToProps } from "react-cismap/tools/svgHelper";
 import previewFeatureCollection from "./helper/previewFC";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faInfo,
   faInfoCircle,
   faMagnifyingGlassMinus,
   faRandom,
@@ -238,7 +236,9 @@ const MyMenu = () => {
             alphabetisch sortieren Menge an Schlagworten (Tags) bestimmte
             Begriffe per Mausklick selektieren bzw. deselektieren; die Auswahl
             aller bzw. keines der Schlagworte erfolgt über die Schaltfläche{" "}
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a className="renderAsLink">alle</a> bzw.{" "}
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a className="renderAsLink">keine</a>.
           </p>
           <p>
@@ -404,6 +404,7 @@ const MyMenu = () => {
               <div>
                 Im Bereich der{" "}
                 <span style={{ whiteSpace: "nowrap" }}>
+                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                   <a className="styleaslink">
                     <FontAwesomeIcon icon={faRandom} /> Klimaorte
                   </a>
@@ -426,6 +427,7 @@ const MyMenu = () => {
                 Puffer) aus dem Open-Data-Angebot der Stadt Wuppertal dar. Im
                 Bereich der{" "}
                 <span style={{ whiteSpace: "nowrap" }}>
+                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                   <a className="styleaslink">
                     <FontAwesomeIcon icon={faRandom} /> Klimarouten
                   </a>
@@ -541,12 +543,14 @@ const MyMenu = () => {
                   <p style={{ paddingTop: 10 }}>
                     Die getroffene Filterung wirkt sich nur auf den Bereich{" "}
                     <span style={{ whiteSpace: "nowrap" }}>
+                      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                       <a className="styleaslink">
                         <FontAwesomeIcon icon={faRandom} /> Klimaorte
                       </a>
                     </span>{" "}
                     aus (nicht auf den Bereich{" "}
                     <span style={{ whiteSpace: "nowrap" }}>
+                      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                       <a className="styleaslink">
                         <FontAwesomeIcon icon={faRandom} /> Klimarouten
                       </a>

@@ -3,14 +3,15 @@ import React from "react";
 import { faRandom } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
-import { TopicMapContext } from "react-cismap/contexts/TopicMapContextProvider";
 import { ResponsiveTopicMapContext } from "react-cismap/contexts/ResponsiveTopicMapContextProvider";
-import { appModes, getModeUrl } from "./helper/modeParser";
+import { appModes } from "./helper/modeParser";
 import { FeatureCollectionContext } from "react-cismap/contexts/FeatureCollectionContextProvider";
 import klimaortTitleFactory from "./helper/klimaortTitleFactory";
+
+// disable chncor is valid rule
+
 const Comp = ({ mode, setMode }) => {
   let titleContent;
-  const { history } = useContext(TopicMapContext);
   const { windowSize } = useContext(ResponsiveTopicMapContext);
   const featureCollectionContext = useContext(FeatureCollectionContext);
 
@@ -20,6 +21,7 @@ const Comp = ({ mode, setMode }) => {
       <div>
         {mainTitle}
         <div style={{ float: "right", paddingRight: 10 }}>
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a
             className="renderAsLink"
             style={{ color: "#337ab7" }}
@@ -38,6 +40,7 @@ const Comp = ({ mode, setMode }) => {
       <div>
         <b>Klimarouten in Wuppertal</b>
         <div style={{ float: "right", paddingRight: 10 }}>
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a
             className="renderAsLink"
             style={{ color: "#337ab7" }}

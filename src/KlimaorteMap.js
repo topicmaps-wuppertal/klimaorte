@@ -6,13 +6,12 @@ import FeatureCollection from "react-cismap/FeatureCollection";
 import { md5FetchText } from "react-cismap/tools/fetching";
 import { getGazDataForTopicIds } from "react-cismap/tools/gazetteerHelper";
 import "react-cismap/topicMaps.css";
-import GenericInfoBoxFromFeature from "react-cismap/topicmaps/GenericInfoBoxFromFeature";
 import InfoBoxFotoPreview from "react-cismap/topicmaps/InfoBoxFotoPreview";
 import ModeSwitcher from "./ModeSwitcher";
 
 import TopicMapComponent from "react-cismap/topicmaps/TopicMapComponent";
 import "./App.css";
-import MyMenu, { getFilterInfo } from "./Menu";
+import MyMenu from "./Menu";
 import InfoPanel from "./SecondaryInfo";
 import { dataHost } from "./App";
 import {
@@ -58,17 +57,15 @@ const getGazData = async (setGazData) => {
 };
 
 function KlimaorteMap() {
-  const { setSelectedFeatureByPredicate, setFilterState, setFilterMode } =
-    useContext(FeatureCollectionDispatchContext);
+  const { setSelectedFeatureByPredicate } = useContext(
+    FeatureCollectionDispatchContext
+  );
   const lightBoxDispatchContext = useContext(LightBoxDispatchContext);
   const {
     selectedFeature,
     items,
     shownFeatures,
     allFeatures,
-    filterState,
-    filterMode,
-    filteredItems,
     secondarySelection,
   } = useContext(FeatureCollectionContext);
   const { zoomToFeature, setAppMode } = useContext(TopicMapDispatchContext);
@@ -161,7 +158,14 @@ function KlimaorteMap() {
         handleShow(history.location.search);
       });
     }
-  }, [history, shownFeatures, items, allFeatures]);
+  }, [
+    history,
+    shownFeatures,
+    items,
+    allFeatures,
+    setSelectedFeatureByPredicate,
+    zoomToFeature,
+  ]);
 
   let weitereAngebote;
   const item = selectedFeature?.properties;

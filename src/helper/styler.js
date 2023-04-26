@@ -1,7 +1,6 @@
 import gtmStyler from "react-cismap/topicmaps/generic/GTMStyler";
 import { appModes } from "./modeParser";
 import Color from "color";
-import { getClusterIconCreatorFunction } from "react-cismap/tools/uiHelper";
 
 const selectionColor = new Color("#2664D8");
 const getKlimaOrtkarteStyler = (

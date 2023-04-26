@@ -8,11 +8,9 @@ import TopicMapContextProvider from "react-cismap/contexts/TopicMapContextProvid
 import StyledWMSTileLayer from "react-cismap/StyledWMSTileLayer";
 import { getClusterIconCreatorFunction } from "react-cismap/tools/uiHelper";
 import "react-cismap/topicMaps.css";
-import getGTMFeatureStyler from "react-cismap/topicmaps/generic/GTMStyler";
 import "./App.css";
 import itemFilterFunction from "./helper/filter";
 import convertBPKlimaItemsToFeature from "./helper/itemConverter";
-import { getMode, getModeUrl } from "./helper/modeParser";
 import KlimaorteMap from "./KlimaorteMap";
 import createItemsDictionary from "./helper/createItemsDictionary";
 import getKlimaOrtkarteStyler from "./helper/styler";

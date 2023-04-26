@@ -1,9 +1,7 @@
 const derive = (props) => {
   const {
     selectedFeature,
-    appMode,
-    itemsDictionary,
-    featureCollection,
+
     secondarySelection,
   } = props;
   let newSecondarySelection;

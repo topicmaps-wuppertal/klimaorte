@@ -12,7 +12,7 @@ import "./verlauf.css";
 import { ResponsiveTopicMapContext } from "react-cismap/contexts/ResponsiveTopicMapContextProvider";
 
 export default function Verlauf({ revertedOrder }) {
-  const { selectedFeature, items, allFeatures, itemsDictionary } = useContext(
+  const { selectedFeature, allFeatures, itemsDictionary } = useContext(
     FeatureCollectionContext
   );
 

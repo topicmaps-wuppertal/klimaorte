@@ -1,4 +1,4 @@
-import { addSVGToProps, DEFAULT_SVG } from "react-cismap/tools/svgHelper";
+import { addSVGToProps } from "react-cismap/tools/svgHelper";
 import Color from "color";
 import { getColorForProperties } from "./fromStadtplan";
 import { getWegeartIcon } from "./iconFactory";
