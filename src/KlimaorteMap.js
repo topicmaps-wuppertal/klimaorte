@@ -28,6 +28,10 @@ import { appModes, getMode, getModeUrl } from "./helper/modeParser";
 import { getClusterIconCreatorFunction } from "react-cismap/tools/uiHelper";
 import { getColorConsideringSeondarySelection } from "./helper/styler";
 import InfoBox from "./InfoBox";
+import {
+  fotoKraemerCaptionFactory,
+  fotoKraemerUrlManipulation,
+} from "react-cismap/tools/lightboxHelpers";
 const getGazData = async (setGazData) => {
   const prefix = "GazDataForStories";
   const sources = {};
@@ -210,6 +214,8 @@ function KlimaorteMap() {
     <InfoBoxFotoPreview
       lightBoxDispatchContext={lightBoxDispatchContext}
       currentFeature={selectedFeature}
+      urlManipulation={fotoKraemerUrlManipulation}
+      captionFactory={fotoKraemerCaptionFactory}
     />,
   ];
 
