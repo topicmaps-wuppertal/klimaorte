@@ -6,20 +6,22 @@ import { useContext } from "react";
 import { TopicMapContext } from "react-cismap/contexts/TopicMapContextProvider";
 import { ResponsiveTopicMapContext } from "react-cismap/contexts/ResponsiveTopicMapContextProvider";
 import { appModes, getModeUrl } from "./helper/modeParser";
-
+import { FeatureCollectionContext } from "react-cismap/contexts/FeatureCollectionContextProvider";
+import klimaortTitleFactory from "./helper/klimaortTitleFactory";
 const Comp = ({ mode, setMode }) => {
   let titleContent;
   const { history } = useContext(TopicMapContext);
   const { windowSize } = useContext(ResponsiveTopicMapContext);
+  const featureCollectionContext = useContext(FeatureCollectionContext);
 
   if (mode === appModes.ORTE) {
+    const mainTitle = klimaortTitleFactory({ featureCollectionContext });
     titleContent = (
       <div>
-        <b>Klimaorte in Wuppertal</b>
-
+        {mainTitle}
         <div style={{ float: "right", paddingRight: 10 }}>
           <a
-            className='renderAsLink'
+            className="renderAsLink"
             style={{ color: "#337ab7" }}
             onClick={() => {
               setMode(appModes.ROUTEN);
@@ -37,7 +39,7 @@ const Comp = ({ mode, setMode }) => {
         <b>Klimarouten in Wuppertal</b>
         <div style={{ float: "right", paddingRight: 10 }}>
           <a
-            className='renderAsLink'
+            className="renderAsLink"
             style={{ color: "#337ab7" }}
             onClick={() => {
               setMode(appModes.ORTE);
@@ -54,7 +56,7 @@ const Comp = ({ mode, setMode }) => {
   let title = null;
   title = (
     <table
-      border='0'
+      border="0"
       style={{
         width: (windowSize?.width || 300) - 54 - 12 - 38 - 12 + "px",
         height: "30px",

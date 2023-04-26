@@ -13,7 +13,6 @@ import "./App.css";
 import itemFilterFunction from "./helper/filter";
 import convertBPKlimaItemsToFeature from "./helper/itemConverter";
 import { getMode, getModeUrl } from "./helper/modeParser";
-import titleFactory from "./helper/titleFactory";
 import KlimaorteMap from "./KlimaorteMap";
 import createItemsDictionary from "./helper/createItemsDictionary";
 import getKlimaOrtkarteStyler from "./helper/styler";
