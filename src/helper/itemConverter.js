@@ -76,7 +76,6 @@ const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
     //round distanz to 1 digit
     const dist = Math.round(item.distanz * 10) / 10;
 
-    console.log("route", item);
     const additionalText = `An dieser Route befinden sich ${
       item?.routenpunkte?.length > 0 ? item?.routenpunkte?.length : "keine"
     } ${item?.routenpunkte?.length === 1 ? "Station" : "Stationen"}.`;
