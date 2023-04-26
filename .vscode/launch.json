@@ -4,12 +4,53 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+
+
+
+
     {
       "type": "pwa-chrome",
       "request": "launch",
       "name": "Utopiastadt",
       "url": "http://localhost:3000/#/?lat=51.26672160389642&lng=7.1450668573379525&zoom=18",
       "webRoot": "${workspaceFolder}"
-    }
-  ]
+    },
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Klimaroute Süd",
+      "url": "http://localhost:3000/#/routen?lat=51.24354210343733&lng=7.1504125965156575&zoom=10",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Uni mit 2 Klimarouten",
+      "url": "http://localhost:3000/#/routen?lat=51.239175055311755&lng=7.161890298164278&zoom=14",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Trassen",
+      "url": "http://localhost:3000/#/routen?lat=51.22156408619464&lng=7.157864892488778&undefined&zoom=12",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Gelpetal",
+      "url": "http://localhost:3000/#/routen?lat=51.22595155178987&lng=7.171453144414679&zoom=11",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Botanische Garten (center)",
+      "url": "http://localhost:3000/#/routen?lat=51.264162501397074&lng=7.154058871905874&zoom=14",
+      "webRoot": "${workspaceFolder}"
+    },
+    
+
+    
 }

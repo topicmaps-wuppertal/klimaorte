@@ -1,12 +1,23 @@
-const factory = ({ featureCollectionContext }) => {
+import { faRandom } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { appModes, getMode, getModeUrl } from "./modeParser";
+
+const factory = ({ featureCollectionContext, responsiveTopicMapContext }) => {
+  const additionalControls = undefined;
+  const additionalControlsShown = false;
+  const mode = getMode();
+  console.log("mode", mode);
+
+  // const { history } = useContext(TopicMapContext);
+  const { windowSize } = responsiveTopicMapContext;
   const getThemaById = (id) => {
     const result = featureCollectionContext?.items?.find((item) => item?.thema?.id === id);
     return result?.thema?.name;
   };
 
-  let themenstadtplanDesc = "?";
+  let desc = "?";
   if (featureCollectionContext?.filteredItems?.length === featureCollectionContext?.items?.length) {
-    themenstadtplanDesc = undefined;
+    desc = undefined;
   } else if (featureCollectionContext?.filterMode === "themen") {
     if (featureCollectionContext?.filterState?.themen?.length <= 2) {
       const themenIds = featureCollectionContext?.filterState?.themen;
@@ -15,21 +26,21 @@ const factory = ({ featureCollectionContext }) => {
         themen.push(getThemaById(id));
       }
 
-      themenstadtplanDesc = "nach Themen gefiltert (nur " + themen.join(", ") + ")";
+      desc = "nach Themen gefiltert (nur " + themen.join(", ") + ")";
     } else {
-      themenstadtplanDesc =
+      desc =
         "nach Themen gefiltert (" +
         featureCollectionContext?.filterState?.themen?.length +
         " Themen)";
     }
   } else if (featureCollectionContext?.filterMode === "kategorien") {
     if (featureCollectionContext?.filterState?.kategorien?.length <= 3) {
-      themenstadtplanDesc =
+      desc =
         "nach Kategorien gefiltert (nur " +
         featureCollectionContext?.filterState?.kategorien?.join(", ") +
         ")";
     } else {
-      themenstadtplanDesc =
+      desc =
         "nach Kategorien gefiltert (" +
         featureCollectionContext?.filterState?.kategorien?.length +
         " Kategorien)";
@@ -44,10 +55,20 @@ const factory = ({ featureCollectionContext }) => {
     );
   }
 
-  if (themenstadtplanDesc) {
+  if (desc) {
     return (
-      <div>
-        <b>Meine Klimaorte:</b> {themenstadtplanDesc}
+      <div key={"title" + mode}>
+        <b>Klimaortkarte:</b> {desc}{" "}
+        <div style={{ float: "right", paddingRight: 10 }}>
+          <a
+            className='renderAsLink'
+            style={{ color: "#337ab7" }}
+            href={mode === appModes.ORTE ? getModeUrl(appModes.ROUTEN) : getModeUrl(appModes.ORTE)}
+          >
+            <FontAwesomeIcon icon={faRandom} style={{ marginRight: 5 }} />
+            {mode === appModes.ORTE ? "Klimarouten" : "Klimaorte"} anzeigen
+          </a>
+        </div>
       </div>
     );
   } else {
