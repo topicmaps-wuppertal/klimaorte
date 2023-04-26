@@ -252,7 +252,7 @@ const createItemsDictionary = (items) => {
     zwischenstoppsInRouten,
     poisInRouten,
   };
-  console.log("yyy dictionary", dict);
+  // console.log("yyy dictionary", dict);
 
   return dict;
 };
