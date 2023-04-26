@@ -89,7 +89,7 @@ const InfoPanel = () => {
                 let separator = null;
                 if (first !== true) {
                   separator = (
-                    <tr colspan={2}>
+                    <tr key={"sep.tr." + index} colspan={2}>
                       <td
                         style={{
                           paddingLeft: 5,
@@ -110,7 +110,7 @@ const InfoPanel = () => {
 
                 first = false;
                 return (
-                  <>
+                  <React.Fragment key={"span" + index}>
                     {separator}
                     <tr style={{ paddingBottom: 10 }} key={"addAng" + index}>
                       <td
@@ -132,7 +132,7 @@ const InfoPanel = () => {
                         })}
                       </td>
                     </tr>
-                  </>
+                  </React.Fragment>
                 );
               })}
             </tbody>
