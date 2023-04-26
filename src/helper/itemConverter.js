@@ -93,13 +93,13 @@ const convertBPKlimaItemsToFeature = async (itemIn, poiColors) => {
         (additionalInfo ? additionalInfo + "\n" : "") + " " + additionalText,
 
       subtitle: (
-        <h6>
+        <span style={{ fontSize: "12px", fontWeight: 500, lineHeight: 1.2 }}>
           Schwierigkeit: {item?.schwierigkeitsgrad}
           <br />
           Distanz: {dist} km, Dauer: {item?.dauer}{" "}
           {item?.dauer === "1:00" ? "Stunde" : "Stunden"}
-        </h6>
-      ),
+        </span>
+      ), // style in span make it look like h6
     };
 
     item.info = info;
