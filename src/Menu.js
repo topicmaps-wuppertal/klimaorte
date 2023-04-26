@@ -283,13 +283,15 @@ const MyMenu = () => {
           <p>
             In der Graphik wird Ihnen das Höhenprofil der jeweiligen Klimaroute
             auf der komoot-Datengrundlage als blaue Linie präsentiert (Höhen-
-            und Entfernungswerte auf 1 Meter gerundet). Dadurch sind Bereiche
-            mit flachem Terrain oder großem Gefälle/ großer Steigung schnell
-            ersichtlich. Besonders für Wuppertal mit der markanten Topographie
-            kann dies beim Erkunden der Klimaroute hilfreich sein. Per Mouseover
-            oder Fingertipp auf die blaue Linie können Sie die entsprechenden
-            Höhenwerte und einen Abstand zum Startpunkt der Klimaroute
-            ermitteln. Am oberen Ende der Graphik befinden sich{" "}
+            und Entfernungswerte auf{" "}
+            <span style={{ whiteSpace: "nowrap" }}>1 Meter</span> gerundet).
+            Dadurch sind Bereiche mit flachem Terrain oder großem Gefälle/
+            großer Steigung schnell ersichtlich. Besonders für Wuppertal mit der
+            markanten Topographie kann dies beim Erkunden der Klimaroute
+            hilfreich sein. Per Mouseover oder Fingertipp auf die blaue Linie
+            können Sie die entsprechenden Höhenwerte und einen Abstand zum
+            Startpunkt der Klimaroute ermitteln. Am oberen Ende der Graphik
+            befinden sich{" "}
             <span style={{ whiteSpace: "nowrap" }}>
               Markierungen{" "}
               <FontAwesomeIcon style={{ color: "#dddddd" }} icon={faStop} />,
@@ -311,8 +313,9 @@ const MyMenu = () => {
             In der Graphik wird Ihnen in einer Verlaufsansicht die
             Stationsabfolge an einer Klimaroute präsentiert: Station folgt auf
             Station entlang der Klimaroute. Die Entfernung zum
-            Klimaroutenstartpunkt (auf 100 Meter gerundet) wird Ihnen im linken
-            Bereich der Verlaufsansicht geboten.
+            Klimaroutenstartpunkt (auf{" "}
+            <span style={{ whiteSpace: "nowrap" }}> 100 Meter</span> gerundet)
+            wird Ihnen im linken Bereich der Verlaufsansicht geboten.
           </p>
 
           <h5>
@@ -400,16 +403,18 @@ const MyMenu = () => {
 
               <div>
                 Im Bereich der{" "}
-                <a className="styleaslink">
-                  <FontAwesomeIcon icon={faRandom} /> Klimaorte
-                </a>{" "}
-                stellt die Klimaortkarte Wuppertal zusätzlich die Daten der{" "}
-                <a
-                  href="https://offenedaten-wuppertal.de/dataset/klimaorte-wuppertal"
-                  target="_opendata"
-                >
-                  Klimaorte
-                </a>{" "}
+                <span style={{ whiteSpace: "nowrap" }}>
+                  <a className="styleaslink">
+                    <FontAwesomeIcon icon={faRandom} /> Klimaorte
+                  </a>{" "}
+                  stellt die Klimaortkarte Wuppertal zusätzlich die Daten der{" "}
+                  <a
+                    href="https://offenedaten-wuppertal.de/dataset/klimaorte-wuppertal"
+                    target="_opendata"
+                  >
+                    Klimaorte
+                  </a>
+                </span>{" "}
                 und eine Auswahl der{" "}
                 <a
                   href="https://offenedaten-wuppertal.de/dataset/radrouten-wuppertal"
@@ -420,9 +425,11 @@ const MyMenu = () => {
                 (mit <span style={{ whiteSpace: "nowrap" }}>1,5 Meter</span>{" "}
                 Puffer) aus dem Open-Data-Angebot der Stadt Wuppertal dar. Im
                 Bereich der{" "}
-                <a className="styleaslink">
-                  <FontAwesomeIcon icon={faRandom} /> Klimarouten
-                </a>{" "}
+                <span style={{ whiteSpace: "nowrap" }}>
+                  <a className="styleaslink">
+                    <FontAwesomeIcon icon={faRandom} /> Klimarouten
+                  </a>
+                </span>{" "}
                 stellt die Klimaortkarte Wuppertal zusätzlich die Daten der
                 Klimarouten, aus dem Open-Data-Angebot (dieses befindet sich in
                 Vorbereitung) der Stadt Wuppertal dar, welche ausgewählte
